@@ -6,6 +6,8 @@ import error_alert as error
 # Before Run this file please change email address or you will get punished
 # # -----------------------------------------------------------------------
 
+# action.send_mail()
+
 
 # # --------- GPM Dr. Mohammad Mizanur Rahman -----------------------------
 # try:
