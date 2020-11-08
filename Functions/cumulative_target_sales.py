@@ -92,19 +92,27 @@ def cumulative_target_sales(name):
             final_target_day_wise = 0
         # print('cumulative target from 0 to final day of the month : ', cumulative_target_that_needs_to_plot)
 
+        # new_array_of_cumulative_sales = [0]
+        # final = 0
+        # for val in final_sales_array:
+        #     # print(val)
+        #     get_in = final_sales_array.index(val)
+        #     # print(get_in)
+        #     if get_in == 0:
+        #         new_array_of_cumulative_sales.append(val / 1000)
+        #     else:
+        #         for i in range(0, get_in + 1):
+        #             final = (final + final_sales_array[i]) / 1000
+        #         new_array_of_cumulative_sales.append(final)
+        #         final = 0
+
+        series = pd.Series(final_sales_array)
+        cumsum = series.cumsum()
+        final_cumulative = cumsum.tolist()
         new_array_of_cumulative_sales = [0]
-        final = 0
-        for val in final_sales_array:
-            # print(val)
-            get_in = final_sales_array.index(val)
-            # print(get_in)
-            if get_in == 0:
-                new_array_of_cumulative_sales.append(val / 1000)
-            else:
-                for i in range(0, get_in + 1):
-                    final = (final + final_sales_array[i]) / 1000
-                new_array_of_cumulative_sales.append(final)
-                final = 0
+
+        for cum_value in final_cumulative:
+            new_array_of_cumulative_sales.append(int(cum_value / 1000))
 
         # print('Cumulative sales list from 0 to current day of month : ', new_array_of_cumulative_sales)  #
         # --------------------------sales data
@@ -142,11 +150,11 @@ def cumulative_target_sales(name):
         ax.set_ylim(ymin=0)
         ax.set_xlim(xmin=0)
         plt.xticks(np.arange(1, total_days + 1, 1), np.arange(1, total_days + 1, 1), fontsize=12)
-        plt.xlabel('Days', color='black', fontsize=14, fontweight='bold')
-        plt.ylabel('Amount(K)', color='black', fontsize=10, fontweight='bold')
-        plt.title('Cumulative Day Wise Stock & Sales', color='black', fontweight='bold', fontsize=12)
+        plt.xlabel('Days', color='black', fontsize=12, fontweight='bold')
+        plt.ylabel('Quantity(K)', color='black', fontsize=12, fontweight='bold')
+        plt.title('Cumulative Day Wise Target & Sales Quantity', color='black', fontweight='bold', fontsize=16)
 
-        plt.legend(['Target', 'Sales'], loc='upper left', fontsize='14')
+        plt.legend(['Target', 'Sales'], loc='upper left')
         plt.yticks(
             np.arange(0, max(cumulative_target_that_needs_to_plot) + 0.4 * max(cumulative_target_that_needs_to_plot),
                       max(cumulative_target_that_needs_to_plot) / 5))

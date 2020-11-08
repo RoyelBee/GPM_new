@@ -62,13 +62,13 @@ def dash_kpi_generator(name):
 
     trend_achivement = (sum(total_sales) / trend) * 100
 
-    def currency_converter(num):
-        num_size = len(str(num))
-        if num_size >= 4:
-            number = str(int(num / 1000)) + 'K'
-        else:
-            number = num
-        return number
+    # def currency_converter(num):
+    #     num_size = len(str(num))
+    #     if num_size >= 4:
+    #         number = str(int(num / 1000)) + 'K'
+    #     else:
+    #         number = num
+    #     return number
 
     image = Image.open(dir.get_directory() + "/images/dash_kpi.png")
     draw = ImageDraw.Draw(image)
@@ -79,10 +79,10 @@ def dash_kpi_generator(name):
     draw.text((650, 80), str(no_sales_sku), font=font, fill=(39, 98, 236))
     draw.text((840, 80), str(no_stock_sku_list[0]), font=font, fill=(39, 98, 236))
 
-    draw.text((70, 220), str(currency_converter(sum(total_target))), font=font, fill=(255, 255, 255))
-    draw.text((260, 220), str(currency_converter(sum(total_sales))), font=font, fill=(255, 255, 255))
+    draw.text((70, 220), str(int(sum(total_target) / 1000)) + 'K', font=font, fill=(255, 255, 255))
+    draw.text((260, 220), str(int(sum(total_sales) / 1000)) + 'K', font=font, fill=(255, 255, 255))
     draw.text((435, 220), str(round(achivemet, 1)) + '%', font=font, fill=(255, 255, 255))
-    draw.text((625, 220), str(currency_converter(round(trend, 1))), font=font, fill=(255, 255, 255))
+    draw.text((625, 220), str(int(trend / 1000)) + 'K', font=font, fill=(255, 255, 255))
     draw.text((830, 220), str(round(trend_achivement, 1)) + '%', font=font, fill=(255, 255, 255))
     # image.show()
     image.save('./Images/dashboard.png')

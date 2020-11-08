@@ -263,7 +263,7 @@ def generate_layout(gpm_name):
 
                 <table border="1px solid black" width="90%"> 
                     <tr> 
-                        <th colspan='7' style=" background-color: #f4d3b5; "> No Sales Item: Last 3 Months </th> 
+                        <th colspan='7' style=" background-color: #f4d3b5; font-size: 20px;"> No Stock Item: Last 3 Months </th> 
                     </tr>
 
                     <tr>
@@ -348,7 +348,6 @@ def generate_layout(gpm_name):
                     </tr>
                     """  + item_day.item_stock_days() + """
                 
-               
                 
             </table>  <br>
 
