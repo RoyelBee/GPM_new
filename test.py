@@ -1,3 +1,3 @@
-import Functions.banner_code as b
+import Functions.dashboard as dash
 
-b.banner()
+dash.dash_kpi_generator('Mr. A. K. M. Nawajesh Hossain')

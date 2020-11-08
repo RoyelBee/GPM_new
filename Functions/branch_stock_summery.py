@@ -123,13 +123,13 @@ def branch_wise_nil_us_ss():
         tabletd = tabletd + "<tr>\n"
         for j in range(0, 1):
             # BSL NO
-            tabletd = tabletd + "<td class=\"serial\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
+            tabletd = tabletd + "<td class=\"serial\" style=\"font-weight: bold;\"" + str(bslno[i - 1]) + "\"> " + str(
                 (sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(1, 2):
             # Brand
-            tabletd = tabletd + "<td class=\"style1\" rowspan=\"" + str(int(brand[i - 1])) + "\">" + str(
-                sh.cell_value(i, j)) + "</td>\n"
+            tabletd = tabletd + "<td class=\"style1\" rowspan=\"" + str(int(brand[i - 1])) + "\">" \
+                      + str(int( sh.cell_value(i, j)) ) + "</td>\n"
 
         for j in range(2, 3):
             # ITemNo

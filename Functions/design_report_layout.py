@@ -9,7 +9,7 @@ import Functions.branch_stock_summery as bs
 import Functions.branch_stock_demo as bb
 
 
-def generate_layout():
+def generate_layout(gpm_name):
     # print('GPM Name  = ', gpm_name)
     results = """ <!DOCTYPE html>
             <html>
@@ -216,8 +216,8 @@ def generate_layout():
                     <tr>
                         <th  class="brand">BSL No.</th>
                         <th class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                        <th  class="item_sl">Item SL</th>
-                        <th  class="description1">Item Description</th>
+                        <th  class="item_sl" style="text-align: left">Item SL</th>
+                        <th  class="description1" style="text-align: left">Item Description</th>
                         <th  class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
                         <th  class="uom" style="text-align: right"> Yesterday Sales</th>
                     </tr>
@@ -282,10 +282,10 @@ def generate_layout():
                     </tr>
                 
                     <tr>
-                        <th class="brand">Branch</th>
-                        <th class="brand"> Nill</th>
-                        <th class="item_sl">Super Under Stock</th>
-                        <th class="description1">Under Stock</th>
+                        <th class="brand" >Branch</th>
+                        <th class="brand" style="text-align: right"> Nill</th>
+                        <th class="item_sl" style="text-align: right">Super Under Stock</th>
+                        <th class="description1" style="text-align: right">Under Stock</th>
                         <th class="uom" style="text-align: right"> Normal Stock</th>
                         <th class="uom" style="text-align: right">Over Stock</th>
                         <th class="uom" style="text-align: right">Super Over Stock</th>
@@ -294,56 +294,84 @@ def generate_layout():
                     """ + bs.branch_wise_nil_us_ss() + """ 
                 
                 </table> <br> 
-
-
-            <table border="1px solid gray" width="200%">
-                <tr> 
-                    <th colspan='36'> Brand wise Items Stock Status </th> 
+                
+                <table border="1px solid gray" cellspacing ="20">
+                 <tr>
+                    <th colspan="15" class="info" style="text-align: center"> """ + gpm.getGPMNFullInfo(gpm_name) + """
+                    </th>
+                    <th colspan="3" style="font-weight: bolder; font-size: 12px; background-color: #e6a454 ">SKF Plant</th>
+                    <th rowspan="3" style="background-color: #d0ff89"><div>TDCL Central WH</div></th>
+                    <th rowspan="3" style="background-color: #95ff89"><div>Branch Total</div></th>
+                    <th colspan="5" style="background-color: #ff2300" class="color_style"> Nill</th>
+                    <th colspan="5" style="background-color: #ff971a" class="color_style">Super Under Stock</th>
+                    <th colspan="5" style="background-color: #eee298;" class="color_style">Under Stock</th>
+                    <th colspan="5" class="color_style">Normal Stock</th>
+                    <th colspan="5" style="background-color: #cbe14c; color: black"   class="color_style">Over Stock</th>
+                    <th colspan="6" style="background-color: #fff900; color: black"  class="color_style">Super Over Stock</th>
+                </tr>
+    
+                <tr>
+                    <th rowspan="2" class="style1">BSL<br> No.</th>
+                    <th rowspan="2" class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+                    <th rowspan="2" class="item_sl">Item SL</th>
+                    <th rowspan="2" class="description"> <div class="my_margin">.</div> Item Description</th>
+                    <th rowspan="2" class="uom"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM &nbsp;</th>
+                    <th rowspan="2" class="sales_monthly_trend">Yesterday Sales </th>
+                    <th rowspan="2" class="sales_monthly_trend">Avg Sales Per Day </th>
+                    <th rowspan="2" class="sales_monthly_trend">Monthly Sales Target</th>
+                    <th rowspan="2" class="style2" ><div>MTD Sales Target</div></th>
+                    <th rowspan="2" class="style2"><div>Actual Sales MTD</div></th>
+                    <th rowspan="2" class="style2"><div>MTD Sales Achv %</div></th>
+                    <th rowspan="2" class="style2"><div>Monthly Sales Achv %</div></th>
+                    <th rowspan="2" class="style2"><div>Monthly Sales Trend</div></th>
+                    <th rowspan="2" class="style2"> <div>Monthly Sales Trend Achv</div></th>
+                    <th rowspan="2" class="remaining"><div>Remaining Quantity</div></th>
+                    <th rowspan="2" class="nation_wide"><div>Nationwide Stock</div></th>
+                    <th class="style3" rowspan="2">SKF <br>Mirpur </th>
+                    <th class="style3" rowspan="2">SKF <br>Rupganje </th>
+                    <th class="style3" rowspan="2">SKF <br>Tongi </th>
+                    <th colspan="31" style="font-weight: bolder; font-size: 14px"> TDCL Branches</th>
                 </tr>
                 <tr>
-                    <th class="style1">BSL</th>
-                    <th class="style1">Brand</th>
-                    <th class="style1">Item SL</th>
-                    <th class="style1" style="width: 8%" >Item Description</th>
-                    <th class="style1"  >UOM</th>
-                    <th class="style1"  >BOG</th>
-                    <th class="style1"  >BSL</th>
-                    <th class="style1"  >COM</th>
-                    <th class="style1"  >COX</th>
-                    <th class="style1"  >CTG</th>
-                    <th class="style1"  >CTN</th>
-                    <th class="style1"  >DNJ</th>
-                    <th class="style1"  >FEN</th>
-                    <th class="style1"  >FRD</th>
-                    <th class="style1"  >GZP</th>
-                    <th class="style1"  >HZJ</th>
-                    <th class="style1"  >JES</th>
-                    <th class="style1"  >KHL</th>
-                    <th class="style1"  >KRN</th>
-                    <th class="style1"  >KSG</th>
-                    <th class="style1"  >KUS</th>
-                    <th class="style1"  >MHK</th>
-                    <th class="style1"  >MIR</th>
-                    <th class="style1"  >MLV</th>
-                    <th class="style1"  >MOT</th>
-                    <th class="style1"  >MYM</th>
-                    <th class="style1"  >NAJ</th>
-                    <th class="style1"  >NOK</th>
-                    <th >PAT</th>
-                    <th >PBN</th>
-                    <th >RAJ</th>
-                    <th >RNG</th>
-                    <th >SAV</th>
-                    <th>SYL</th>
-                    <th>TGL</th>
-                    <th>VRB</th>
- 
+    
+                    <th class="branch_bg_color">BOG</th>
+                    <th class="branch_bg_color">BSL</th>
+                    <th class="branch_bg_color">COM</th>
+                    <th class="branch_bg_color">COX</th>
+                    <th class="branch_bg_color">CTG</th>
+                    <th class="branch_bg_color">CTN</th>
+                    <th class="branch_bg_color"> DNJ</th>
+                    <th class="branch_bg_color">FEN</th>
+                    <th class="branch_bg_color">FRD</th>
+                    <th class="branch_bg_color">GZP</th>
+                    <th class="branch_bg_color">HZJ</th>
+                    <th class="branch_bg_color">JES</th>
+                    <th class="branch_bg_color">KHL</th>
+                    <th class="branch_bg_color">KRN</th>
+                    <th class="branch_bg_color">KSG</th>
+                    <th class="branch_bg_color">KUS</th>
+                    <th class="branch_bg_color">MHK</th>
+                    <th class="branch_bg_color">MIR</th>
+                    <th class="branch_bg_color">MLV</th>
+                    <th class="branch_bg_color" style="font-size: 8px;"> MOT</th>
+                    <th class="branch_bg_color">MYM</th>
+                    <th class="branch_bg_color">NAJ</th>
+                    <th class="branch_bg_color">NOK</th>
+                    <th class="branch_bg_color">PAT</th>
+                    <th class="branch_bg_color">PBN</th>
+                    <th class="branch_bg_color">RAJ</th>
+                    <th class="branch_bg_color" style="font-size: 8px;">RNG</th>
+                    <th class="branch_bg_color">SAV</th>
+                    <th class="branch_bg_color">SYL</th>
+                    <th class="branch_bg_color">TGL</th>
+                    <th class="branch_bg_color">VRB</th>
+    
+                    </tr>
+    
+                    """ + SalesStock.get_Sales_and_Stock_Records() + """
+                </table> <br>
+
             
-                </tr>
-                
-                """ + bb.branch_wise_stocks_Records() + """
-                
-            </table> 
                                 
                 </body>
             </html>

@@ -64,11 +64,7 @@ def dash_kpi_generator(name):
 
     def currency_converter(num):
         num_size = len(str(num))
-        if num_size >= 8:
-            number = str(round((num / 10000000), 2)) + 'Cr'
-        elif num_size >= 7:
-            number = str(round(num / 1000000, 2)) + 'M'
-        elif num_size >= 4:
+        if num_size >= 4:
             number = str(int(num / 1000)) + 'K'
         else:
             number = num

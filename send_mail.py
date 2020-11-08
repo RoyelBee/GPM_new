@@ -24,14 +24,14 @@ def send_mail(gpm_name):
     import Functions.brand_wise_target_sales as b
 
     # ban.banner()
-    # # gdata.GenerateReport(gpm_name)
-    # dash.dash_kpi_generator(gpm_name)
+    # gdata.GenerateReport(gpm_name)
+    dash.dash_kpi_generator(gpm_name)
     # cm.cumulative_target_sales(gpm_name)
     # ex.executive_sales_target(gpm_name)
     # b.brand_wise_target_sales()
 
     # # # --------- Add Image Border ---------------------------------------
-    from PIL import Image
+    # from PIL import Image
     # da = Image.open("./Images/dashboard.png")
     # imageSize = Image.new('RGB', (962, 297))
     # imageSize.paste(da, (1, 0))
