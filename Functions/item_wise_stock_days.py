@@ -78,6 +78,7 @@ fifth_column = df['UOM'].tolist()
 label_list = ['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'BOG', 'BSL', 'COM', 'COX', 'CTG', 'CTN', 'DNJ', 'FEN',
               'FRD', 'GZP', 'HZJ', 'JES', 'KHL', 'KRN', 'KSG', 'KUS', 'MHK', 'MIR', 'MLV', 'MOT', 'MYM', 'NAJ', 'NOK',
               'PAT', 'PBN', 'RAJ', 'RNG', 'SAV', 'SYL', 'TGL', 'VRB']
+third_column_serial_change=range(1, len(first_column)+1)
 
 workbook = xlsxwriter.Workbook('Data/item_wise_stock_days.xlsx')
 worksheet = workbook.add_worksheet()
@@ -86,7 +87,7 @@ length_of_label = range(0, len(label_list))
 length_of_column_values = range(1, len(first_column) + 1)
 # print(length)
 
-for i, j, k, l, m, n in zip(first_column, second_column, third_column, fourth_column, fifth_column,
+for i, j, k, l, m, n in zip(first_column, second_column, third_column_serial_change, fourth_column, fifth_column,
                             length_of_column_values):
     worksheet.write(n, 0, i)
     worksheet.write(n, 1, j)
@@ -121,15 +122,18 @@ def set_color(val):
     if '-' in val:
         color = '#ffba62'
     else:
-        color = '#89ffbd'
+        color = '#80ffff'
 
     return color
 
 def item_stock_days():
     excel_data_df = pd.read_excel('Data/item_wise_stock_days.xlsx', sheet_name='Sheet1',
                                   usecols=['BSL NO', 'BRAND'])
-    bslno = excel_data_df['BSL NO'].tolist()
-    brand = excel_data_df['BRAND'].tolist()
+    # bslno = excel_data_df['BSL NO'].tolist()
+    # brand = excel_data_df['BRAND'].tolist()
+
+    bslno = ofn.create_dup_count_list(excel_data_df, 'BSL NO')
+    brand = ofn.create_dup_count_list(excel_data_df, 'BRAND')
 
     wb = xlrd.open_workbook('Data/item_wise_stock_days.xlsx')
     sh = wb.sheet_by_name('Sheet1')
@@ -140,21 +144,23 @@ def item_stock_days():
         tabletd = tabletd + "<tr>\n"
         for j in range(0, 1):
             # BSL NO
-            tabletd = tabletd + "<td class=\"serial\" style=\"font-weight: bold;\"" + str(int(bslno[i - 1])) + "\"> " \
-                      + str(int((sh.cell_value(i, j)))) + "</td>\n"
+            if (bslno[i - 1] != 0):
+                tabletd = tabletd + "<td class=\"serial\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
+                    int(sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(1, 2):
             # Brand
-            tabletd = tabletd + "<td class=\"style1\" rowspan=\"" + str(brand[i - 1]) + "\">" \
-                      + str(brand[i - 1]) + "</td>\n"
+            if (brand[i - 1] != 0):
+                tabletd = tabletd + "<td class=\"brandtd\" rowspan=\"" + str(brand[i - 1]) + "\">" + str(
+                    sh.cell_value(i, j)) + "</td>\n"
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"style1\">" + str(int((sh.cell_value(i, j)))) + "</td>"
+            tabletd = tabletd + "<td class=\"serial\">" + str(int((sh.cell_value(i, j)))) + "</td>"
 
         for j in range(3, 4):
             # item name
-            tabletd = tabletd + "<td class=\"style1\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"serial\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(4, 5):
             # unit

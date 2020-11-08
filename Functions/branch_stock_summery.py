@@ -114,6 +114,8 @@ def branch_wise_nil_us_ss():
     bslno = excel_data_df['Branch'].tolist()
     brand = excel_data_df['Nill'].tolist()
 
+
+
     wb = xlrd.open_workbook('Data/branch_wise_nil_us_ss.xlsx')
     sh = wb.sheet_by_name('Sheet1')
     # print('No Sales dataset Start printing in HTML')
@@ -123,7 +125,8 @@ def branch_wise_nil_us_ss():
         tabletd = tabletd + "<tr>\n"
         for j in range(0, 1):
             # BSL NO
-            tabletd = tabletd + "<td class=\"serial\" style=\"font-weight: bold;\"" + str(bslno[i - 1]) + "\"> " + str(
+            tabletd = tabletd + "<td class=\"serial\" style=\"font-weight: bold;\"" + str((bslno[i - 1])) + "\"> "\
+                      + str(
                 (sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(1, 2):

@@ -112,40 +112,40 @@ def send_mail(gpm_name):
                         """, 'html')
     msgAlternative.attach(msgText)
 
-    # # --- Read Banner Images
-    # fp = open(d.get_directory() + '/images/banner_ai.png', 'rb')
-    # banner_ai = MIMEImage(fp.read())
-    # fp.close()
-    # banner_ai.add_header('Content-ID', '<banner_ai>')
-    # msgRoot.attach(banner_ai)
-    #
-    # # --- Read Dashboard KPI Images
-    # fp = open(d.get_directory() + '/images/dashboard.png', 'rb')
-    # dash = MIMEImage(fp.read())
-    # fp.close()
-    # dash.add_header('Content-ID', '<dash>')
-    # msgRoot.attach(dash)
-    #
-    # # --- Read Cumulative Target & Sales Images
-    # fp = open(d.get_directory() + '/images/Cumulative_Day_Wise_Target_vs_Sales.png', 'rb')
-    # cm = MIMEImage(fp.read())
-    # fp.close()
-    # cm.add_header('Content-ID', '<cm>')
-    # msgRoot.attach(cm)
-    #
-    # # --- Read Cumulative Target & Sales Images
-    # fp = open(d.get_directory() + '/images/executive_wise_target_vs_sold_quantity.png', 'rb')
-    # executive = MIMEImage(fp.read())
-    # fp.close()
-    # executive.add_header('Content-ID', '<executive>')
-    # msgRoot.attach(executive)
-    #
-    # # --- Read Cumulative Target & Sales Images
-    # fp = open(d.get_directory() + '/images/brand_wise_target_vs_sold_quantity.png', 'rb')
-    # brand = MIMEImage(fp.read())
-    # fp.close()
-    # brand.add_header('Content-ID', '<brand>')
-    # msgRoot.attach(brand)
+    # --- Read Banner Images
+    fp = open(d.get_directory() + '/images/banner_ai.png', 'rb')
+    banner_ai = MIMEImage(fp.read())
+    fp.close()
+    banner_ai.add_header('Content-ID', '<banner_ai>')
+    msgRoot.attach(banner_ai)
+
+    # --- Read Dashboard KPI Images
+    fp = open(d.get_directory() + '/images/dashboard.png', 'rb')
+    dash = MIMEImage(fp.read())
+    fp.close()
+    dash.add_header('Content-ID', '<dash>')
+    msgRoot.attach(dash)
+
+    # --- Read Cumulative Target & Sales Images
+    fp = open(d.get_directory() + '/images/Cumulative_Day_Wise_Target_vs_Sales.png', 'rb')
+    cm = MIMEImage(fp.read())
+    fp.close()
+    cm.add_header('Content-ID', '<cm>')
+    msgRoot.attach(cm)
+
+    # --- Read Cumulative Target & Sales Images
+    fp = open(d.get_directory() + '/images/executive_wise_target_vs_sold_quantity.png', 'rb')
+    executive = MIMEImage(fp.read())
+    fp.close()
+    executive.add_header('Content-ID', '<executive>')
+    msgRoot.attach(executive)
+
+    # --- Read Cumulative Target & Sales Images
+    fp = open(d.get_directory() + '/images/brand_wise_target_vs_sold_quantity.png', 'rb')
+    brand = MIMEImage(fp.read())
+    fp.close()
+    brand.add_header('Content-ID', '<brand>')
+    msgRoot.attach(brand)
 
     # # Add GPM sales and stock dataset
     # part = MIMEBase('application', "octet-stream")

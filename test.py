@@ -1,4 +1,2 @@
-
-import Functions.item_wise_stock_days as item_days
-
-item_days.item_stock_days()
+import Functions.item_wise_yesterday_sales as y
+y.item_wise_yesterday_sales_Records()

@@ -14,10 +14,20 @@ def item_wise_yesterday_sales_Records():
 
     yesterday_sales = df_stock.loc[df_stock['YesterdaySales'] >= 1]
     yesterday_no_sales = df_stock.loc[df_stock['YesterdaySales'] <= 0]
-    yesterday_no_sales = yesterday_no_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM']]
 
-    yesterday_sales.to_excel('Data/item_wise_yesterday_sales.xlsx', index=False)
+    import numpy as np
+    yesterday_no_sales = yesterday_no_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM']]
+    yesterday_no_sales = yesterday_no_sales.drop(yesterday_no_sales.columns[[2]], axis=1)
+    yesterday_no_sales.insert(loc=2, column='ISL NO', value=np.arange(len(yesterday_no_sales)) + 1)
+    yesterday_no_sales = yesterday_no_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM']]
     yesterday_no_sales.to_excel('Data/yesterday_no_sales.xlsx', index=False)
+
+    yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySales']]
+    yesterday_sales = yesterday_sales.drop(yesterday_sales.columns[[2]], axis=1)
+    yesterday_sales.insert(loc=2, column='ISL NO', value=np.arange(len(yesterday_sales)) + 1)
+    yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySales']]
+    yesterday_sales.to_excel('Data/item_wise_yesterday_sales.xlsx', index=False)
+
     print('yesterday sales and no sales excel generated')
 
     excel_data_df = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', sheet_name='Sheet1',
@@ -46,7 +56,7 @@ def item_wise_yesterday_sales_Records():
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"brandtd\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"serial\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
 
         for j in range(3, 4):
             # item name
@@ -95,7 +105,7 @@ def item_wise_yesterday_no_sales_Records():
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"central\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"serial\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
 
         for j in range(3, 4):
             # item name

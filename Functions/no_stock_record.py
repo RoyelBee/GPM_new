@@ -29,7 +29,7 @@ def get_No_Stock_Records():
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"central\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"serial\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
 
         for j in range(3, 4):
             # item name

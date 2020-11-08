@@ -202,15 +202,16 @@ def generate_layout(gpm_name):
 
             </head>
             <body>
-                <img src="cid:banner_ai"> <br>
-                <img src="cid:dash"> <br>
-                <img src="cid:cm"> <br>
-                <img src="cid:executive"> <br>
-                <img src="cid:brand"> <br> <br>
+                <img src="cid:banner_ai" width="90%"> <br>
+                <img src="cid:dash" width="90%"> <br>
+                <img src="cid:cm" width="90%"> <br>
+                <img src="cid:executive" width="90%"> <br>
+                <img src="cid:brand" width="90%"> <br> <br>
 
-            <table border="1px solid gray" width="78.5%"> 
+            <table border="1px solid gray" width="90%"> 
                    <tr> 
-                        <th colspan='6' style=" background-color: #bcf19f "> Item wise Yesterday Sales Quantity </th> 
+                        <th colspan='6' style=" background-color: #bcf19f; font-size: 18px;"> Item wise Yesterday 
+                        Sales Quantity </th> 
                     </tr>
 
                     <tr>
@@ -225,16 +226,17 @@ def generate_layout(gpm_name):
                    """ + yesterday.item_wise_yesterday_sales_Records() + """
                 </table>  <br> 
 
-            <table border="1px solid gray" width="78.5%"> 
+            <table border="1px solid gray" width="90%"> 
                    <tr> 
-                        <th colspan='5' style=" background-color: #bcf19f "> Item wise Yesterday No Sales </th> 
+                        <th colspan='5' style=" background-color: #ffc994; font-size: 20px; "> Item wise Yesterday No 
+                        Sales </th> 
                     </tr>
 
                     <tr>
-                        <th class="brand">BSL No.</th>
-                        <th class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                        <th class="item_sl">Item SL</th>
-                        <th class="description1">Item Description</th>
+                        <th class="brand" style="text-align: left">BSL No.</th>
+                        <th class="brand" style="text-align: left"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+                        <th class="item_sl" style="text-align: left">Item SL</th>
+                        <th class="description1" style="text-align: left">Item Description</th>
                         <th class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
 
                     </tr>
@@ -242,16 +244,16 @@ def generate_layout(gpm_name):
                   """ + yesterday.item_wise_yesterday_no_sales_Records() + """
                 </table>  <br> <br>
 
-                <table border="1px solid gray" width="78.5%">
+                <table border="1px solid gray" width="90%">
                     <tr> 
-                        <th colspan='5' style=" background-color: #f4d3b5 "> No Sales Item: Last 3 Months </th> 
+                        <th colspan='5' style=" background-color: #f4d3b5 ;font-size: 20px;"> No Sales Item: Last 3 Months </th> 
                     </tr>
 
                     <tr>
-                        <th class="brand">BSL No</th>
-                        <th class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                        <th class="item_sl">Item SL</th>
-                        <th class="description1">Item Description</th>
+                        <th class="brand" style="text-align: left">BSL No</th>
+                        <th class="brand" style="text-align: left"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+                        <th class="item_sl" style="text-align: left">Item SL</th>
+                        <th class="description1" style="text-align: left">Item Description</th>
                         <th class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
                     </tr>
 
@@ -259,16 +261,16 @@ def generate_layout(gpm_name):
                 </table>  <br> 
 
 
-                <table border="1px solid black" width="78.5%"> 
+                <table border="1px solid black" width="90%"> 
                     <tr> 
-                        <th colspan='7' style=" background-color: #f4d3b5 "> No Sales Item: Last 3 Months </th> 
+                        <th colspan='7' style=" background-color: #f4d3b5; "> No Sales Item: Last 3 Months </th> 
                     </tr>
 
                     <tr>
                         <th class="brand">BSL No</th>
                         <th class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                        <th class="item_sl">Item SL</th>
-                        <th class="description1">Item Description</th>
+                        <th class="item_sl" style="text-align: left">Item SL</th>
+                        <th class="description1" style="text-align: left">Item Description</th>
                         <th class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
                         <th class="uom">Total Ordered</th>
                         <th class="uom" style="text-align: right"> Estimated Sales</th>
@@ -276,9 +278,11 @@ def generate_layout(gpm_name):
                     """ + noStock.get_No_Stock_Records() + """  </tr>
                 </table>  <br> 
 
-                <table border="1px solid gray" width="78.5%"> 
+                <table border="1px solid black" width="90%"> 
                     <tr> 
-                        <th colspan='7' style=" background-color: #f4d3b5 "> Branch Wise Item Stock Category </th> 
+                        <th colspan='7' style=" background-color: #f4d3b5;text-align: center; font-size: 20px; "> 
+                        Branch 
+                        Wise Item Stock Category </th> 
                     </tr>
 
                     <tr>
@@ -297,37 +301,40 @@ def generate_layout(gpm_name):
                 
                 <table border="1px solid gray" width="200%">
                     <tr> 
-                        <th colspan='36'> Brand wise Items Stock Status </th> 
+                        <th colspan='16' style="background-color: #f5f681;text-align: left; font-size:20px;"> Brand 
+                        wise Items Stock Status </th> 
+                        <th colspan='10' style="background-color: #ffba62"> Low Stock </th> 
+                        <th colspan='10' style="background-color: #80ffff"> High Stock </th> 
                     </tr>
                     <tr>
-                        <th class="style1" >BSL</th>
-                        <th class="style1"  >Brand</th>
-                        <th class="style1"  >Item SL</th>
+                        <th class="style1">BSL</th>
+                        <th class="style1">Brand</th>
+                        <th class="style1">Item SL</th>
                         <th class="style1" style="width: 8%" >Item Description</th>
-                        <th class="style1"  >UOM</th>
-                        <th class="style1"  >BOG</th>
-                        <th class="style1"  >BSL</th>
-                        <th class="style1"  >COM</th>
-                        <th class="style1"  >COX</th>
-                        <th class="style1"  >CTG</th>
-                        <th class="style1"  >CTN</th>
-                        <th class="style1"  >DNJ</th>
-                        <th class="style1"  >FEN</th>
-                        <th class="style1"  >FRD</th>
-                        <th class="style1"  >GZP</th>
-                        <th class="style1"  >HZJ</th>
-                        <th class="style1"  >JES</th>
-                        <th class="style1"  >KHL</th>
-                        <th class="style1"  >KRN</th>
-                        <th class="style1"  >KSG</th>
-                        <th class="style1"  >KUS</th>
-                        <th class="style1"  >MHK</th>
-                        <th class="style1"  >MIR</th>
-                        <th class="style1"  >MLV</th>
-                        <th class="style1"  >MOT</th>
-                        <th class="style1"  >MYM</th>
-                        <th class="style1"  >NAJ</th>
-                        <th class="style1"  >NOK</th>
+                        <th class="style1">UOM</th>
+                        <th class="style1">BOG</th>
+                        <th class="style1">BSL</th>
+                        <th class="style1">COM</th>
+                        <th class="style1">COX</th>
+                        <th class="style1">CTG</th>
+                        <th class="style1">CTN</th>
+                        <th class="style1">DNJ</th>
+                        <th class="style1">FEN</th>
+                        <th class="style1">FRD</th>
+                        <th class="style1">GZP</th>
+                        <th class="style1">HZJ</th>
+                        <th class="style1">JES</th>
+                        <th class="style1">KHL</th>
+                        <th class="style1">KRN</th>
+                        <th class="style1">KSG</th>
+                        <th class="style1">KUS</th>
+                        <th class="style1">MHK</th>
+                        <th class="style1">MIR</th>
+                        <th class="style1">MLV</th>
+                        <th class="style1">MOT</th>
+                        <th class="style1">MYM</th>
+                        <th class="style1">NAJ</th>
+                        <th class="style1">NOK</th>
                         <th class="style1">PAT</th>
                         <th class="style1">PBN</th>
                         <th class="style1">RAJ</th>
@@ -343,9 +350,7 @@ def generate_layout(gpm_name):
                 
                
                 
-            </table> 
-
-                
+            </table>  <br>
 
                 
                 <table border="1px solid gray" cellspacing ="20">
