@@ -239,7 +239,7 @@ def GenerateReport(gpm_name):
     data_for_html = pd.read_excel('./Data/gpm_data.xlsx')
     data = data_for_html[data_for_html['Avg Sales/Day'] != 0]
 
-    html_data = data.drop(data.columns[[2, 82, 83]], axis=1)
+    html_data = data.drop(data.columns[[2]], axis=1)
     html_data.insert(loc=2, column='ISL NO', value=np.arange(len(html_data)) + 1)
     html_data.to_excel('./Data/html_data_Sales_and_Stock.xlsx', index=False)
     print('HTML data File  Saved')

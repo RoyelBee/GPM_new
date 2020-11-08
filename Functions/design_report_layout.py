@@ -6,7 +6,7 @@ import Functions.sales_and_stock_record as SalesStock
 
 import Functions.branch_wise_stocks as branch_stock
 import Functions.branch_stock_summery as bs
-import Functions.branch_stock_demo as bb
+import Functions.item_wise_stock_days as item_day
 
 
 def generate_layout(gpm_name):
@@ -25,7 +25,7 @@ def generate_layout(gpm_name):
                         table-layout: fixed;
                         width: 20000px;
                     }
-            
+
                     th, td {
                         border: 1px solid black;
                         width: 150px;
@@ -76,13 +76,13 @@ def generate_layout(gpm_name):
                     .sales_monthly_trend{
                      background-color: #faeaca;
                      padding-left: 20px;
-    
+
                     }
                     .style3{
                         background-color: #f7e0b3;
                         padding-left: 5px;
                         padding-right: 2px;
-    
+
                     }
                     td {
                         font-family: "Tohoma";
@@ -98,7 +98,7 @@ def generate_layout(gpm_name):
                         padding-right: 2px;
                         text-align: right;
                         font-size: 8px;
-    
+
                     }
                     td.num_style {
                         text-align: right;
@@ -154,9 +154,9 @@ def generate_layout(gpm_name):
                         background-color: #e5f0e5;
                         font-size: 11px;
                         color: black;
-                        
+
                     }
-    
+
                     .my_margin{
                     margin-right: 220px;
                     color: #E5F0E5 !important;
@@ -182,24 +182,24 @@ def generate_layout(gpm_name):
                         text-align: left;
                         text-decoration-line: none;
                         color: black;
-    
+
                     }
-    
+
                     .banner{
                     width: 800px !important;
                     height: 200px !important;
                     border: 1px solid #0f6674;
                     }
-                    
+
                 .float_left {
                     width: 50%;
                     float: left;
                 }
-                    
-        
-    
+
+
+
                 </style>
-    
+
             </head>
             <body>
                 <img src="cid:banner_ai"> <br>
@@ -207,7 +207,7 @@ def generate_layout(gpm_name):
                 <img src="cid:cm"> <br>
                 <img src="cid:executive"> <br>
                 <img src="cid:brand"> <br> <br>
-            
+
             <table border="1px solid gray" width="78.5%"> 
                    <tr> 
                         <th colspan='6' style=" background-color: #bcf19f "> Item wise Yesterday Sales Quantity </th> 
@@ -221,32 +221,32 @@ def generate_layout(gpm_name):
                         <th  class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
                         <th  class="uom" style="text-align: right"> Yesterday Sales</th>
                     </tr>
-                
-                   """ + yesterday.item_wise_yesterday_sales_Records()+ """
+
+                   """ + yesterday.item_wise_yesterday_sales_Records() + """
                 </table>  <br> 
-                
+
             <table border="1px solid gray" width="78.5%"> 
                    <tr> 
                         <th colspan='5' style=" background-color: #bcf19f "> Item wise Yesterday No Sales </th> 
                     </tr>
-                    
+
                     <tr>
                         <th class="brand">BSL No.</th>
                         <th class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
                         <th class="item_sl">Item SL</th>
                         <th class="description1">Item Description</th>
                         <th class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
-                        
+
                     </tr>
-                
-                  """ + yesterday.item_wise_yesterday_no_sales_Records()+ """
+
+                  """ + yesterday.item_wise_yesterday_no_sales_Records() + """
                 </table>  <br> <br>
 
                 <table border="1px solid gray" width="78.5%">
                     <tr> 
                         <th colspan='5' style=" background-color: #f4d3b5 "> No Sales Item: Last 3 Months </th> 
                     </tr>
-                    
+
                     <tr>
                         <th class="brand">BSL No</th>
                         <th class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
@@ -254,16 +254,16 @@ def generate_layout(gpm_name):
                         <th class="description1">Item Description</th>
                         <th class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
                     </tr>
-    
+
                      """ + noSales.get_No_Sales_Records() + """
                 </table>  <br> 
-                
-                
+
+
                 <table border="1px solid black" width="78.5%"> 
                     <tr> 
                         <th colspan='7' style=" background-color: #f4d3b5 "> No Sales Item: Last 3 Months </th> 
                     </tr>
-                    
+
                     <tr>
                         <th class="brand">BSL No</th>
                         <th class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
@@ -275,12 +275,12 @@ def generate_layout(gpm_name):
                     </tr>
                     """ + noStock.get_No_Stock_Records() + """  </tr>
                 </table>  <br> 
-                
+
                 <table border="1px solid gray" width="78.5%"> 
                     <tr> 
                         <th colspan='7' style=" background-color: #f4d3b5 "> Branch Wise Item Stock Category </th> 
                     </tr>
-                
+
                     <tr>
                         <th class="brand" >Branch</th>
                         <th class="brand" style="text-align: right"> Nill</th>
@@ -290,14 +290,67 @@ def generate_layout(gpm_name):
                         <th class="uom" style="text-align: right">Over Stock</th>
                         <th class="uom" style="text-align: right">Super Over Stock</th>
                     </tr>
-        
+
                     """ + bs.branch_wise_nil_us_ss() + """ 
-                
+
                 </table> <br> 
+                
+                <table border="1px solid gray" width="200%">
+                    <tr> 
+                        <th colspan='36'> Brand wise Items Stock Status </th> 
+                    </tr>
+                    <tr>
+                        <th class="style1" >BSL</th>
+                        <th class="style1"  >Brand</th>
+                        <th class="style1"  >Item SL</th>
+                        <th class="style1" style="width: 8%" >Item Description</th>
+                        <th class="style1"  >UOM</th>
+                        <th class="style1"  >BOG</th>
+                        <th class="style1"  >BSL</th>
+                        <th class="style1"  >COM</th>
+                        <th class="style1"  >COX</th>
+                        <th class="style1"  >CTG</th>
+                        <th class="style1"  >CTN</th>
+                        <th class="style1"  >DNJ</th>
+                        <th class="style1"  >FEN</th>
+                        <th class="style1"  >FRD</th>
+                        <th class="style1"  >GZP</th>
+                        <th class="style1"  >HZJ</th>
+                        <th class="style1"  >JES</th>
+                        <th class="style1"  >KHL</th>
+                        <th class="style1"  >KRN</th>
+                        <th class="style1"  >KSG</th>
+                        <th class="style1"  >KUS</th>
+                        <th class="style1"  >MHK</th>
+                        <th class="style1"  >MIR</th>
+                        <th class="style1"  >MLV</th>
+                        <th class="style1"  >MOT</th>
+                        <th class="style1"  >MYM</th>
+                        <th class="style1"  >NAJ</th>
+                        <th class="style1"  >NOK</th>
+                        <th class="style1">PAT</th>
+                        <th class="style1">PBN</th>
+                        <th class="style1">RAJ</th>
+                        <th class="style1">RNG</th>
+                        <th class="style1">SAV</th>
+                        <th class="style1">SYL</th>
+                        <th class="style1">TGL</th>
+                        <th class="style1">VRB</th>
+                
+                
+                    </tr>
+                    """  + item_day.item_stock_days() + """
+                
+               
+                
+            </table> 
+
+                
+
                 
                 <table border="1px solid gray" cellspacing ="20">
                  <tr>
-                    <th colspan="15" class="info" style="text-align: center"> """ + gpm.getGPMNFullInfo(gpm_name) + """
+                    <th colspan="16" class="info" style="text-align: left"> """ + gpm.getGPMNFullInfo(gpm_name) + """
                     </th>
                     <th colspan="3" style="font-weight: bolder; font-size: 12px; background-color: #e6a454 ">SKF Plant</th>
                     <th rowspan="3" style="background-color: #d0ff89"><div>TDCL Central WH</div></th>
@@ -328,8 +381,9 @@ def generate_layout(gpm_name):
                     <th rowspan="2" class="remaining"><div>Remaining Quantity</div></th>
                     <th rowspan="2" class="nation_wide"><div>Nationwide Stock</div></th>
                     <th class="style3" rowspan="2">SKF <br>Mirpur </th>
-                    <th class="style3" rowspan="2">SKF <br>Rupganje </th>
                     <th class="style3" rowspan="2">SKF <br>Tongi </th>
+                    <th class="style3" rowspan="2">SKF <br>Rupganje </th>
+
                     <th colspan="31" style="font-weight: bolder; font-size: 14px"> TDCL Branches</th>
                 </tr>
                 <tr>
@@ -371,8 +425,8 @@ def generate_layout(gpm_name):
                     """ + SalesStock.get_Sales_and_Stock_Records() + """
                 </table> <br>
 
-            
-                                
+
+
                 </body>
             </html>
         """

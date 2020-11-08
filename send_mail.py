@@ -25,13 +25,13 @@ def send_mail(gpm_name):
 
     # ban.banner()
     # gdata.GenerateReport(gpm_name)
-    dash.dash_kpi_generator(gpm_name)
+    # dash.dash_kpi_generator(gpm_name)
     # cm.cumulative_target_sales(gpm_name)
     # ex.executive_sales_target(gpm_name)
     # b.brand_wise_target_sales()
 
     # # # --------- Add Image Border ---------------------------------------
-    # from PIL import Image
+    from PIL import Image
     # da = Image.open("./Images/dashboard.png")
     # imageSize = Image.new('RGB', (962, 297))
     # imageSize.paste(da, (1, 0))
@@ -72,7 +72,7 @@ def send_mail(gpm_name):
     #     print('Report Sending to = ', to)
 
     to = ['rejaul.islam@transcombd.com', '']
-    cc = ['', '']
+    cc = ['badhonngc@yahoo.com', '']
     bcc = ['', '']
 
     msgRoot = MIMEMultipart('related')
@@ -108,7 +108,7 @@ def send_mail(gpm_name):
 
     # # We reference the image in the IMG SRC attribute by the ID we give it below
     msgText = MIMEText("""
-                            """ + layout.generate_layout() + """
+                            """ + layout.generate_layout(gpm_name) + """ 
                         """, 'html')
     msgAlternative.attach(msgText)
 
