@@ -34,6 +34,7 @@ def dash_kpi_generator(name):
 
     sold_sku_list = sold_sku['Sold_SKU'].to_list()
     no_sales_sku = total_sku_list[0] - sold_sku_list[0]
+
     no_stock_sku = pd.read_sql_query("""select count(a.itemno) 'no stock item' from
                    (select itemno from PRINFOSKF
                    where status=1
@@ -70,20 +71,30 @@ def dash_kpi_generator(name):
     #         number = num
     #     return number
 
+    sold_sku_percentage = str(round((sold_sku_list[0] / total_sku_list[0]) * 100)) + '%'
+    # print(sold_sku_percentage)
+
+    No_sold_sku_percentage = str(round((no_sales_sku / total_sku_list[0]) * 100)) + '%'
+    # print(No_sold_sku_percentage)
+
+    No_stock_sku_percentage = str(round((no_stock_sku_list[0] / total_sku_list[0]) * 100)) + '%'
+    # print(No_stock_sku_percentage)
+
     image = Image.open(dir.get_directory() + "/images/dash_kpi.png")
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype(dir.get_directory() + '/Images/FrancoisOne-Regular.ttf', 30)
     draw.text((80, 80), str(total_brand_list[0]), font=font, fill=(39, 98, 236))
     draw.text((270, 80), str(total_sku_list[0]), font=font, fill=(39, 98, 236))
-    draw.text((460, 80), str(sold_sku_list[0]), font=font, fill=(39, 98, 236))
-    draw.text((650, 80), str(no_sales_sku), font=font, fill=(39, 98, 236))
-    draw.text((840, 80), str(no_stock_sku_list[0]), font=font, fill=(39, 98, 236))
+    draw.text((420, 80), str(sold_sku_list[0]) + ' (' + sold_sku_percentage + ')', font=font, fill=(39, 98, 236))
+    draw.text((615, 80), str(no_sales_sku) + ' (' + No_sold_sku_percentage + ')', font=font, fill=(39, 98, 236))
+    draw.text((805, 80), str(no_stock_sku_list[0]) + ' (' + No_stock_sku_percentage + ')', font=font,
+              fill=(39, 98, 236))
 
-    draw.text((70, 220), str(int(sum(total_target) / 1000)) + 'K', font=font, fill=(255, 255, 255))
-    draw.text((260, 220), str(int(sum(total_sales) / 1000)) + 'K', font=font, fill=(255, 255, 255))
-    draw.text((435, 220), str(round(achivemet, 1)) + '%', font=font, fill=(255, 255, 255))
-    draw.text((625, 220), str(int(trend / 1000)) + 'K', font=font, fill=(255, 255, 255))
-    draw.text((830, 220), str(round(trend_achivement, 1)) + '%', font=font, fill=(255, 255, 255))
+    # draw.text((70, 220), str(int(sum(total_target) / 1000)) + 'K', font=font, fill=(255, 255, 255))
+    # draw.text((260, 220), str(int(sum(total_sales) / 1000)) + 'K', font=font, fill=(255, 255, 255))
+    # draw.text((435, 220), str(round(achivemet, 1)) + '%', font=font, fill=(255, 255, 255))
+    # draw.text((625, 220), str(int(trend / 1000)) + 'K', font=font, fill=(255, 255, 255))
+    # draw.text((830, 220), str(round(trend_achivement, 1)) + '%', font=font, fill=(255, 255, 255))
     # image.show()
     image.save('./Images/dashboard.png')
     print('Dash generated')

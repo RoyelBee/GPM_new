@@ -33,7 +33,7 @@ def send_mail(gpm_name):
     # # # --------- Add Image Border ---------------------------------------
     from PIL import Image
     da = Image.open("./Images/dashboard.png")
-    imageSize = Image.new('RGB', (962, 297))
+    imageSize = Image.new('RGB', (962, 154))
     imageSize.paste(da, (1, 0))
     imageSize.save("./Images/dashboard.png")
 
@@ -41,14 +41,14 @@ def send_mail(gpm_name):
     imageSize = Image.new('RGB', (962, 481))
     imageSize.paste(kpi1, (1, 0))
     imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-
+    #
     kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
     imageSize = Image.new('RGB', (962, 481))
     imageSize.paste(kpi2, (1, 0))
     imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
     #
     kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
-    imageSize = Image.new('RGB', (962, 481))
+    imageSize = Image.new('RGB', (1802, 481))
     imageSize.paste(kpi3, (1, 0))
     imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
 
@@ -69,9 +69,9 @@ def send_mail(gpm_name):
     #     bcc = ['', '']
     #     print('Report Sending to = ', to)
 
-    to = ['yakub@transcombd.com', 'aftab.uddin@transcombd.com']
-    cc = ['rejaul.islam@transcombd.com', '']
-    bcc = ['', '']
+    to = ['', '']
+    cc = ['', '']
+    bcc = ['rejaul.islam@transcombd.com', '']
 
     msgRoot = MIMEMultipart('related')
     me = 'erp-bi.service@transcombd.com'

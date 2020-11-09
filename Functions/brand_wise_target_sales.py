@@ -17,13 +17,13 @@ def brand_wise_target_sales():
         mtd_achivemet = read_file_for_all_data['MTD Sales Acv'].to_list()
         # mtd_achivemet = mtd_achivemet[:10]
 
-        plt.subplots(figsize=(9.6, 4.8))
+        plt.subplots(figsize=(18, 4.8))
         colors = ['#3F93D0']
         bars = plt.bar(new_list, mtd_sales, color=colors, width=.75)
 
         plt.title("Brand wise Target VS Sold Quantity", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Brand', fontsize=12, color='black', fontweight='bold')
-        plt.xticks(new_list, brand, rotation=90)
+        plt.xticks(new_list, brand, rotation=90, fontsize=8)
         plt.ylabel('Quantity(K)', fontsize=12, color='black', fontweight='bold')
 
         # plt.rcParams['text.color'] = 'black'
@@ -31,15 +31,16 @@ def brand_wise_target_sales():
         for bar, achv in zip(bars, mtd_achivemet):
             yval = bar.get_height()
             wval = bar.get_width()
-            data = format(int(yval / 1000), ',')   + '\n' + str(achv) + '%'
-            plt.text(bar.get_x() + .4 - wval / 2, yval * .5, data)  # - wval / 2
+            data = format(int(yval / 1000), ',')  +'(' + str(achv) + '%)'
+            plt.text(bar.get_x() + .5 - wval / 2, yval * .5, data, fontsize=8, rotation=90)  # - wval / 2
 
         lines = plt.plot(new_list, mtd_target, 'o-', color='Red')
         #
 
         for i, j in zip(new_list, mtd_target):
             label = format(int(j / 1000), ',')
-            plt.annotate(str(label) + 'K', (i, j), textcoords="offset points", xytext=(0, 15), ha='center')
+            plt.annotate(str(label) + 'K', (i, j), rotation=90, textcoords="offset points", xytext=(0, 15),
+                         ha='center', fontsize=8)
 
         plt.legend(['Target', 'Sales & Achiv%'], loc='best', fontsize='14')
         plt.tight_layout()

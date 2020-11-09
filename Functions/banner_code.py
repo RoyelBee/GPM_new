@@ -7,6 +7,7 @@ import pandas as pd
 import path as dir
 import pyodbc as db
 
+
 con = db.connect('DRIVER={SQL Server};'
                         'SERVER=137.116.139.217;'
                         'DATABASE=ARCHIVESKF;'
@@ -60,13 +61,16 @@ def banner():
     name_font = ImageFont.truetype(dir.get_directory() + "/images/Lobster-Regular.ttf", 30, encoding="unic")
     font1 = ImageFont.truetype(dir.get_directory() + "/images/ROCK.ttf", 30, encoding="unic")
     font2 = ImageFont.truetype(dir.get_directory() + "/images/ROCK.ttf", 18, encoding="unic")
+    font3 = ImageFont.truetype(dir.get_directory() + "/images/ROCK.ttf", 10, encoding="unic")
     report_name = 'GPM '
     # n = gpm_name
     tag.text((25, 8), 'SK+F', (255, 255, 255), font=font)
     branch.text((25, 150), report_name + "Sales and Stock Report", (255, 209, 0), font=font1)
     # name.text((25, 180), n , (255, 255, 255), font=name_font)
     timestore.text((25, 200),time + "\n" + day, (255, 255, 255), font=font2)
-    timestore.text((705, 200), "Last Update Time: " + str(convertTime(hour, min)), (33,246,7), font=font2)
+    timestore.text((835, 10), "Last Data Update Time\n" + str(convertTime(hour, min)) + ', '+ day, (255, 255, 255),
+                   font=font3)
     img.save(dir.get_directory() + "/images/banner_ai.png")
     # img.show()
     print("Banner Created")
+

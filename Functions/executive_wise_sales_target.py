@@ -3,7 +3,7 @@ import pandas as pd
 import pyodbc as db
 import numpy as np
 
-name = 'Dr. Shafiqul Mawla'
+# name = 'Dr. Shafiqul Mawla'
 
 connection = db.connect('DRIVER={SQL Server};'
                         'SERVER=137.116.139.217;'
@@ -13,21 +13,21 @@ connection = db.connect('DRIVER={SQL Server};'
 def executive_sales_target(name):
     try:
         executive_target_df = pd.read_sql_query("""
-                            Declare @CurrentMonth NVARCHAR(MAX);
-                            Declare @DaysInMonth NVARCHAR(MAX);
-                            Declare @DaysInMonthtilltoday NVARCHAR(MAX);
-                            SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
-                            SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
-                            SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
-                            select CP01 as ExecutiveName, cast(isnull((sum(QTY)/@DaysInMonth)*@DaysInMonthtilltoday,
-                            0)/1000 as int) as MTDTargetQty
-                            from PRINFOSKF 
-                            left join ARCSECONDARY.dbo.RfieldForceProductTRG
-                            on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
-                            where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
-                            112) and GPMNAME like ?
-                            group by CP01
-                            order by CP01 asc """, connection,params={name})
+                                Declare @CurrentMonth NVARCHAR(MAX);
+                                Declare @DaysInMonth NVARCHAR(MAX);
+                                Declare @DaysInMonthtilltoday NVARCHAR(MAX);
+                                SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
+                                SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
+                                SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
+                                select CP01 as ExecutiveName, cast(isnull((sum(QTY)/@DaysInMonth)*@DaysInMonthtilltoday,
+                                0)/1000 as int) as MTDTargetQty
+                                from PRINFOSKF 
+                                left join ARCSECONDARY.dbo.RfieldForceProductTRG
+                                on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
+                                where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
+                                112) and GPMNAME like ?
+                                group by CP01
+                                order by CP01 asc """, connection, params={name})
 
         Executive_name = executive_target_df['ExecutiveName'].tolist()
         Executive_target = executive_target_df['MTDTargetQty'].tolist()
@@ -52,25 +52,39 @@ def executive_sales_target(name):
         # print(new_name3)
 
         executive_sales_df = pd.read_sql_query("""select CP01 as ExecutiveName, cast(isnull(sum(QTYSHIPPED),0)/1000 as int) as ItemSales from OESalesDetails
-                                left join PRINFOSKF
-                                on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-                                where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
-                                                and convert(varchar(10),getdate(), 112)
-                                and PRINFOSKF.GPMNAME like ?
-                                group by CP01
-                                order by CP01 asc """, connection,params={name})
+                                    left join PRINFOSKF
+                                    on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+                                    where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
+                                                    and convert(varchar(10),getdate(), 112)
+                                    and PRINFOSKF.GPMNAME like ?
+                                    group by CP01
+                                    order by CP01 asc """, connection, params={name})
 
         Executive_sale = executive_sales_df['ItemSales'].tolist()
         # print(Executive_sale)
 
+        achievement_list = []
+        for x, y in zip(Executive_sale, Executive_target):
+            achv = (x / y) * 100
+            achievement_list.append(achv)
+        # print("Achv list", achievement_list)
+
+        new_label_list = []
+        for x, y in zip(new_name3, achievement_list):
+            new_label = str(x) + '(' + str(round(y)) + '%)'
+            new_label_list.append(new_label)
+        # print("new label list", new_label_list)
+
+        z = range(0, len(new_label_list))
+        # print(range(0, len(new_label_list)))
         fig, ax = plt.subplots(figsize=(9.6, 4.8))
 
         colors = ['#3F93D0']
-        bars = plt.bar(new_name3, Executive_sale, color=colors, width=.4)
+        bars = plt.bar(new_label_list, Executive_sale, color=colors, width=.4)
 
         plt.title("Executive Wise MTD Target & Sales Quantity", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Executive', fontsize=12, color='black', fontweight='bold')
-        plt.xticks(new_name3, rotation=90)
+        plt.xticks(new_label_list, rotation=45)
         plt.ylabel('Quantity(K)', fontsize=12, color='black', fontweight='bold')
 
         plt.rcParams['text.color'] = 'black'
@@ -78,17 +92,18 @@ def executive_sales_target(name):
         for bar, achv in zip(bars, Executive_sale):
             yval = bar.get_height()
             wval = bar.get_width()
-            data = format(int(yval), ',') + 'K' #+ '\n' + str(achv) + '%'
-            plt.text(bar.get_x() + wval/3, yval, data)
+            data = format(int(yval), ',') + 'K'  # + '\n' + str(achv) + '%'
+            plt.text(bar.get_x() + wval / 3, yval, data)
 
-        lines = plt.plot(new_name3, Executive_target, 'o-', color='Red')
-        plt.yticks(np.arange(0, max(Executive_target) + 0.9 * max(Executive_target), max(Executive_target) / 5))
-        for i, j in zip(new_name3, Executive_target):
+        plt.plot(new_label_list, Executive_target, 'o-', color='Red')
+        plt.yticks(
+            np.arange(0, int(max(Executive_target) + 0.9 * max(Executive_target)), int(max(Executive_target) / 5)))
+        for i, j in zip(new_label_list, Executive_target):
             label = format(int(j), ',') + 'K'
             plt.annotate(label, (i, j), textcoords="offset points", xytext=(0, 4), ha='center', rotation=45)
-
-        # print(mtd_achivemet)
-        plt.legend(['Target','Sales'])
+        #
+        # # print(mtd_achivemet)
+        plt.legend(['Target', 'Sales'])
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/executive_wise_target_vs_sold_quantity.png')
@@ -104,4 +119,5 @@ def executive_sales_target(name):
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/executive_wise_target_vs_sold_quantity.png')
-        print('Executive figure generated')
+        print('Executive Not figure generated')
+

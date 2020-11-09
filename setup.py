@@ -25,6 +25,7 @@ import error_alert as error
 
 
 # # # --------- GPM Mr. A. K. M. Nawajesh Hossain  ----------------------
+
 try:
     action.send_mail('Mr. A. K. M. Nawajesh Hossain')
 except:
@@ -36,32 +37,31 @@ except:
 #     action.send_mail('Mr. Fazal Mohammad Tanim')
 # except:
 #     error.send_error_msg('Mr. Fazal Mohammad Tanim')
-#
-#
-# # # --------- GPM Mr. Mohammad Akhter Alam Khan -----------------------
+
+
+# # --------- GPM Mr. Mohammad Akhter Alam Khan -----------------------
 # try:
 #     action.send_mail('Mr. Mohammad Akhter Alam Khan')
 # except:
 #     error.send_error_msg('Mr. Mohammad Akhter Alam Khan')
-#
-#
+
+
 # # # --------- GPM Mr. Rubaeadul Hasan Lashkar ---------------------------
 # try:
 #     action.send_mail('Mr. Rubaeadul Hasan Lashkar')
 # except:
 #     action.send_mail('Mr. Rubaeadul Hasan Lashkar')
-#
-#
+
 # # # --------- GPM Mr. Tafsir Bashar -------------------------------------
 # try:
 #     action.send_mail('Mr. Tafsir Bashar')
 # except:
 #     action.send_mail('Mr. Tafsir Bashar')
-#
-#
-# # # --------- GPM Mr. Zahid Hossain Faisal ------------------------------
+
+
+# # --------- GPM Mr. Zahid Hossain Faisal --------------------------------
 # try:
 #     action.send_mail('Mr. Zahid Hossain Faisal')
 # except:
 #     action.send_mail('Mr. Zahid Hossain Faisal')
-#
+

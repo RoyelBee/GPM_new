@@ -206,7 +206,7 @@ def generate_layout(gpm_name):
                 <img src="cid:dash" width="90%"> <br>
                 <img src="cid:cm" width="90%"> <br>
                 <img src="cid:executive" width="90%"> <br>
-                <img src="cid:brand" width="90%"> <br> <br>
+                <img src="cid:brand"> <br> <br>
 
             <table border="1px solid gray" width="90%"> 
                    <tr> 

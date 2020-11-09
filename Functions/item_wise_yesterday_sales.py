@@ -69,7 +69,7 @@ def item_wise_yesterday_sales_Records():
         for j in range(5, 6):
             # unit
             tabletd = tabletd + "<td class=\"style1\">" + \
-                      ofn.number_style(str(int((sh.cell_value(i,j))))) + "</td>\n"
+                      ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
 
         table1 = tabletd + "</tr>\n"
     print("item wise yesterday sale table Created")

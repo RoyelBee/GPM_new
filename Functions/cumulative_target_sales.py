@@ -45,8 +45,7 @@ def cumulative_target_sales(name):
 
         final_days_array = []
         final_sales_array = []
-        final_return_array = []
-        for t_va in range(0, current_day_in_int):
+        for t_va in range(0, current_day_in_int-1):
             final_days_array.append(day_wise_date[t_va])
             final_sales_array.append(day_to_day_sale[t_va])
         # print('Reduced 0 value days from the list : ', final_days_array)
@@ -84,13 +83,26 @@ def cumulative_target_sales(name):
         total_days = calendar.monthrange(now.year, now.month)[1]
         # print('Total number of days in this month : ', total_days)
 
+        monthly_trend = (sum(final_sales_array) / (current_day_in_int-1))*total_days
+        # print('Monthly Trend: ',monthly_trend)
+
+        monthly_trend_per_day = (sum(final_sales_array) / (current_day_in_int-1))
+        # print('Monthly Trend Per Day: ', monthly_trend_per_day)
+
+        trend_achievement = str(round((sum(final_sales_array)/monthly_trend)*100,1))
+        # print('Trend Achievement: ',trend_achievement)
+
         final_target_day_wise = 0
         cumulative_target_that_needs_to_plot = []
+        cumulative_trend_that_needs_to_plot = []
         for t_value in range(0, total_days + 1):
             final_target_day_wise = single_day_target * t_value
+            final_trend_day_wise = monthly_trend_per_day * t_value
             cumulative_target_that_needs_to_plot.append(final_target_day_wise / 1000)
+            cumulative_trend_that_needs_to_plot.append(final_trend_day_wise/1000)
             final_target_day_wise = 0
         # print('cumulative target from 0 to final day of the month : ', cumulative_target_that_needs_to_plot)
+        # print('cumulative trend from 0 to final day of the month : ', cumulative_trend_that_needs_to_plot)
 
         # new_array_of_cumulative_sales = [0]
         # final = 0
@@ -131,9 +143,25 @@ def cumulative_target_sales(name):
         # sys.exit()
 
         fig, ax = plt.subplots(figsize=(9.6, 4.8))
+
+        plt.fill_between(length_of_cumulative_target, cumulative_trend_that_needs_to_plot, color="green", alpha=.3)
         plt.fill_between(length_of_cumulative_sales, new_array_of_cumulative_sales, color="green", alpha=1)
         plt.plot(length_of_cumulative_target, cumulative_target_that_needs_to_plot, color="red", linewidth=3,
                  linestyle="-")
+
+        plt.text(list_index_for_target - 1, cumulative_trend_that_needs_to_plot[list_index_for_target] + 50,
+                 format(round(cumulative_trend_that_needs_to_plot[list_index_for_target]), ',') + 'K\n(' +trend_achievement+'%)' ,
+                 color='black', fontsize=10, fontweight='bold')
+        plt.scatter(list_index_for_target, cumulative_trend_that_needs_to_plot[list_index_for_target], s=60,
+                    facecolors='green', edgecolors='white')
+
+
+        plt.text(list_index_for_sale - 1, cumulative_target_that_needs_to_plot[list_index_for_sale]+50,
+                 format(round(cumulative_target_that_needs_to_plot[list_index_for_sale], 1), ',') + 'K',
+                 color='black', fontsize=10, fontweight='bold')
+        plt.scatter(list_index_for_sale, cumulative_target_that_needs_to_plot[list_index_for_sale], s=60, facecolors='red',
+                    edgecolors='white')
+
 
         plt.text(list_index_for_sale + .2, new_array_of_cumulative_sales[list_index_for_sale],
                  format(round(new_array_of_cumulative_sales[list_index_for_sale], 1), ',') + 'K',
@@ -141,7 +169,7 @@ def cumulative_target_sales(name):
         plt.scatter(list_index_for_sale, new_array_of_cumulative_sales[list_index_for_sale], s=60, facecolors='#113d3c',
                     edgecolors='white')
 
-        plt.text(list_index_for_target - 1.3, cumulative_target_that_needs_to_plot[list_index_for_target],
+        plt.text(list_index_for_target - 1, cumulative_target_that_needs_to_plot[list_index_for_target]+50,
                  format(round(cumulative_target_that_needs_to_plot[list_index_for_target]), ',') + 'K',
                  color='black', fontsize=10, fontweight='bold')
         plt.scatter(list_index_for_target, cumulative_target_that_needs_to_plot[list_index_for_target], s=60,
@@ -149,12 +177,13 @@ def cumulative_target_sales(name):
 
         ax.set_ylim(ymin=0)
         ax.set_xlim(xmin=0)
+
         plt.xticks(np.arange(1, total_days + 1, 1), np.arange(1, total_days + 1, 1), fontsize=12)
         plt.xlabel('Days', color='black', fontsize=12, fontweight='bold')
         plt.ylabel('Quantity(K)', color='black', fontsize=12, fontweight='bold')
-        plt.title('Cumulative Day Wise Target & Sales Quantity', color='black', fontweight='bold', fontsize=16)
+        plt.title('Cumulative Day Wise MTD Target & Sales Quantity', color='black', fontweight='bold', fontsize=16)
 
-        plt.legend(['Target', 'Sales'], loc='upper left')
+        plt.legend(['Target', 'Trend with Achiv%' ,'Sales'], loc='upper left')
         plt.yticks(
             np.arange(0, max(cumulative_target_that_needs_to_plot) + 0.4 * max(cumulative_target_that_needs_to_plot),
                       max(cumulative_target_that_needs_to_plot) / 5))
@@ -178,4 +207,3 @@ def cumulative_target_sales(name):
         plt.savefig("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
         # plt.show()
         print('Error Cumulative day wise target sales generated')
-

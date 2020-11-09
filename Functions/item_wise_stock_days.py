@@ -54,16 +54,16 @@ for branches, avgq in zip(l, l2):
             index_of_values = branch_stock_limit_list.index(i)
             month = int(i / 30)
             Day = int(i % 30)
-            quantity_value = 'Q:' + str(branch_current_stock[index_of_values])
-            value_to_be_shown = quantity_value + '   S:-' + str(month) + "M" + str(Day) + "D" + ""
+            quantity_value = str(branch_current_stock[index_of_values])
+            value_to_be_shown = quantity_value + '  -' + str(month) + "M" + str(Day) + "D" + ""
             each_branch_analytics_value.append(value_to_be_shown)
         # Super Under Stock
         elif i > 35:
             index_of_values = branch_stock_limit_list.index(i)
             month = int(i / 30)
             Day = int(i % 30)
-            quantity_value = 'Q:' + str(branch_current_stock[index_of_values])
-            value_to_be_shown = quantity_value + '   S:' + str(month) + "M" + str(Day) + "D" + ""
+            quantity_value =  str(branch_current_stock[index_of_values])
+            value_to_be_shown = quantity_value + '  ' + str(month) + "M" + str(Day) + "D" + ""
             each_branch_analytics_value.append(value_to_be_shown)
     # print(each_branch_analytics_value)
     final_list.append(each_branch_analytics_value)
@@ -115,7 +115,7 @@ print('Item wise stock days data generated')
 
 def seperator(val):
     a = val.split('  ')
-    c = str(a[0]) + "\n" + str(a[1])
+    c = str(a[0]) + "\n\n" + str(a[1])
     return c
 
 def set_color(val):
