@@ -7,6 +7,7 @@ import Functions.sales_and_stock_record as SalesStock
 import Functions.branch_wise_stocks as branch_stock
 import Functions.branch_stock_summery as bs
 import Functions.item_wise_stock_days as item_day
+import Functions.branch_wise_stock_aging as branch_aging
 
 
 def generate_layout(gpm_name):
@@ -409,6 +410,55 @@ def generate_layout(gpm_name):
                 
                     </tr>
                     """ + item_day.item_stock_days() + """
+                
+                
+            </table>  <br>
+            
+             <table border="1px solid gray" width="200%">
+                    <tr> 
+                        <th colspan='33' style="background-color: #f5f681;text-align: left; font-size:20px;"> Brand 
+                        wise Aging Stock Status </th> 
+                         
+                    </tr>
+                    <tr>
+                        
+                        <th class="style1">Brand</th>
+                        <th class="style1" style="width: 8%" >Item Description</th>
+                        <th class="style1">BOG</th>
+                        <th class="style1">BSL</th>
+                        <th class="style1">COM</th>
+                        <th class="style1">COX</th>
+                        <th class="style1">CTG</th>
+                        <th class="style1">CTN</th>
+                        <th class="style1">DNJ</th>
+                        <th class="style1">FEN</th>
+                        <th class="style1">FRD</th>
+                        <th class="style1">GZP</th>
+                        <th class="style1">HZJ</th>
+                        <th class="style1">JES</th>
+                        <th class="style1">KHL</th>
+                        <th class="style1">KRN</th>
+                        <th class="style1">KSG</th>
+                        <th class="style1">KUS</th>
+                        <th class="style1">MHK</th>
+                        <th class="style1">MIR</th>
+                        <th class="style1">MLV</th>
+                        <th class="style1">MOT</th>
+                        <th class="style1">MYM</th>
+                        <th class="style1">NAJ</th>
+                        <th class="style1">NOK</th>
+                        <th class="style1">PAT</th>
+                        <th class="style1">PBN</th>
+                        <th class="style1">RAJ</th>
+                        <th class="style1">RNG</th>
+                        <th class="style1">SAV</th>
+                        <th class="style1">SYL</th>
+                        <th class="style1">TGL</th>
+                        <th class="style1">VRB</th>
+                
+                
+                    </tr>
+                    """ + branch_aging.get_branch_aging_stock_status() + """
                 
                 
             </table>  <br>

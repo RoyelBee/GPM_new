@@ -97,3 +97,26 @@ def create_dup_count_list(excel, colName):
         colList.insert(k, i)
         k = k + 1
     return colList
+
+
+def status_color(status):
+    if status == 'Within 15 Days':
+        color = '#e82b04'
+
+    elif status == 'Within 30 Days':
+        color = '#ff7100'
+
+    elif status == 'Within 60 Days':
+        color = '#ffd100'
+
+    elif status == 'Within 90 Days':
+        color = '#bed32e'
+
+    elif status == 'More Than 120 Days':
+        color = '#6ef607'
+
+    elif status == 'More Than 1 Year':
+        color = '#6ef607'
+    else:
+        color = '#ff0000'
+    return color

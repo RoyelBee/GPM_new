@@ -23,45 +23,43 @@ def send_mail(gpm_name):
     import Functions.executive_wise_sales_target as ex
     import Functions.brand_wise_target_sales as b
     import Functions.stock_aging_days as aging
+    import Functions.branch_wise_stock_aging as branch_stock_aging
 
     ban.banner()
-    # gdata.GenerateReport(gpm_name)
-    # import Functions.branch_stock_summery_data as summery
-    # summery.generate_summery_data()
-    #
-    # dash.dash_kpi_generator(gpm_name)
-    # cm.cumulative_target_sales(gpm_name)
-    # ex.executive_sales_target(gpm_name)
-    # b.brand_wise_target_sales()
+    gdata.GenerateReport(gpm_name)
+    dash.dash_kpi_generator(gpm_name)
+    cm.cumulative_target_sales(gpm_name)
+    ex.executive_sales_target(gpm_name)
+    b.brand_wise_target_sales()
     aging.stockagingchart(gpm_name)
+    branch_stock_aging.get_branch_aging_stock_status()
 
     # # # --------- Add Image Border ---------------------------------------
     from PIL import Image
-    # da = Image.open("./Images/dashboard.png")
-    # imageSize = Image.new('RGB', (962, 154))
-    # imageSize.paste(da, (1, 0))
-    # imageSize.save("./Images/dashboard.png")
+    da = Image.open("./Images/dashboard.png")
+    imageSize = Image.new('RGB', (962, 154))
+    imageSize.paste(da, (1, 0))
+    imageSize.save("./Images/dashboard.png")
+
+    kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi1, (1, 0))
+    imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
     #
-    # kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi1, (1, 0))
-    # imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    # #
-    # kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi2, (1, 0))
-    # imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
-    # #
-    # kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
-    # imageSize = Image.new('RGB', (1802, 601))
-    # imageSize.paste(kpi3, (1, 0))
-    # imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
+    kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi2, (1, 0))
+    imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
     #
+    kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
+    imageSize = Image.new('RGB', (1802, 601))
+    imageSize.paste(kpi3, (1, 0))
+    imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
+
     kpi4 = Image.open("./Images/aging_stock_information.png")
     imageSize = Image.new('RGB', (962, 481))
     imageSize.paste(kpi4, (1, 0))
     imageSize.save("./Images/aging_stock_information.png")
-
 
     # # ------------- HTML generating section ------------------------------
     # data = pd.read_excel('./Data/html_data_Sales_and_Stock.xlsx')
@@ -80,8 +78,8 @@ def send_mail(gpm_name):
     #     bcc = ['', '']
     #     print('Report Sending to = ', to)
 
-    to = ['biswascma@yahoo.com', 'yakub@transcombd.com']
-    cc = ['fazle.rabby@transcombd.com', '']
+    to = ['', '']
+    cc = ['', '']
     bcc = ['rejaul.islam@transcombd.com', '']
 
     msgRoot = MIMEMultipart('related')

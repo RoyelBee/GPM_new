@@ -7,11 +7,11 @@ import pandas as pd
 import path as dir
 import pyodbc as db
 
-
 con = db.connect('DRIVER={SQL Server};'
-                        'SERVER=137.116.139.217;'
-                        'DATABASE=ARCHIVESKF;'
-                        'UID=sa;PWD=erp@123')
+                 'SERVER=137.116.139.217;'
+                 'DATABASE=ARCHIVESKF;'
+                 'UID=sa;PWD=erp@123')
+
 
 def banner():
     date = datetime.today()
@@ -27,10 +27,10 @@ def banner():
     time = datetime_BD.strftime("%I:%M %p")
 
     conn = db.connect('DRIVER={SQL Server};'
-                          'SERVER=137.116.139.217;'
-                          'DATABASE=ARCHIVESKF;'
-                          'UID=sa;'
-                          'PWD=erp@123;')
+                      'SERVER=137.116.139.217;'
+                      'DATABASE=ARCHIVESKF;'
+                      'UID=sa;'
+                      'PWD=erp@123;')
 
     date_time = pd.read_sql_query(
         """select max(datetime) as uptime from OESalesDetails
@@ -67,10 +67,8 @@ def banner():
     tag.text((25, 8), 'SK+F', (255, 255, 255), font=font)
     branch.text((25, 150), report_name + "Sales and Stock Report", (255, 209, 0), font=font1)
     # name.text((25, 180), n , (255, 255, 255), font=name_font)
-    timestore.text((25, 200),time + "\n" + day, (255, 255, 255), font=font2)
-    timestore.text((835, 10), "Last Data Update Time\n" + str(convertTime(hour, min)) + ', '+ day, (255, 255, 255),
-                   font=font3)
+    timestore.text((25, 200), time + "\n" + day, (255, 255, 255), font=font2)
+    # timestore.text((835, 10), "Last Data Update Time\n" + str(convertTime(hour, min)) + ', ' + day, (255, 255, 255),  font=font3)
     img.save(dir.get_directory() + "/images/banner_ai.png")
     # img.show()
     print("Banner Created")
-
