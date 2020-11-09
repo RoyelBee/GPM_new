@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../BasicWebScrapeing/.idea/BasicWebScrapeing.iml" filepath="$PROJECT_DIR$/../BasicWebScrapeing/.idea/BasicWebScrapeing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Data-Analysis-for-Alexa-Flash-Briefing/.idea/Data-Analysis-for-Alexa-Flash-Briefing.iml" filepath="$PROJECT_DIR$/../Data-Analysis-for-Alexa-Flash-Briefing/.idea/Data-Analysis-for-Alexa-Flash-Briefing.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/GPM_new.iml" filepath="$PROJECT_DIR$/.idea/GPM_new.iml" />
     </modules>
   </component>

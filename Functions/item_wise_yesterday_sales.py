@@ -12,8 +12,8 @@ def item_wise_yesterday_sales_Records():
                             70,
                             71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84]], axis=1)
 
-    yesterday_sales = df_stock.loc[df_stock['YesterdaySales'] >= 1]
-    yesterday_no_sales = df_stock.loc[df_stock['YesterdaySales'] <= 0]
+    yesterday_sales = df_stock.loc[df_stock['YesterdaySalesQty'] >= 1]
+    yesterday_no_sales = df_stock.loc[df_stock['YesterdaySalesQty'] <= 0]
 
     import numpy as np
     yesterday_no_sales = yesterday_no_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM']]
@@ -22,16 +22,19 @@ def item_wise_yesterday_sales_Records():
     yesterday_no_sales = yesterday_no_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM']]
     yesterday_no_sales.to_excel('Data/yesterday_no_sales.xlsx', index=False)
 
-    yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySales']]
+    yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
+       'TP', 'TP Sales Value', 'Net Sales Value', 'Discount']]
+
     yesterday_sales = yesterday_sales.drop(yesterday_sales.columns[[2]], axis=1)
     yesterday_sales.insert(loc=2, column='ISL NO', value=np.arange(len(yesterday_sales)) + 1)
-    yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySales']]
+    yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
+       'TP', 'TP Sales Value', 'Net Sales Value', 'Discount']]
     yesterday_sales.to_excel('Data/item_wise_yesterday_sales.xlsx', index=False)
 
     print('yesterday sales and no sales excel generated')
 
     excel_data_df = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', sheet_name='Sheet1',
-                                  usecols=['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySales'])
+                                  usecols=['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty'])
     bslno = ofn.create_dup_count_list(excel_data_df, 'BSL NO')
     brand = ofn.create_dup_count_list(excel_data_df, 'BRAND')
 
@@ -60,20 +63,74 @@ def item_wise_yesterday_sales_Records():
 
         for j in range(3, 4):
             # item name
-            tabletd = tabletd + "<td class=\"descriptiontd\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"y_desc_sales\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(4, 5):
             # unit
-            tabletd = tabletd + "<td class=\"style1\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"number_style\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(5, 6):
             # unit
-            tabletd = tabletd + "<td class=\"style1\">" + \
+            tabletd = tabletd + "<td class=\"number_style\">" + \
                       ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
+
+        for j in range(6, 7):
+            # unit
+            tabletd = tabletd + "<td class=\"number_style\">" + \
+                      ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
+
+        for j in range(7, 8):
+            # unit
+            tabletd = tabletd + "<td class=\"number_style\">" + \
+                      ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
+
+        for j in range(8, 9):
+            # unit
+            tabletd = tabletd + "<td class=\"number_style\">" + \
+                      ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
+
+        for j in range(9, 10):
+            # unit
+            tabletd = tabletd + "<td class=\"number_style\">" + \
+                      ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
+
+
+
 
         table1 = tabletd + "</tr>\n"
     print("item wise yesterday sale table Created")
     return table1
+
+
+def grandtotal():
+    excel_data_df = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', sheet_name='Sheet1',
+                                  usecols=['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
+       'TP', 'TP Sales Value', 'Net Sales Value', 'Discount'])
+    yesterday_sale_list = excel_data_df['TP Sales Value'].tolist()
+    sum_yesterday_value = int(sum(yesterday_sale_list))
+    discountval_list = excel_data_df['Net Sales Value'].tolist()
+    sum_discountval_value = int(sum(discountval_list))
+    salesval_list = excel_data_df['Discount'].tolist()
+    sum_salesval_value = int(sum(salesval_list))
+
+    tabletd = ""
+
+    tabletd = tabletd + "<tr>\n"
+
+    tabletd = tabletd + "<td colspan='7' class=\"grand_total\">" + str('Grand Total') + "</td>\n"
+
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" \
+              + ofn.number_style(str(sum_yesterday_value)) + "</td>\n"
+
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" + ofn.number_style(
+        str(sum_discountval_value)) + "</td>\n"
+
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" + ofn.number_style(str(
+        sum_salesval_value)) + "</td>\n"
+
+    tab = tabletd + "</tr>\n"
+    print("yesterday grand total added")
+    return tab
 
 
 def item_wise_yesterday_no_sales_Records():
@@ -94,7 +151,7 @@ def item_wise_yesterday_no_sales_Records():
         for j in range(0, 1):
             # BSL NO
             if (bslno[i - 1] != 0):
-                tabletd = tabletd + "<td class=\"serial\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
+                tabletd = tabletd + "<td class=\"serialno\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
                     int(sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(1, 2):
@@ -105,15 +162,15 @@ def item_wise_yesterday_no_sales_Records():
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"serial\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"serialno\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
 
         for j in range(3, 4):
             # item name
-            tabletd = tabletd + "<td class=\"descriptiontd\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"y_desc_sales\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(4, 5):
             # unit
-            tabletd = tabletd + "<td class=\"style1\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"number_style\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         table1 = tabletd + "</tr>\n"
     print("item wise yesterday No sale table Created")

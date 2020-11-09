@@ -31,7 +31,7 @@ def brand_wise_target_sales():
         for bar, achv in zip(bars, mtd_achivemet):
             yval = bar.get_height()
             wval = bar.get_width()
-            data = format(int(yval / 1000), ',')  +'(' + str(achv) + '%)'
+            data = format(int(yval / 1000), ',')  +'K(' + str(achv) + '%)'
             plt.text(bar.get_x() + .5 - wval / 2, yval * .5, data, fontsize=8, rotation=90)  # - wval / 2
 
         lines = plt.plot(new_list, mtd_target, 'o-', color='Red')

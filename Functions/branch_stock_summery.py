@@ -114,8 +114,6 @@ def branch_wise_nil_us_ss():
     bslno = excel_data_df['Branch'].tolist()
     brand = excel_data_df['Nill'].tolist()
 
-
-
     wb = xlrd.open_workbook('Data/branch_wise_nil_us_ss.xlsx')
     sh = wb.sheet_by_name('Sheet1')
     # print('No Sales dataset Start printing in HTML')
@@ -125,36 +123,36 @@ def branch_wise_nil_us_ss():
         tabletd = tabletd + "<tr>\n"
         for j in range(0, 1):
             # BSL NO
-            tabletd = tabletd + "<td class=\"serial\" style=\"font-weight: bold;\"" + str((bslno[i - 1])) + "\"> "\
+            tabletd = tabletd + "<td class=\"serial\" style=\"font-weight: bold;\"" + str((bslno[i - 1])) + "\"> " \
                       + str(
                 (sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(1, 2):
             # Brand
-            tabletd = tabletd + "<td class=\"style1\" rowspan=\"" + str(int(brand[i - 1])) + "\">" \
-                      + str(int( sh.cell_value(i, j)) ) + "</td>\n"
+            tabletd = tabletd + "<td class=\"number_style\" rowspan=\"" + str(int(brand[i - 1])) + "\">" \
+                      + str(int(sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"style1\">" + str(int((sh.cell_value(i, j)))) + "</td>"
+            tabletd = tabletd + "<td class=\"number_style\">" + str(int((sh.cell_value(i, j)))) + "</td>"
 
         for j in range(3, 4):
             # item name
-            tabletd = tabletd + "<td class=\"style1\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"number_style\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
 
         for j in range(4, 5):
             # unit
-            tabletd = tabletd + "<td class=\"style1\">" + str(int((sh.cell_value(i, j)))) + "</td>"
+            tabletd = tabletd + "<td class=\"number_style\">" + str(int((sh.cell_value(i, j)))) + "</td>"
 
         for j in range(5, 6):
             # Total Ordered
-            tabletd = tabletd + "<td class=\"style1\">" + str(ofn.number_style(str(int(sh.cell_value(i,
-                                                                                                     j))))) + "</td>"
+            tabletd = tabletd + "<td class=\"number_style\">" + str(ofn.number_style(str(int(sh.cell_value(i,
+                                                                                                           j))))) + "</td>"
 
         for j in range(6, 7):
             # Estimated Sales
-            tabletd = tabletd + "<td class=\"style1\">" + str(ofn.number_style(str(int(sh.cell_value(i,
-                                                                                                     j))))) + "</td>"
+            tabletd = tabletd + "<td class=\"number_style\">" + str(ofn.number_style(str(int(sh.cell_value(i,
+                                                                                                           j))))) + "</td>"
 
         table6 = tabletd + "</tr>\n"
     # print("No Sales table Created")

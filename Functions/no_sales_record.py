@@ -17,7 +17,7 @@ def get_No_Sales_Records():
         for j in range(0, 1):
             # BSL NO
             if (bslno[i - 1] != 0):
-                tabletd = tabletd + "<td class=\"serial\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
+                tabletd = tabletd + "<td class=\"serialno\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
                     int(sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(1, 2):
@@ -28,7 +28,7 @@ def get_No_Sales_Records():
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"serial\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"serialno\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
 
         for j in range(3, 4):
             # item name
@@ -36,7 +36,7 @@ def get_No_Sales_Records():
 
         for j in range(4, 5):
             # unit
-            tabletd = tabletd + "<td class=\"style1\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"number_style\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         table1 = tabletd + "</tr>\n"
     print("No Sales table Created")

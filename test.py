@@ -1,2 +1,2 @@
-import Functions.executive_wise_sales_target as d
-d.executive_sales_target('Mr. A. K. M. Nawajesh Hossain')
+import Functions.item_wise_yesterday_sales as d
+d.item_wise_yesterday_sales_Records()

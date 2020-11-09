@@ -37,16 +37,16 @@ def get_No_Stock_Records():
 
         for j in range(4, 5):
             # unit
-            tabletd = tabletd + "<td class=\"style1\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"number_style\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(5, 6):
             # Total Ordered
-            tabletd = tabletd + "<td class=\"style1\">" + str(ofn.number_style(str(int(sh.cell_value(i,
+            tabletd = tabletd + "<td class=\"number_style\">" + str(ofn.number_style(str(int(sh.cell_value(i,
                                                                                                      j))))) + "</td>\n"
 
         for j in range(6, 7):
             # Estimated Sales
-            tabletd = tabletd + "<td class=\"style1\">" + str(ofn.number_style(str(int(sh.cell_value(i,
+            tabletd = tabletd + "<td class=\"number_style\">" + str(ofn.number_style(str(int(sh.cell_value(i,
                                                                                                      j))))) + "</td>\n"
 
         table1 = tabletd + "</tr>\n"

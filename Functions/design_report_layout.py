@@ -31,9 +31,11 @@ def generate_layout(gpm_name):
                         width: 150px;
                         overflow: hidden;
                     }
+                    
                     .central{
-                    text-align: center;
+                        text-align: center;
                     }
+                    
                     th.style1{
                         background-color: #e5f0e5;
                         padding-left: 2px;
@@ -43,28 +45,65 @@ def generate_layout(gpm_name):
                     .style1{
                         padding-right: 3px;
                         text-align: right;
+                        
+                        
                     }
+                    .number_style{
+                        padding-right: 3px;
+                        text-align: right;
+                        font-size: 12px;   
+                    }
+                    
                     .item_sl{
+                        width: 60px !important; 
                         background-color: #e5f0e5;
                         padding-right: 3px;
                         text-align: center;
                     }
                     td.serial{
+                        width: 60px !important;
                         padding-left: 5px;
                         text-align: left;
+                        font-size: 12px;
+                    }
+                    .serialno{
+                        width: 30px !important;
+                        padding-left: 5px;
+                        text-align: left;
+                        font-size: 12px;
                     }
                     .brand {
+                        width: 70px !important;
                         background-color: #e5f0e5;
                         font-weight: bold;
                         color: black;
                         text-align: left;
                     }
+                    .brandsl {
+                        width: 30px !important;
+                        background-color: #e5f0e5;
+                        font-weight: bold;
+                        color: black;
+                        text-align: left;
+                    }
+                    
                     .brandtd {
+                        width: 50px !important;
                         text-align: left;
                         padding-left: 2px;
                         font-weight: bold;
-                        font-size: 12px;
+                        font-size: 14px;
                         color: black;
+                    }
+                    .brandtd1 {
+                        width: 40px !important;
+                        text-align: left;
+                        padding-left: 2px;
+                        font-weight: bold;
+                        font-size: 14px;
+                        color: black;
+                        
+
                     }
                     th.style2{
                         background-color: #faeaca;
@@ -147,9 +186,24 @@ def generate_layout(gpm_name):
                         font-size: 12px;
                         color: black;
                     }
-                    .descriptiontd{
-                    padding-left: 2px;
+                    
+                    .y_desc_sales{
+                        width: 250px !important;
+                        font-size: 12px;
+                        color: black;
                     }
+                    
+                    .grand_total{
+                        font-size: 15px;
+                        font-weight: bolder;
+                        color: black;
+                    }
+                    
+                    .descriptiontd{
+                        padding-left: 2px;
+                        font-size: 12px;
+                    }
+                    
                     .uom{
                         background-color: #e5f0e5;
                         font-size: 11px;
@@ -208,77 +262,81 @@ def generate_layout(gpm_name):
                 <img src="cid:executive" width="90%"> <br>
                 <img src="cid:brand"> <br> <br>
 
-            <table border="1px solid gray" width="90%"> 
+            <table border="1px solid gray" width="100%"> 
                    <tr> 
-                        <th colspan='6' style=" background-color: #bcf19f; font-size: 18px;"> Item wise Yesterday 
+                        <th colspan='10' style=" background-color: #bcf19f; font-size: 18px;"> Item wise Yesterday 
                         Sales Quantity </th> 
                     </tr>
 
                     <tr>
-                        <th  class="brand">BSL No.</th>
-                        <th class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                        <th  class="item_sl" style="text-align: left">Item SL</th>
-                        <th  class="description1" style="text-align: left">Item Description</th>
-                        <th  class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
-                        <th  class="uom" style="text-align: right"> Yesterday Sales</th>
+                        <th  class="brandsl" style="font-size: 14px;">BSL No.</th>
+                        <th class="brand" style="font-size: 14px;"> Brand </th>
+                        <th  class="item_sl" style="text-align: left; font-size: 14px;">Item SL</th>
+                        <th  class="description1" style="text-align: left; font-size: 14px;">Item Description</th>
+                        <th  class="uom" style="text-align: right; font-size: 14px;"> UOM</th>
+                        <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Quantity</th>
+                        <th  class="uom" style="text-align: right; font-size: 14px;"> TP </th>
+                        <th  class="uom" style="text-align: right; font-size: 14px;"> TP Sales Value </th>
+                        <th  class="uom" style="text-align: right ; font-size: 14px;"> Net Sales Value</th>
+                        <th  class="uom" style="text-align: right ; font-size: 14px;"> Discount</th>
                     </tr>
 
-                   """ + yesterday.item_wise_yesterday_sales_Records() + """
+                   """ + yesterday.item_wise_yesterday_sales_Records() + yesterday.grandtotal() + """
                 </table>  <br> 
 
-            <table border="1px solid gray" width="90%"> 
+            <table border="1px solid gray" width="100%"> 
                    <tr> 
-                        <th colspan='5' style=" background-color: #ffc994; font-size: 20px; "> Item wise Yesterday No 
-                        Sales </th> 
+                        <th colspan='5' style=" background-color: #ffc994; font-size: 20px; "> No Sales Item : 
+                        Yesterday </th> 
                     </tr>
 
                     <tr>
-                        <th class="brand" style="text-align: left">BSL No.</th>
-                        <th class="brand" style="text-align: left"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                        <th class="item_sl" style="text-align: left">Item SL</th>
-                        <th class="description1" style="text-align: left">Item Description</th>
-                        <th class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
+                        <th  class="brandsl" style="font-size: 14px;">BSL No.</th>
+                        <th class="brand" style="font-size: 14px;"> Brand </th>
+                        <th  class="brandsl" style="text-align: left; font-size: 14px;">Item SL</th>
+                        <th  class="description1" style="text-align: left; font-size: 14px;">Item Description</th
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> UOM</th>
 
                     </tr>
 
                   """ + yesterday.item_wise_yesterday_no_sales_Records() + """
                 </table>  <br> <br>
 
-                <table border="1px solid gray" width="90%">
+                <table border="1px solid gray" width="100%">
                     <tr> 
                         <th colspan='5' style=" background-color: #f4d3b5 ;font-size: 20px;"> No Sales Item: Last 3 Months </th> 
                     </tr>
 
                     <tr>
-                        <th class="brand" style="text-align: left">BSL No</th>
-                        <th class="brand" style="text-align: left"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                        <th class="item_sl" style="text-align: left">Item SL</th>
-                        <th class="description1" style="text-align: left">Item Description</th>
-                        <th class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
+                        <th  class="brandsl" style="font-size: 14px;">BSL No.</th>
+                        <th class="brand" style="font-size: 14px;"> Brand </th>
+                        <th  class="brandsl" style="text-align: left; font-size: 14px;">Item SL</th>
+                        <th  class="description1" style="text-align: left; font-size: 14px;">Item Description</th
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> UOM</th>
                     </tr>
 
                      """ + noSales.get_No_Sales_Records() + """
                 </table>  <br> 
 
 
-                <table border="1px solid black" width="90%"> 
+                <table border="1px solid black" width="100%"> 
                     <tr> 
                         <th colspan='7' style=" background-color: #f4d3b5; font-size: 20px;"> No Stock Item: Last 3 Months </th> 
                     </tr>
 
                     <tr>
-                        <th class="brand">BSL No</th>
-                        <th class="brand"> Brand &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                        <th class="item_sl" style="text-align: left">Item SL</th>
-                        <th class="description1" style="text-align: left">Item Description</th>
-                        <th class="uom" style="text-align: right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UOM</th>
-                        <th class="uom">Total Ordered</th>
-                        <th class="uom" style="text-align: right"> Estimated Sales</th>
+                        <th  class="brandsl" style="font-size: 14px;">BSL No.</th>
+                        <th class="brand" style="font-size: 14px;"> Brand </th>
+                        <th  class="brandsl" style="text-align: left; font-size: 14px;">Item SL</th>
+                        <th  class="description1" style="text-align: left; font-size: 14px;">Item Description</th
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> UOM</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;">Total Ordered</th>
+                        <th class="uom" style="text-align: right; font-size: 14px;"> Estimated Sales</th>
                     </tr>
                     """ + noStock.get_No_Stock_Records() + """  </tr>
                 </table>  <br> 
 
-                <table border="1px solid black" width="90%"> 
+                <table border="1px solid black" width="100%"> 
                     <tr> 
                         <th colspan='7' style=" background-color: #f4d3b5;text-align: center; font-size: 20px; "> 
                         Branch 
@@ -287,12 +345,12 @@ def generate_layout(gpm_name):
 
                     <tr>
                         <th class="brand" >Branch</th>
-                        <th class="brand" style="text-align: right"> Nill</th>
-                        <th class="item_sl" style="text-align: right">Super Under Stock</th>
-                        <th class="description1" style="text-align: right">Under Stock</th>
-                        <th class="uom" style="text-align: right"> Normal Stock</th>
-                        <th class="uom" style="text-align: right">Over Stock</th>
-                        <th class="uom" style="text-align: right">Super Over Stock</th>
+                        <th class="brand" style="text-align: right; font-size: 14px;"> Nill</th>
+                        <th class="item_sl" style="text-align: right; font-size: 14px;">Super Under Stock</th>
+                        <th class="description1" style="text-align: right; font-size: 14px;">Under Stock</th>
+                        <th class="uom" style="text-align: right; font-size: 14px;"> Normal Stock</th>
+                        <th class="uom" style="text-align: right; font-size: 14px;">Over Stock</th>
+                        <th class="uom" style="text-align: right; font-size: 14px;">Super Over Stock</th>
                     </tr>
 
                     """ + bs.branch_wise_nil_us_ss() + """ 
@@ -346,7 +404,7 @@ def generate_layout(gpm_name):
                 
                 
                     </tr>
-                    """  + item_day.item_stock_days() + """
+                    """ + item_day.item_stock_days() + """
                 
                 
             </table>  <br>

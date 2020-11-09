@@ -71,7 +71,7 @@ def executive_sales_target(name):
 
         new_label_list = []
         for x, y in zip(new_name3, achievement_list):
-            new_label = str(x) + '(' + str(round(y)) + '%)'
+            new_label = str(x) + ' (' + str(round(y)) + '%)'
             new_label_list.append(new_label)
         # print("new label list", new_label_list)
 

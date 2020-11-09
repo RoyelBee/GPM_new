@@ -144,7 +144,7 @@ def cumulative_target_sales(name):
 
         fig, ax = plt.subplots(figsize=(9.6, 4.8))
 
-        plt.fill_between(length_of_cumulative_target, cumulative_trend_that_needs_to_plot, color="green", alpha=.3)
+        plt.fill_between(length_of_cumulative_target, cumulative_trend_that_needs_to_plot, color="green", alpha=.15)
         plt.fill_between(length_of_cumulative_sales, new_array_of_cumulative_sales, color="green", alpha=1)
         plt.plot(length_of_cumulative_target, cumulative_target_that_needs_to_plot, color="red", linewidth=3,
                  linestyle="-")
