@@ -22,16 +22,21 @@ def send_mail(gpm_name):
     import Functions.cumulative_target_sales as cm
     import Functions.executive_wise_sales_target as ex
     import Functions.brand_wise_target_sales as b
+    import Functions.stock_aging_days as aging
 
-    # ban.banner()
+    ban.banner()
     # gdata.GenerateReport(gpm_name)
+    # import Functions.branch_stock_summery_data as summery
+    # summery.generate_summery_data()
+    #
     # dash.dash_kpi_generator(gpm_name)
     # cm.cumulative_target_sales(gpm_name)
     # ex.executive_sales_target(gpm_name)
     # b.brand_wise_target_sales()
+    aging.stockagingchart(gpm_name)
 
     # # # --------- Add Image Border ---------------------------------------
-    # from PIL import Image
+    from PIL import Image
     # da = Image.open("./Images/dashboard.png")
     # imageSize = Image.new('RGB', (962, 154))
     # imageSize.paste(da, (1, 0))
@@ -48,9 +53,15 @@ def send_mail(gpm_name):
     # imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
     # #
     # kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
-    # imageSize = Image.new('RGB', (1802, 481))
+    # imageSize = Image.new('RGB', (1802, 601))
     # imageSize.paste(kpi3, (1, 0))
     # imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
+    #
+    kpi4 = Image.open("./Images/aging_stock_information.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi4, (1, 0))
+    imageSize.save("./Images/aging_stock_information.png")
+
 
     # # ------------- HTML generating section ------------------------------
     # data = pd.read_excel('./Data/html_data_Sales_and_Stock.xlsx')
@@ -69,8 +80,8 @@ def send_mail(gpm_name):
     #     bcc = ['', '']
     #     print('Report Sending to = ', to)
 
-    to = ['', '']
-    cc = ['', '']
+    to = ['biswascma@yahoo.com', 'yakub@transcombd.com']
+    cc = ['fazle.rabby@transcombd.com', '']
     bcc = ['rejaul.islam@transcombd.com', '']
 
     msgRoot = MIMEMultipart('related')
@@ -116,6 +127,13 @@ def send_mail(gpm_name):
     fp.close()
     banner_ai.add_header('Content-ID', '<banner_ai>')
     msgRoot.attach(banner_ai)
+
+    # --- Read Dashboard KPI Images
+    fp = open(d.get_directory() + '/images/aging_stock_information.png', 'rb')
+    aging = MIMEImage(fp.read())
+    fp.close()
+    aging.add_header('Content-ID', '<aging>')
+    msgRoot.attach(aging)
 
     # --- Read Dashboard KPI Images
     fp = open(d.get_directory() + '/images/dashboard.png', 'rb')

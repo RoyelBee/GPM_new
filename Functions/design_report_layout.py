@@ -143,6 +143,7 @@ def generate_layout(gpm_name):
                         text-align: right;
                         border: 1px solid gray;
                         padding-right: 5px;
+                        font-size: 10px;
                     }
                     .color_style{
                         padding-left: 10px;
@@ -229,6 +230,7 @@ def generate_layout(gpm_name):
                     padding-left: 1px;
                     padding-right: 1px;
                     text-align: right;
+                    font-size: 10px;
                     }
                     .info{
                         background-color: #a9f2e7;
@@ -261,6 +263,7 @@ def generate_layout(gpm_name):
                 <img src="cid:cm" width="90%"> <br>
                 <img src="cid:executive" width="90%"> <br>
                 <img src="cid:brand"> <br> <br>
+                <img src="cid:aging" width="100%"> <br> <br>
 
             <table border="1px solid gray" width="100%"> 
                    <tr> 
@@ -338,13 +341,14 @@ def generate_layout(gpm_name):
 
                 <table border="1px solid black" width="100%"> 
                     <tr> 
-                        <th colspan='7' style=" background-color: #f4d3b5;text-align: center; font-size: 20px; "> 
+                        <th colspan='8' style=" background-color: #f4d3b5;text-align: center; font-size: 20px; "> 
                         Branch 
                         Wise Item Stock Category </th> 
                     </tr>
 
                     <tr>
                         <th class="brand" >Branch</th>
+                        <th class="brand" style="text-align: right; font-size: 14px;"> Total Items</th>
                         <th class="brand" style="text-align: right; font-size: 14px;"> Nill</th>
                         <th class="item_sl" style="text-align: right; font-size: 14px;">Super Under Stock</th>
                         <th class="description1" style="text-align: right; font-size: 14px;">Under Stock</th>

@@ -38,7 +38,7 @@ def get_Sales_and_Stock_Records():
 
         for j in range(4, 5):
             # unit
-            tabletd = tabletd + "<td class=\"style1\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"remarks\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(5, 6):
             # avg sales Day

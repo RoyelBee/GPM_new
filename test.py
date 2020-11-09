@@ -1,2 +1,2 @@
-import Functions.item_wise_yesterday_sales as d
-d.item_wise_yesterday_sales_Records()
+import Functions.stock_aging_days as s
+s.stockagingchart('Mr. A. K. M. Nawajesh Hossain')
