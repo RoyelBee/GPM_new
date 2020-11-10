@@ -100,23 +100,33 @@ def create_dup_count_list(excel, colName):
 
 
 def status_color(status):
+
     if status == 'Within 15 Days':
-        color = '#e82b04'
+        color = '#f40d0d'
 
     elif status == 'Within 30 Days':
-        color = '#ff7100'
+        color = '#ff8600'
 
     elif status == 'Within 60 Days':
-        color = '#ffd100'
+        color = '#e1e300'
 
     elif status == 'Within 90 Days':
-        color = '#bed32e'
+        color = '#b2eb05'
 
-    elif status == 'More Than 120 Days':
-        color = '#6ef607'
+    elif status == 'More Than 120 Days' or status== 'Within 120 Days':
+        color = '#ffffff'
 
     elif status == 'More Than 1 Year':
-        color = '#6ef607'
+        color = '#ffffff'
+    elif status == '':
+        color = '#ffffff'
     else:
-        color = '#ff0000'
+        color = '#933636'
     return color
+
+def integer_converter(num):
+    if num == '':
+        num
+    else:
+        num  = int(num)
+    return num

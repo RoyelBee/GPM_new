@@ -233,6 +233,13 @@ def generate_layout(gpm_name):
                     text-align: right;
                     font-size: 10px;
                     }
+                    
+                    .remarks1{
+                    padding-left: 1px;
+                    padding-right: 1px;
+                    text-align: left;
+                    font-size: 10px;
+                    }
                     .info{
                         background-color: #a9f2e7;
                         font-size: 13px;
@@ -265,7 +272,71 @@ def generate_layout(gpm_name):
                 <img src="cid:executive" width="90%"> <br>
                 <img src="cid:brand"> <br> <br>
                 <img src="cid:aging" width="100%"> <br> <br>
-
+                
+            <table border="1px solid gray" width="200%">
+               <tr>  
+               <th colspan='6' style="background-color: #f40d0d;text-align: center; font-size:14px;"> Within 15 
+                    Days </th> 
+                    <th colspan='6' style="background-color: #ff8600;text-align: center; font-size:14px;"> Within 30 
+                    Days </th> 
+                    <th colspan='6' style="background-color: #e1e300;text-align: center; font-size:14px;"> Within 60 
+                    Days </th> 
+                    <th colspan='5' style="background-color: #b2eb05;text-align: center; font-size:14px;"> Within 90 
+                    Days </th> 
+                    <th colspan='5' style="background-color: #ffffff;text-align: center; font-size:14px;"> More Than 
+                    120 Days </th>
+                    <th colspan='5' style="background-color: #933636 ;text-align: center; font-size:14px;"> Expired 
+                    </th> 
+               </tr>
+                <tr> 
+                    <th colspan='33' style="background-color: #f5f681;text-align: center; font-size:20px;"> Brand 
+                    wise Aging Stock Status </th> 
+                    
+                     
+                </tr>
+                    <tr>
+                        
+                        <th class="style1">Brand</th>
+                        <th class="style1" style="width: 10%" >Item Description</th>
+                        <th class="style1">BOG</th>
+                        <th class="style1">BSL</th>
+                        <th class="style1">COM</th>
+                        <th class="style1">COX</th>
+                        <th class="style1">CTG</th>
+                        <th class="style1">CTN</th>
+                        <th class="style1">DNJ</th>
+                        <th class="style1">FEN</th>
+                        <th class="style1">FRD</th>
+                        <th class="style1">GZP</th>
+                        <th class="style1">HZJ</th>
+                        <th class="style1">JES</th>
+                        <th class="style1">KHL</th>
+                        <th class="style1">KRN</th>
+                        <th class="style1">KSG</th>
+                        <th class="style1">KUS</th>
+                        <th class="style1">MHK</th>
+                        <th class="style1">MIR</th>
+                        <th class="style1">MLV</th>
+                        <th class="style1">MOT</th>
+                        <th class="style1">MYM</th>
+                        <th class="style1">NAJ</th>
+                        <th class="style1">NOK</th>
+                        <th class="style1">PAT</th>
+                        <th class="style1">PBN</th>
+                        <th class="style1">RAJ</th>
+                        <th class="style1">RNG</th>
+                        <th class="style1">SAV</th>
+                        <th class="style1">SYL</th>
+                        <th class="style1">TGL</th>
+                        <th class="style1">VRB</th>
+                
+                
+                    </tr>
+                    """ + branch_aging.get_branch_aging_stock_status() + """
+ 
+            </table>  <br>
+            
+            
             <table border="1px solid gray" width="100%"> 
                    <tr> 
                         <th colspan='10' style=" background-color: #bcf19f; font-size: 18px;"> Item wise Yesterday 
@@ -366,9 +437,10 @@ def generate_layout(gpm_name):
                     <tr> 
                         <th colspan='16' style="background-color: #f5f681;text-align: left; font-size:20px;"> Brand 
                         wise Items Stock Status </th> 
-                        <th colspan='10' style="background-color: #ffba62"> Low Stock </th> 
-                        <th colspan='10' style="background-color: #80ffff"> High Stock </th> 
+                        <th colspan='10' style="background-color: #ffba62; font-size:14px;"> Low Stock </th> 
+                        <th colspan='10' style="background-color: #80ffff; font-size:14px; "> High Stock </th> 
                     </tr>
+                    
                     <tr>
                         <th class="style1">BSL</th>
                         <th class="style1">Brand</th>
@@ -414,54 +486,6 @@ def generate_layout(gpm_name):
                 
             </table>  <br>
             
-             <table border="1px solid gray" width="200%">
-                    <tr> 
-                        <th colspan='33' style="background-color: #f5f681;text-align: left; font-size:20px;"> Brand 
-                        wise Aging Stock Status </th> 
-                         
-                    </tr>
-                    <tr>
-                        
-                        <th class="style1">Brand</th>
-                        <th class="style1" style="width: 8%" >Item Description</th>
-                        <th class="style1">BOG</th>
-                        <th class="style1">BSL</th>
-                        <th class="style1">COM</th>
-                        <th class="style1">COX</th>
-                        <th class="style1">CTG</th>
-                        <th class="style1">CTN</th>
-                        <th class="style1">DNJ</th>
-                        <th class="style1">FEN</th>
-                        <th class="style1">FRD</th>
-                        <th class="style1">GZP</th>
-                        <th class="style1">HZJ</th>
-                        <th class="style1">JES</th>
-                        <th class="style1">KHL</th>
-                        <th class="style1">KRN</th>
-                        <th class="style1">KSG</th>
-                        <th class="style1">KUS</th>
-                        <th class="style1">MHK</th>
-                        <th class="style1">MIR</th>
-                        <th class="style1">MLV</th>
-                        <th class="style1">MOT</th>
-                        <th class="style1">MYM</th>
-                        <th class="style1">NAJ</th>
-                        <th class="style1">NOK</th>
-                        <th class="style1">PAT</th>
-                        <th class="style1">PBN</th>
-                        <th class="style1">RAJ</th>
-                        <th class="style1">RNG</th>
-                        <th class="style1">SAV</th>
-                        <th class="style1">SYL</th>
-                        <th class="style1">TGL</th>
-                        <th class="style1">VRB</th>
-                
-                
-                    </tr>
-                    """ + branch_aging.get_branch_aging_stock_status() + """
-                
-                
-            </table>  <br>
 
                 
                 <table border="1px solid gray" cellspacing ="20">

@@ -68,7 +68,7 @@ def banner():
     branch.text((25, 150), report_name + "Sales and Stock Report", (255, 209, 0), font=font1)
     # name.text((25, 180), n , (255, 255, 255), font=name_font)
     timestore.text((25, 200), time + "\n" + day, (255, 255, 255), font=font2)
-    # timestore.text((835, 10), "Last Data Update Time\n" + str(convertTime(hour, min)) + ', ' + day, (255, 255, 255),  font=font3)
+    timestore.text((835, 10), "Last Data Update Time\n" + str(convertTime(hour, min)) + ', ' + day, (255, 255, 255),  font=font3)
     img.save(dir.get_directory() + "/images/banner_ai.png")
     # img.show()
     print("Banner Created")
