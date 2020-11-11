@@ -53,7 +53,8 @@ def get_branch_aging_stock_status():
         on (tblsStock.ITEMNAME=TblAging.ITEMNAME) """, connection)
 
     df.to_excel('Data/branch_wise_aging_stock.xlsx', index=False)
-    print('Aging Stock data saved')
+    print('10. Branch wise aging stock data saved')
+
     excel_data_df = pd.read_excel('Data/branch_wise_aging_stock.xlsx', sheet_name='Sheet1',
                                   usecols=['BRAND', 'ITEMNAME'])
     bslno = ofn.create_dup_count_list(excel_data_df, 'BRAND')
@@ -298,5 +299,5 @@ def get_branch_aging_stock_status():
 
 
         table = tabletd + "</tr>\n"
-    print("Branch wise aging stock table Created")
+    print("10.1. Branch wise aging stock table Created\n")
     return table

@@ -21,6 +21,7 @@ def item_wise_yesterday_sales_Records():
     yesterday_no_sales.insert(loc=2, column='ISL NO', value=np.arange(len(yesterday_no_sales)) + 1)
     yesterday_no_sales = yesterday_no_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM']]
     yesterday_no_sales.to_excel('Data/yesterday_no_sales.xlsx', index=False)
+    print('11. Yesterday No Sales Data Saved')
 
     yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
        'TP', 'TP Sales Value', 'Net Sales Value', 'Discount']]
@@ -31,7 +32,8 @@ def item_wise_yesterday_sales_Records():
        'TP', 'TP Sales Value', 'Net Sales Value', 'Discount']]
     yesterday_sales.to_excel('Data/item_wise_yesterday_sales.xlsx', index=False)
 
-    print('yesterday sales and no sales excel generated')
+    print('11.1. Yesterday Item wise sales data saved')
+
 
     excel_data_df = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', sheet_name='Sheet1',
                                   usecols=['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty'])
@@ -40,8 +42,7 @@ def item_wise_yesterday_sales_Records():
 
     wb = xlrd.open_workbook('Data/item_wise_yesterday_sales.xlsx')
     sh = wb.sheet_by_name('Sheet1')
-    print('No Sales dataset Start printing in HTML')
-    #
+
     tabletd = ""
     for i in range(1, sh.nrows):
         tabletd = tabletd + "<tr>\n"
@@ -94,11 +95,9 @@ def item_wise_yesterday_sales_Records():
             tabletd = tabletd + "<td class=\"number_style\">" + \
                       ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
 
-
-
-
         table1 = tabletd + "</tr>\n"
-    print("item wise yesterday sale table Created")
+
+    print("11.2. Yesterday Item wise sale table Created")
     return table1
 
 
@@ -129,7 +128,7 @@ def grandtotal():
         sum_salesval_value)) + "</td>\n"
 
     tab = tabletd + "</tr>\n"
-    print("yesterday grand total added")
+    print("11.3. Yesterday grand total value added at the bottom of the table\n")
     return tab
 
 
@@ -143,8 +142,7 @@ def item_wise_yesterday_no_sales_Records():
 
     wb = xlrd.open_workbook('Data/yesterday_no_sales.xlsx')
     sh = wb.sheet_by_name('Sheet1')
-    print('Yesterday  No sales ')
-    #
+
     tabletd = ""
     for i in range(1, sh.nrows):
         tabletd = tabletd + "<tr>\n"
@@ -173,5 +171,6 @@ def item_wise_yesterday_no_sales_Records():
             tabletd = tabletd + "<td class=\"number_style\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         table1 = tabletd + "</tr>\n"
-    print("item wise yesterday No sale table Created")
+
+    print("12. Yesterday No sale table Created\n")
     return table1

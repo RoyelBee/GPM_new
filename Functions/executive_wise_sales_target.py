@@ -107,7 +107,7 @@ def executive_sales_target(name):
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/executive_wise_target_vs_sold_quantity.png')
-        print('Executive figure generated')
+        print('5. Executive figure generated \n')
     except:
         fig, ax = plt.subplots(figsize=(9.6, 4.8))
         plt.title("Executive Wise MTD Target & Sales", fontsize=12, color='black', fontweight='bold')
@@ -119,5 +119,5 @@ def executive_sales_target(name):
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/executive_wise_target_vs_sold_quantity.png')
-        print('Executive Not figure generated')
+        print('5. Executive Not figure generated \n')
 

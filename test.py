@@ -1,2 +1,2 @@
-import Functions.stock_aging_days as stock_aging_days
-stock_aging_days.stockagingchart('Mr. A. K. M. Nawajesh Hossain')
+import Functions.branch_stock_summery_data as t
+t.branch_stock_summery_data()

@@ -374,5 +374,5 @@ def get_Sales_and_Stock_Records():
         #               str(ofn.warning(vrb, VRB)) + "\">" + str(ofn.number_style(str(VRB))) + "</td>\n"
 
         table = tabletd + "</tr>\n"
-    print("Master Table Created")
+    print("17. Master Table Created\n\n")
     return table

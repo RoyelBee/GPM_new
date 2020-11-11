@@ -16,6 +16,8 @@ import xlsxwriter
 
 
 def send_mail(gpm_name):
+    print('This project has 17 KPI, It takes time to generate. Keep patience.\n')
+
     import Functions.banner_code as ban
     import Functions.generate_data as gdata
     import Functions.dashboard as dash
@@ -24,42 +26,49 @@ def send_mail(gpm_name):
     import Functions.brand_wise_target_sales as b
     import Functions.stock_aging_days as aging
     import Functions.branch_wise_stock_aging as branch_stock_aging
+    import Functions.item_wise_stock_days_data as item_stock_days_data
+    import Functions.branch_stock_summery_data as bsdata
 
-    # ban.banner()
-    # gdata.GenerateReport(gpm_name)
-    # dash.dash_kpi_generator(gpm_name)
-    # cm.cumulative_target_sales(gpm_name)
-    # ex.executive_sales_target(gpm_name)
-    # b.brand_wise_target_sales()
-    # aging.stockagingchart(gpm_name)
-    # branch_stock_aging.get_branch_aging_stock_status()
+    ban.banner() # 01
+    gdata.GenerateReport(gpm_name) # 02
+    dash.dash_kpi_generator(gpm_name) # 03
+    cm.cumulative_target_sales(gpm_name) # 4
+    ex.executive_sales_target(gpm_name)  # 5
+    b.brand_wise_target_sales()  # 6
+    aging.stock_aging_chart(gpm_name) # 7
+    item_stock_days_data.create_item_wise_stock_days_data() # 8
+    bsdata.branch_stock_summery_data() # 9
+    branch_stock_aging.get_branch_aging_stock_status() # 10
+
+    ## 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
+
 
     # # # --------- Add Image Border ---------------------------------------
-    # from PIL import Image
-    # da = Image.open("./Images/dashboard.png")
-    # imageSize = Image.new('RGB', (962, 154))
-    # imageSize.paste(da, (1, 0))
-    # imageSize.save("./Images/dashboard.png")
+    from PIL import Image
+    da = Image.open("./Images/dashboard.png")
+    imageSize = Image.new('RGB', (962, 154))
+    imageSize.paste(da, (1, 0))
+    imageSize.save("./Images/dashboard.png")
+
+    kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi1, (1, 0))
+    imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
     #
-    # kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi1, (1, 0))
-    # imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    # #
-    # kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi2, (1, 0))
-    # imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
-    # #
-    # kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
-    # imageSize = Image.new('RGB', (1802, 601))
-    # imageSize.paste(kpi3, (1, 0))
-    # imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
+    kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi2, (1, 0))
+    imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
     #
-    # kpi4 = Image.open("./Images/aging_stock_information.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi4, (1, 0))
-    # imageSize.save("./Images/aging_stock_information.png")
+    kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
+    imageSize = Image.new('RGB', (1802, 601))
+    imageSize.paste(kpi3, (1, 0))
+    imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
+
+    kpi4 = Image.open("./Images/aging_stock_information.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi4, (1, 0))
+    imageSize.save("./Images/aging_stock_information.png")
 
     # # ------------- HTML generating section ------------------------------
     # data = pd.read_excel('./Data/html_data_Sales_and_Stock.xlsx')
@@ -78,12 +87,13 @@ def send_mail(gpm_name):
     #     bcc = ['', '']
     #     print('Report Sending to = ', to)
 
-    to = ['biswascma@yahoo.com', 'yakub@transcombd.com','tawhid@transcombd.com', 'zubair@transcombd.com']
+    to = ['', '']
     cc = ['', '']
     bcc = ['rejaul.islam@transcombd.com', 'fazle.rabby@transcombd.com', 'aftab.uddin@transcombd.com']
 
     msgRoot = MIMEMultipart('related')
     me = 'erp-bi.service@transcombd.com'
+
     # to = to
     # cc = ['biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com']
     # bcc = ['rejaul.islam@transcombd.com', 'aftab.uddin@transcombd.com', 'fazle.rabby@transcombd.com']
@@ -93,7 +103,7 @@ def send_mail(gpm_name):
     date = datetime.today()
     today = str(date.day) + '/' + str(date.month) + '/' + str(date.year) + ' ' + date.strftime("%I:%M %p")
 
-    # # ------------ Group email --------------------
+    # # ------------ Group email -------------------------
     subject = "Brand Wise Sales and Stock Report " + today
     email_server_host = 'mail.transcombd.com'
     port = 25
@@ -195,7 +205,6 @@ def send_mail(gpm_name):
     # msgRoot.attach(part)
 
     # #----------- Finally send mail and close server connection -----
-    print('mail send start')
     server = smtplib.SMTP(email_server_host, port)
     server.ehlo()
     print('\n-----------------')

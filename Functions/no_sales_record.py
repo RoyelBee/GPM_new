@@ -39,5 +39,6 @@ def get_No_Sales_Records():
             tabletd = tabletd + "<td class=\"number_style\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         table1 = tabletd + "</tr>\n"
-    print("No Sales table Created")
+
+    print("13. No Sales table Created\n")
     return table1

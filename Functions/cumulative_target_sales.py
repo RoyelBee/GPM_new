@@ -191,7 +191,7 @@ def cumulative_target_sales(name):
 
         plt.savefig("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
         # plt.show()
-        print('Cumulative day wise target sales generated')
+        print('4. Cumulative day wise target sales generated\n')
 
     except:
         plt.subplots(figsize=(9.6, 4.8))
@@ -206,4 +206,4 @@ def cumulative_target_sales(name):
 
         plt.savefig("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
         # plt.show()
-        print('Error Cumulative day wise target sales generated')
+        print('4. Error Cumulative day wise target sales generated\n')

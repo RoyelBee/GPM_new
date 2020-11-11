@@ -12,7 +12,7 @@ connection = db.connect('DRIVER={SQL Server};'
                         'DATABASE=ARCHIVESKF;'
                         'UID=sa;PWD=erp@123')
 
-def stockagingchart(name):
+def stock_aging_chart(name):
     try:
         executive_target_df = pd.read_sql_query("""
                 Select Sum(case when AGEING='Within 15 Days' then TotalStock Else 0 end) 'Within 15 Days'  
@@ -67,7 +67,7 @@ def stockagingchart(name):
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/aging_stock_information.png')
-        print('Aging figure generated')
+        print('7. Stock Aging figure generated \n')
     except:
         fig, ax = plt.subplots(figsize=(9.6, 4.8))
         plt.title("Executive Wise MTD Target & Sales", fontsize=12, color='black', fontweight='bold')
@@ -79,4 +79,4 @@ def stockagingchart(name):
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/aging_stock_information.png')
-        print('Error !!!!Aging figure not generated')
+        print('7. Error !!!! Stock Aging figure not generated\n')

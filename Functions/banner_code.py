@@ -47,7 +47,7 @@ def banner():
 
         postfix = ' AM'
 
-        if h > 12:
+        if h >= 12:
             postfix = ' PM'
             h -= 12
         return '{}:{:02d}{}'.format(h or 12, m, postfix)
@@ -71,4 +71,4 @@ def banner():
     timestore.text((835, 10), "Last Data Update Time\n" + str(convertTime(hour, min)) + ', ' + day, (255, 255, 255),  font=font3)
     img.save(dir.get_directory() + "/images/banner_ai.png")
     # img.show()
-    print("Banner Created")
+    print("1. Banner Created \n ")

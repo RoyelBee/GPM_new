@@ -1,4 +1,3 @@
-
 import pandas as pd
 import numpy as np
 import xlsxwriter
@@ -9,21 +8,16 @@ import Functions.operational_functionality as ofn
 # # -------------------------------------------------------------------
 # # ------ Branch wise stock summery -----------------------------------
 
-def generate_summery_data():
+def branch_stock_summery_data():
     df = pd.read_excel('Data/gpm_data.xlsx')
-    # print(df)
 
     cols = range(52, 83)
     df2 = pd.read_excel('Data/gpm_data.xlsx', usecols=cols)
     l = list(df2.columns)
-    # print(l)
 
     cols2 = range(19, 50)
     df3 = pd.read_excel('Data/gpm_data.xlsx', usecols=cols2)
     l2 = list(df3.columns)
-    # print(l2)
-
-    # sys.exit()
 
     final_list = []
 
@@ -90,9 +84,9 @@ def generate_summery_data():
     workbook = xlsxwriter.Workbook('Data/branch_wise_stock_status.xlsx')
     worksheet = workbook.add_worksheet()
 
-    len = range(1, len(l) + 1)
+    lenth = range(1, len(l) + 1)
 
-    for i, j in zip(l, len):
+    for i, j in zip(l, lenth):
         worksheet.write(j, 0, i)
 
     stock_list = ['Branch', 'Total Item', 'Nill', 'Super Under Stock', 'Under Stock', 'Normal Stock', 'Over Stock',
@@ -112,4 +106,4 @@ def generate_summery_data():
             # print(c)
             worksheet.write(a + 1, b + 1, c)
     workbook.close()
-    print('Branch wise stock status data generated')
+    print('9. Branch wise stock status data generated \n')

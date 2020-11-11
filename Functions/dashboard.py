@@ -97,7 +97,7 @@ def dash_kpi_generator(name):
     # draw.text((830, 220), str(round(trend_achivement, 1)) + '%', font=font, fill=(255, 255, 255))
     # image.show()
     image.save('./Images/dashboard.png')
-    print('Dash generated')
+    print('3. Dash generated\n')
 
 
 
