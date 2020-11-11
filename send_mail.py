@@ -29,46 +29,46 @@ def send_mail(gpm_name):
     import Functions.item_wise_stock_days_data as item_stock_days_data
     import Functions.branch_stock_summery_data as bsdata
 
-    ban.banner() # 01
-    gdata.GenerateReport(gpm_name) # 02
-    dash.dash_kpi_generator(gpm_name) # 03
-    cm.cumulative_target_sales(gpm_name) # 4
-    ex.executive_sales_target(gpm_name)  # 5
-    b.brand_wise_target_sales()  # 6
-    aging.stock_aging_chart(gpm_name) # 7
-    item_stock_days_data.create_item_wise_stock_days_data() # 8
-    bsdata.branch_stock_summery_data() # 9
-    branch_stock_aging.get_branch_aging_stock_status() # 10
+    # ban.banner() # 01
+    # gdata.GenerateReport(gpm_name) # 02
+    # dash.dash_kpi_generator(gpm_name) # 03
+    # cm.cumulative_target_sales(gpm_name) # 4
+    # ex.executive_sales_target(gpm_name)  # 5
+    # b.brand_wise_target_sales()  # 6
+    # aging.stock_aging_chart(gpm_name) # 7
+    # item_stock_days_data.create_item_wise_stock_days_data() # 8
+    # bsdata.branch_stock_summery_data() # 9
+    # branch_stock_aging.get_branch_aging_stock_status() # 10
 
     ## 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
 
 
     # # # --------- Add Image Border ---------------------------------------
-    from PIL import Image
-    da = Image.open("./Images/dashboard.png")
-    imageSize = Image.new('RGB', (962, 154))
-    imageSize.paste(da, (1, 0))
-    imageSize.save("./Images/dashboard.png")
-
-    kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    imageSize = Image.new('RGB', (962, 481))
-    imageSize.paste(kpi1, (1, 0))
-    imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+    # from PIL import Image
+    # da = Image.open("./Images/dashboard.png")
+    # imageSize = Image.new('RGB', (962, 154))
+    # imageSize.paste(da, (1, 0))
+    # imageSize.save("./Images/dashboard.png")
     #
-    kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
-    imageSize = Image.new('RGB', (962, 481))
-    imageSize.paste(kpi2, (1, 0))
-    imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
+    # kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+    # imageSize = Image.new('RGB', (962, 481))
+    # imageSize.paste(kpi1, (1, 0))
+    # imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+    # #
+    # kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
+    # imageSize = Image.new('RGB', (962, 481))
+    # imageSize.paste(kpi2, (1, 0))
+    # imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
+    # #
+    # kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
+    # imageSize = Image.new('RGB', (1802, 601))
+    # imageSize.paste(kpi3, (1, 0))
+    # imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
     #
-    kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
-    imageSize = Image.new('RGB', (1802, 601))
-    imageSize.paste(kpi3, (1, 0))
-    imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
-
-    kpi4 = Image.open("./Images/aging_stock_information.png")
-    imageSize = Image.new('RGB', (962, 481))
-    imageSize.paste(kpi4, (1, 0))
-    imageSize.save("./Images/aging_stock_information.png")
+    # kpi4 = Image.open("./Images/aging_stock_information.png")
+    # imageSize = Image.new('RGB', (962, 481))
+    # imageSize.paste(kpi4, (1, 0))
+    # imageSize.save("./Images/aging_stock_information.png")
 
     # # ------------- HTML generating section ------------------------------
     # data = pd.read_excel('./Data/html_data_Sales_and_Stock.xlsx')
@@ -89,7 +89,7 @@ def send_mail(gpm_name):
 
     to = ['', '']
     cc = ['', '']
-    bcc = ['rejaul.islam@transcombd.com', 'fazle.rabby@transcombd.com', 'aftab.uddin@transcombd.com']
+    bcc = ['rejaul.islam@transcombd.com', '', '']
 
     msgRoot = MIMEMultipart('related')
     me = 'erp-bi.service@transcombd.com'
@@ -127,6 +127,7 @@ def send_mail(gpm_name):
     msgText = MIMEText("""
                             """ + layout.generate_layout(gpm_name) + """ 
                         """, 'html')
+
     msgAlternative.attach(msgText)
 
     # --- Read Banner Images
