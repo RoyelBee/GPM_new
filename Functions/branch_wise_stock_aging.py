@@ -11,10 +11,9 @@ connection = db.connect('DRIVER={SQL Server};'
 
 
 
-def get_branch_aging_stock_status():
+def get_branch_aging_stock_status(name):
     df = pd.read_sql_query("""
         Select * from
-
         (select *
         from
         (
@@ -24,7 +23,7 @@ def get_branch_aging_stock_status():
         LEFT JOIN
         (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
         ON (T1.ITEMNO=T2.ITEMNO)
-        WHERE T2.GPMNAME = 'Mr. A. K. M. Nawajesh Hossain'
+        WHERE T2.GPMNAME like ? 
         Group by  BRAND,ITEMNAME,AUDTORG ) as T3
         ) src
         pivot
@@ -41,7 +40,7 @@ def get_branch_aging_stock_status():
         LEFT JOIN
         (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
         ON (T1.ITEMNO=T2.ITEMNO)
-        WHERE T2.GPMNAME ='Mr. A. K. M. Nawajesh Hossain'
+        WHERE T2.GPMNAME like ? 
         Group by  BRAND,ITEMNAME,AUDTORG ) as T3
         ) src
         pivot
@@ -50,7 +49,9 @@ def get_branch_aging_stock_status():
         for AUDTORG in ([BOGSKF],[BSLSKF],[COMSKF],[COXSKF],[CTGSKF],[CTNSKF],[DNJSKF],[FENSKF],[FRDSKF],[GZPSKF],[HZJSKF],[JESSKF],[KHLSKF],[KRNSKF],[KSGSKF],[KUSSKF],[MHKSKF],[MIRSKF],[MLVSKF],[MOTSKF],[MYMSKF],[NAJSKF],[NOKSKF],[PATSKF],[PBNSKF],[RAJSKF],[RNGSKF],[SAVSKF],[SKFDAT],[SYLSKF],[TGLSKF],[VRBSKF]
          )
         ) AS piv) as tblsStock
-        on (tblsStock.ITEMNAME=TblAging.ITEMNAME) """, connection)
+        on (tblsStock.ITEMNAME=TblAging.ITEMNAME)
+     
+     """, connection, params=(name, name))
 
     df.to_excel('Data/branch_wise_aging_stock.xlsx', index=False)
     print('10. Branch wise aging stock data saved')

@@ -176,7 +176,7 @@ def generate_layout(gpm_name):
                         font-size: 12px;
                         color: black;
                     }
-                    th.description{
+                    .description{
                         width: 900px !important;
                         background-color: #e5f0e5;
                         font-size: 12px;
@@ -204,6 +204,11 @@ def generate_layout(gpm_name):
                     .descriptiontd{
                         padding-left: 2px;
                         font-size: 12px;
+                    }
+                    
+                    .descriptionmastertd{
+                        padding-left: 2px;
+                        font-size: 9px;
                     }
                     
                     .uom{
@@ -332,7 +337,7 @@ def generate_layout(gpm_name):
                 
                 
                     </tr>
-                    """ + branch_aging.get_branch_aging_stock_status() + """
+                    """ + branch_aging.get_branch_aging_stock_status(gpm_name) + """
  
             </table>  <br>
             

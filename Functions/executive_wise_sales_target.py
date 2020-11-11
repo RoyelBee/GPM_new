@@ -51,7 +51,8 @@ def executive_sales_target(name):
         new_name3 = MS_Replace(new_name2)
         # print(new_name3)
 
-        executive_sales_df = pd.read_sql_query("""select CP01 as ExecutiveName, cast(isnull(sum(QTYSHIPPED),0)/1000 as int) as ItemSales from OESalesDetails
+        executive_sales_df = pd.read_sql_query(""" select CP01 as ExecutiveName, cast(isnull(sum(QTYSHIPPED),
+        0)/1000 as int) as ItemSales from OESalesDetails
                                     left join PRINFOSKF
                                     on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
                                     where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)

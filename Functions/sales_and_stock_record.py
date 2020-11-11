@@ -34,7 +34,7 @@ def get_Sales_and_Stock_Records():
 
         for j in range(3, 4):
             # item name
-            tabletd = tabletd + "<td class=\"description\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"descriptionmastertd\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(4, 5):
             # unit

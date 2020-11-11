@@ -32,18 +32,14 @@ def brand_wise_target_sales():
         plt.xticks(new_list, new_label_list, rotation=90, fontsize=8)
         plt.ylabel('Quantity(K)', fontsize=12, color='black', fontweight='bold')
 
-
-
-
-
-
         # plt.rcParams['text.color'] = 'black'
         #
         for bar, achv in zip(bars, mtd_achivemet):
             yval = bar.get_height()
             wval = bar.get_width()
             data = format(int(yval / 1000), ',') # +'K(' + str(achv) + '%)'
-            plt.text(bar.get_x() + .5 - wval / 2, yval * .5, data, fontsize=8, rotation=90)  # - wval / 2
+            plt.text(bar.get_x() + .5 - wval / 2, yval * .5, data, color='#ffe94e', fontsize=8, rotation=90)  # -
+            # wval / 2
 
         lines = plt.plot(new_list, mtd_target, 'o-', color='Red')
         #
