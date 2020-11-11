@@ -33,23 +33,23 @@ def cumulative_target_sales(name):
 
         day_wise_date = everday_sale_df['Date'].tolist()
         day_to_day_sale = everday_sale_df['ItemSales'].tolist()
-        print('day wise date list : ', day_wise_date)
-        print('day wise sales list : ', day_to_day_sale)
+        # print('day wise date list : ', day_wise_date)
+        # print('day wise sales list : ', day_to_day_sale)
 
         from datetime import date
         today = date.today()
 
         current_day = today.strftime("%d")
         current_day_in_int = int(current_day)
-        print("Current days in month till today: ", current_day_in_int)
+        # print("Current days in month till today: ", current_day_in_int)
 
         final_days_array = []
         final_sales_array = []
         for t_va in range(0, current_day_in_int-1):
             final_days_array.append(day_wise_date[t_va])
             final_sales_array.append(day_to_day_sale[t_va])
-        print('Reduced 0 value days from the list : ', final_days_array)
-        print('Sales Taken According to the value of days : ', final_sales_array)
+        # print('Reduced 0 value days from the list : ', final_days_array)
+        # print('Sales Taken According to the value of days : ', final_sales_array)
 
         EveryDay_target_df = pd.read_sql_query(""" Declare @CurrentMonth NVARCHAR(MAX);
                                 Declare @DaysInMonth NVARCHAR(MAX);
@@ -64,7 +64,7 @@ def cumulative_target_sales(name):
                                 """, connection, params={name})
 
         single_day_target = EveryDay_target_df['MonthsTargetQty'][0]
-        print('Single Day Target : ', single_day_target)
+        # print('Single Day Target : ', single_day_target)
 
         y_pos = np.arange(len(final_days_array))
 
@@ -73,7 +73,7 @@ def cumulative_target_sales(name):
         for z in y_pos:
             labell_to_plot.append(n)
             n = n + 1
-        print('Final label to plot : ', labell_to_plot)
+        # print('Final label to plot : ', labell_to_plot)
 
         # ----------------code for cumulitive sales------------
         import calendar
@@ -81,16 +81,16 @@ def cumulative_target_sales(name):
 
         now = datetime.datetime.now()
         total_days = calendar.monthrange(now.year, now.month)[1]
-        print('Total number of days in this month : ', total_days)
+        # print('Total number of days in this month : ', total_days)
 
         monthly_trend = (sum(final_sales_array) / (current_day_in_int-1))*total_days
-        print('Monthly Trend: ',monthly_trend)
+        # print('Monthly Trend: ',monthly_trend)
 
         monthly_trend_per_day = (sum(final_sales_array) / (current_day_in_int-1))
-        print('Monthly Trend Per Day: ', monthly_trend_per_day)
+        # print('Monthly Trend Per Day: ', monthly_trend_per_day)
 
         trend_achievement = str(round((sum(final_sales_array)/monthly_trend)*100,1))
-        print('Trend Achievement: ',trend_achievement)
+        # print('Trend Achievement: ',trend_achievement)
 
         final_target_day_wise = 0
         cumulative_target_that_needs_to_plot = []
@@ -101,8 +101,8 @@ def cumulative_target_sales(name):
             cumulative_target_that_needs_to_plot.append(final_target_day_wise / 1000)
             cumulative_trend_that_needs_to_plot.append(final_trend_day_wise/1000)
             final_target_day_wise = 0
-        print('cumulative target from 0 to final day of the month : ', cumulative_target_that_needs_to_plot)
-        print('cumulative trend from 0 to final day of the month : ', cumulative_trend_that_needs_to_plot)
+        # print('cumulative target from 0 to final day of the month : ', cumulative_target_that_needs_to_plot)
+        # print('cumulative trend from 0 to final day of the month : ', cumulative_trend_that_needs_to_plot)
 
         # new_array_of_cumulative_sales = [0]
         # final = 0
@@ -126,7 +126,7 @@ def cumulative_target_sales(name):
         for cum_value in final_cumulative:
             new_array_of_cumulative_sales.append(int(cum_value / 1000))
 
-        print('Cumulative sales list from 0 to current day of month : ', new_array_of_cumulative_sales)  #
+        # print('Cumulative sales list from 0 to current day of month : ', new_array_of_cumulative_sales)  #
         # --------------------------sales data
 
         # sys.exit()
@@ -135,11 +135,11 @@ def cumulative_target_sales(name):
         length_of_cumulative_sales = range(len(new_array_of_cumulative_sales))
 
         list_index_for_target = len(cumulative_target_that_needs_to_plot) - 1
-        print('index size for target : ', list_index_for_target)
+        # print('index size for target : ', list_index_for_target)
         # sys.exit()
 
         list_index_for_sale = len(new_array_of_cumulative_sales) - 1
-        print('index size for sale : ', list_index_for_sale)
+        # print('index size for sale : ', list_index_for_sale)
         # sys.exit()
 
         cumulative_achv_label=[]
@@ -147,18 +147,19 @@ def cumulative_target_sales(name):
             cumulative_achv=str(round((new_array_of_cumulative_sales[loop_value]/cumulative_target_that_needs_to_plot[loop_value])*100,1))+'%'
             cumulative_achv_label.append(cumulative_achv)
 
-        print('cumulative achievement list: ',cumulative_achv_label)
+        # print('cumulative achievement list: ',cumulative_achv_label)
 
         for z in range(0,(total_days-list_index_for_sale)):
             cumulative_achv_label.append('')
-        print('cumulative achv with Faka values: ',cumulative_achv_label)
+        # print('cumulative achv with Faka values: ',cumulative_achv_label)
 
         days_list=np.arange(1, total_days + 1, 1)
-        print('days list: ',days_list)
+        # print('days list: ',days_list)
 
         new_generated_label_list=[]
         for new_generated_label_value in range(0,total_days):
-            new_generated_label_list.append(str(days_list[new_generated_label_value])+'('+str(cumulative_achv_label[new_generated_label_value])+')')
+            new_generated_label_list.append(str(days_list[new_generated_label_value])+' ('+str(cumulative_achv_label[
+                                                                                                   new_generated_label_value])+')')
 
         fig, ax = plt.subplots(figsize=(9.6, 4.8))
 
@@ -201,7 +202,11 @@ def cumulative_target_sales(name):
         plt.xticks(np.arange(1, total_days + 1, 1), new_generated_label_list, fontsize=12,rotation=90)
         plt.xlabel('Days', color='black', fontsize=12, fontweight='bold')
         plt.ylabel('Quantity(K)', color='black', fontsize=12, fontweight='bold')
-        plt.title('Cumulative Day Wise MTD Target & Sales Quantity', color='black', fontweight='bold', fontsize=16)
+
+        date = datetime.datetime.now()
+        month = date.strftime("%B")
+        plt.title('Day wise Cumulative MTD Target VS Sales (' +str(month)+ ')', color='black', fontweight='bold',
+                  fontsize=16)
 
         plt.legend(['Target', 'Trend with Achiv%' ,'Sales'], loc='upper left')
         plt.yticks(
