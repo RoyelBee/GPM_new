@@ -61,7 +61,7 @@ def banner():
     mask = mask.resize(im.size, Image.ANTIALIAS)
     im.putalpha(mask)
     background = Image.open(dir.get_directory() + '/Images/new_ai.png')
-    background.paste(im, (800, 50), im)
+    background.paste(im, (820, 70), im)
     background.save(dir.get_directory() + '/images/overlap.png')
 
 
