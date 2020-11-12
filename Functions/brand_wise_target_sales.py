@@ -18,7 +18,7 @@ def brand_wise_target_sales():
         # mtd_achivemet = mtd_achivemet[:10]
 
         plt.subplots(figsize=(18, 6))
-        colors = ['#3F93D0']
+        colors = ['#1031dd']
 
         new_label_list = []
         for x, y in zip(brand, mtd_achivemet):
@@ -29,7 +29,7 @@ def brand_wise_target_sales():
 
         plt.title("Brand wise Target VS Sold Quantity", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Brand', fontsize=12, color='black', fontweight='bold')
-        plt.xticks(new_list, new_label_list, rotation=90, fontsize=8)
+        plt.xticks(new_list, new_label_list, rotation=90, fontsize=9)
         plt.ylabel('Quantity(K)', fontsize=12, color='black', fontweight='bold')
 
         # plt.rcParams['text.color'] = 'black'
@@ -37,20 +37,21 @@ def brand_wise_target_sales():
         for bar, achv in zip(bars, mtd_achivemet):
             yval = bar.get_height()
             wval = bar.get_width()
-            data = format(int(yval / 1000), ',') # +'K(' + str(achv) + '%)'
-            plt.text(bar.get_x() + .5 - wval / 2, yval * .5, data, color='#ffe94e', fontsize=8, rotation=90)  # -
+            data = str(float("{:.1f}".format(yval / 1000, ','))) + 'K'
+            plt.text(bar.get_x() + .5 - wval / 2, yval * .5, data, color='#ffe94e', fontweight='bold', fontsize=8,
+                     rotation=90)  # -
             # wval / 2
 
         lines = plt.plot(new_list, mtd_target, 'o-', color='Red')
         #
 
         for i, j in zip(new_list, mtd_target):
-            label = format(int(j / 1000), ',')
+            label = str(float("{:.1f}".format(j / 1000, ',')))
             plt.annotate(str(label) + 'K', (i, j), rotation=90, textcoords="offset points", xytext=(0, 15),
                          ha='center', fontsize=8)
 
 
-        plt.legend(['Target', 'Sales & Achiv%'], loc='best', fontsize='14')
+        plt.legend(['Target', 'Sales'], loc='best', fontsize='14')
         plt.tight_layout()
         plt.savefig('./Images/brand_wise_target_vs_sold_quantity.png')
         print('6. Brand Figure generated \n')

@@ -83,7 +83,7 @@ def executive_sales_target(name):
         colors = ['#3F93D0']
         bars = plt.bar(new_label_list, Executive_sale, color=colors, width=.4)
 
-        plt.title("Executive Wise MTD Target & Sales Quantity", fontsize=16, color='black', fontweight='bold')
+        plt.title("Executive wise MTD Target & Sales", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Executive', fontsize=12, color='black', fontweight='bold')
         plt.xticks(new_label_list, rotation=45)
         plt.ylabel('Quantity(K)', fontsize=12, color='black', fontweight='bold')
