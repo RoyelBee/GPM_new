@@ -34,10 +34,10 @@ def send_mail(gpm_name):
     # dash.dash_kpi_generator(gpm_name) # 03
     # cm.cumulative_target_sales(gpm_name) # 4
     # ex.executive_sales_target(gpm_name)  # 5
-    b.brand_wise_target_sales()  # 6
+    # b.brand_wise_target_sales()  # 6
     # aging.stock_aging_chart(gpm_name) # 7
     # item_stock_days_data.create_item_wise_stock_days_data() # 8
-    bsdata.branch_stock_summery_data() # 9
+    # bsdata.branch_stock_summery_data() # 9
     branch_stock_aging.get_branch_aging_stock_status(gpm_name) # 10
 
     ## 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.

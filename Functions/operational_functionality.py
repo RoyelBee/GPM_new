@@ -16,7 +16,7 @@ def number_style(value):
         return value
 
 
-def warning(daily_sales, total_stock):
+def warning(daily_sales, total_stock, third):
     if daily_sales <= 0:
         return False
     else:

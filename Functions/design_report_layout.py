@@ -278,7 +278,7 @@ def generate_layout(gpm_name):
                 <img src="cid:brand"> <br> <br>
                 <img src="cid:aging" width="100%"> <br> <br>
                 
-            <table border="1px solid gray" width="200%">
+            <table border="1px solid gray" width='300%'>
                <tr>  
                <th colspan='6' style="background-color: #f40d0d;text-align: center; font-size:14px;"> Within 15 
                     Days </th> 
@@ -336,8 +336,8 @@ def generate_layout(gpm_name):
                         <th class="style1">VRB</th>
                 
                 
-                    </tr>
-                    """ + branch_aging.get_branch_aging_stock_status(gpm_name) + """
+                    </tr>  """ + branch_aging.get_branch_aging_stock_status(gpm_name) + """
+                    
  
             </table>  <br>
             

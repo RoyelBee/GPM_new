@@ -11,6 +11,10 @@ def get_Sales_and_Stock_Records():
 
     wb = xlrd.open_workbook('Data/html_data_Sales_and_Stock.xlsx')
     sh = wb.sheet_by_name('Sheet1')
+
+    wb2 = xlrd.open_workbook('Data/item_wise_stock_days.xlsx')
+    sh2 = wb2.sheet_by_name('Sheet1')
+
     # print('GPM Salse and Stock dataset Start printing in HTML')
     tabletd = ""
 
@@ -34,7 +38,7 @@ def get_Sales_and_Stock_Records():
 
         for j in range(3, 4):
             # item name
-            tabletd = tabletd + "<td class=\"descriptionmastertd\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"description\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(4, 5):
             # unit
@@ -214,159 +218,252 @@ def get_Sales_and_Stock_Records():
             tabletd = tabletd + "<td class=\"num_style\">" + str(ofn.number_style(str(tdcl_val))) + "</td>\n"
 
         for j in range(52, 53):
-            BOG = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(bog, BOG)) + "\">" + str(ofn.number_style(str(BOG))) + "</td>\n"
+            bog1 = int(sh.cell_value(i, j))
 
         for j in range(53, 54):
-            BSL = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\" style=\"background-color:" + \
-                      str(ofn.warning(bsl, BSL)) + "\">" + str(ofn.number_style(str(BSL))) + "</td>\n"
+            bsl1 = int(sh.cell_value(i, j))
 
         for j in range(54, 55):
-            COM = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(com, COM)) + "\">" + str(ofn.number_style(str(COM))) + "</td>\n"
+            com1 = int(sh.cell_value(i, j))
 
         for j in range(55, 56):
-            COX = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(cox, COX)) + "\">" + str(ofn.number_style(str(COX))) + "</td>\n"
+            cox1 = int(sh.cell_value(i, j))
 
         for j in range(56, 57):
-            CTG = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(ctg, CTG)) + "\">" + str(ofn.number_style(str(CTG))) + "</td>\n"
+            ctg1 = int(sh.cell_value(i, j))
 
         for j in range(57, 58):
-            CTN = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(ctn, CTN)) + "\">" + str(ofn.number_style(str(CTN))) + "</td>\n"
+            ctn1 = int(sh.cell_value(i, j))
 
         for j in range(58, 59):
-            DNJ = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(dnj, DNJ)) + "\">" + str(ofn.number_style(str(DNJ))) + "</td>\n"
+            dnj1 = int(sh.cell_value(i, j))
 
         for j in range(59, 60):
-            FEN = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(fen, FEN)) + "\">" + str(ofn.number_style(str(FEN))) + "</td>\n"
+            fen1 = int(sh.cell_value(i, j))
 
         for j in range(60, 61):
-            FRD = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(frd, FRD)) + "\">" + str(ofn.number_style(str(FRD))) + "</td>\n"
+            frd1 = int(sh.cell_value(i, j))
 
         for j in range(61, 62):
-            GZP = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(gzp, GZP)) + "\">" + str(ofn.number_style(str(GZP))) + "</td>\n"
+            gzp1 = int(sh.cell_value(i, j))
 
         for j in range(62, 63):
-            HZJ = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(hzj, HZJ)) + "\">" + str(ofn.number_style(str(HZJ))) + "</td>\n"
+            hzj1 = int(sh.cell_value(i, j))
 
         for j in range(63, 64):
-            JES = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(jes, JES)) + "\">" + str(ofn.number_style(str(JES))) + "</td>\n"
+            jes1 = int(sh.cell_value(i, j))
 
         for j in range(64, 65):
-            KHL = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(khl, KHL)) + "\">" + str(ofn.number_style(str(KHL))) + "</td>\n"
+            khl1 = int(sh.cell_value(i, j))
 
         for j in range(65, 66):
-            KRN = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(krn, KRN)) + "\">" + str(ofn.number_style(str(KRN))) + "</td>\n"
+            krn1 = int(sh.cell_value(i, j))
 
         for j in range(66, 67):
-            KSG = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(ksg, KSG)) + "\">" + str(ofn.number_style(str(KSG))) + "</td>\n"
+            ksg1 = int(sh.cell_value(i, j))
 
         for j in range(67, 68):
-            KUS = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(kus, KUS)) + "\">" + str(ofn.number_style(str(KUS))) + "</td>\n"
+            kus1 = int(sh.cell_value(i, j))
 
         for j in range(68, 69):
-            MHK = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(mhk, MHK)) + "\">" + str(ofn.number_style(str(MHK))) + "</td>\n"
+            mhk1 = int(sh.cell_value(i, j))
 
         for j in range(69, 70):
-            MIR = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(mir, MIR)) + "\">" + str(ofn.number_style(str(MIR))) + "</td>\n"
+            mir1 = int(sh.cell_value(i, j))
 
         for j in range(70, 71):
-            MLV = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(mlv, MLV)) + "\">" + str(ofn.number_style(str(MLV))) + "</td>\n"
+            mlv1 = int(sh.cell_value(i, j))
 
         for j in range(71, 72):
-            MOT = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(mot, MOT)) + "\">" + str(ofn.number_style(str(MOT))) + "</td>\n"
+            mot1 = int(sh.cell_value(i, j))
 
         for j in range(72, 73):
-            MYM = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(mym, MYM)) + "\">" + str(ofn.number_style(str(MYM))) + "</td>\n"
+            mym1 = int(sh.cell_value(i, j))
 
         for j in range(73, 74):
-            NAJ = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(naj, NAJ)) + "\">" + str(ofn.number_style(str(NAJ))) + "</td>\n"
+            naj1 = int(sh.cell_value(i, j))
 
         for j in range(74, 75):
-            NOK = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(nok, NOK)) + "\">" + str(ofn.number_style(str(NOK))) + "</td>\n"
+            nok1 = int(sh.cell_value(i, j))
 
         for j in range(75, 76):
-            PAT = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(pat, PAT)) + "\">" + str(ofn.number_style(str(PAT))) + "</td>\n"
+            pat1 = int(sh.cell_value(i, j))
 
         for j in range(76, 77):
-            PBN = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(pbn, PBN)) + "\">" + str(ofn.number_style(str(PBN))) + "</td>\n"
+            pbn1 = int(sh.cell_value(i, j))
 
         for j in range(77, 78):
-            RAJ = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(raj, RAJ)) + "\">" + str(ofn.number_style(str(RAJ))) + "</td>\n"
+            raj1 = int(sh.cell_value(i, j))
 
         for j in range(78, 79):
-            RNG = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(rng, RNG)) + "\">" + str(ofn.number_style(str(RNG))) + "</td>\n"
+            rng1 = int(sh.cell_value(i, j))
 
         for j in range(79, 80):
-            SAV = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(sav, SAV)) + "\">" + str(ofn.number_style(str(SAV))) + "</td>\n"
+            sav1 = int(sh.cell_value(i, j))
 
         for j in range(80, 81):
-            SYL = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + str(ofn.warning(
-                syl, SYL)) + "\">" + str(ofn.number_style(str(SYL))) + "</td>\n"
-
-        for j in range(81, 82):
-            TGL = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(tgl, TGL)) + "\">" + str(ofn.number_style(str(TGL))) + "</td>\n"
+            syl1 = int(sh.cell_value(i, j))
 
         for j in range(82, 83):
-            VRB = int(sh.cell_value(i, j))
+            tgl1 = int(sh.cell_value(i, j))
+
+        for j in range(83, 84):
+            vrb1 = int(sh.cell_value(i, j))
+
+        for j in range(5, 6):
+            BOG = str(sh2.cell_value(i, j))
             tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-                      str(ofn.warning(vrb, VRB)) + "\">" + str(ofn.number_style(str(VRB))) + "</td>\n"
+                      str(ofn.warning(bog,bog1, BOG)) + "\">" + str(BOG) + "</td>\n"
+
+        for j in range(6, 7):
+            BSL = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\" style=\"background-color:" + \
+                      str(ofn.warning(bsl,bsl1, BSL)) + "\">" + str(BSL) + "</td>\n"
+
+        for j in range(7, 8):
+            COM = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(com,com1, COM)) + "\">" + str(COM) + "</td>\n"
+
+        for j in range(8, 9):
+            COX = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(cox,cox1, COX)) + "\">" + str(COX) + "</td>\n"
+
+        for j in range(9, 10):
+            CTG = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(ctg,ctg1, CTG)) + "\">" + str(CTG) + "</td>\n"
+
+        for j in range(10, 11):
+            CTN = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(ctn,ctn1, CTN)) + "\">" + str(CTN) + "</td>\n"
+
+        for j in range(11, 12):
+            DNJ = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(dnj,dnj1, DNJ)) + "\">" + str(DNJ) + "</td>\n"
+
+        for j in range(12, 13):
+            FEN = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(fen,fen1, FEN)) + "\">" + str(FEN) + "</td>\n"
+
+        for j in range(13, 14):
+            FRD = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(frd,frd1, FRD)) + "\">" + str(FRD) + "</td>\n"
+
+        for j in range(14, 15):
+            GZP = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(gzp,gzp1, GZP)) + "\">" + str(GZP)+ "</td>\n"
+
+        for j in range(15, 16):
+            HZJ = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(hzj,hzj1, HZJ)) + "\">" + str(HZJ) + "</td>\n"
+
+        for j in range(16, 17):
+            JES = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(jes,jes1, JES)) + "\">" + str(JES)+ "</td>\n"
+
+        for j in range(17,18):
+            KHL = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(khl,khl1, KHL)) + "\">" + str(KHL) + "</td>\n"
+
+        for j in range(18, 19):
+            KRN = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(krn,krn1, KRN)) + "\">" + str(KRN) + "</td>\n"
+
+        for j in range(19, 20):
+            KSG = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(ksg,ksg1, KSG)) + "\">" + str(KSG) + "</td>\n"
+
+        for j in range(20, 21):
+            KUS = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(kus,kus1, KUS)) + "\">" + str(KUS) + "</td>\n"
+
+        for j in range(21, 22):
+            MHK = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(mhk,mhk1, MHK)) + "\">" + str(MHK) + "</td>\n"
+
+        for j in range(22, 23):
+            MIR = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(mir,mir1, MIR)) + "\">" + str(MIR) + "</td>\n"
+
+        for j in range(23, 24):
+            MLV = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(mlv,mlv1, MLV)) + "\">" + str(MLV)+ "</td>\n"
+
+        for j in range(24, 25):
+            MOT = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(mot,mot1, MOT)) + "\">" + str(MOT) + "</td>\n"
+
+        for j in range(25, 26):
+            MYM = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(mym,mym1, MYM)) + "\">" + str(MYM) + "</td>\n"
+
+        for j in range(26, 27):
+            NAJ = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(naj,naj1, NAJ)) + "\">" + str(NAJ)+ "</td>\n"
+
+        for j in range(27, 28):
+            NOK = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(nok,nok1, NOK)) + "\">" + str(NOK)+ "</td>\n"
+
+        for j in range(28, 29):
+            PAT = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(pat,pat1, PAT)) + "\">" + str(PAT) + "</td>\n"
+
+        for j in range(29, 30):
+            PBN = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(pbn,pbn1, PBN)) + "\">" + str(PBN) + "</td>\n"
+
+        for j in range(30, 31):
+            RAJ = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(raj,raj1, RAJ)) + "\">" + str(RAJ)+ "</td>\n"
+
+        for j in range(31, 32):
+            RNG = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(rng,rng1, RNG)) + "\">" + str(RNG) + "</td>\n"
+
+        for j in range(32, 33):
+            SAV = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(sav,sav1, SAV)) + "\">" + str(SAV) + "</td>\n"
+
+        for j in range(33, 34):
+            SYL = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + str(ofn.warning(
+                syl,syl1, SYL)) + "\">" + str(SYL) + "</td>\n"
+
+        for j in range(34, 35):
+            TGL = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(tgl,tgl1, TGL)) + "\">" + str(TGL) + "</td>\n"
+
+        for j in range(35, 36):
+            VRB = str(sh2.cell_value(i, j))
+            tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+                      str(ofn.warning(vrb,vrb1, VRB)) + "\">" + str(VRB)+ "</td>\n"
 
         # for j in range(83, 84):
         #     VRB = int(sh.cell_value(i, j))
@@ -374,5 +471,6 @@ def get_Sales_and_Stock_Records():
         #               str(ofn.warning(vrb, VRB)) + "\">" + str(ofn.number_style(str(VRB))) + "</td>\n"
 
         table = tabletd + "</tr>\n"
-    print("17. Master Table Created\n\n")
+    print("Master Table Created")
     return table
+
