@@ -32,15 +32,60 @@ def item_wise_yesterday_sales_Records():
        'TP', 'TP Sales Value', 'Net Sales Value', 'Discount']]
     yesterday_sales.to_excel('Data/item_wise_yesterday_sales.xlsx', index=False)
 
+
+    #-----------------change excel percentage---------------------
+
+    dataf = pd.read_excel('Data/item_wise_yesterday_sales.xlsx')
+
+    yesterday_sales_quantity = dataf['YesterdaySalesQty'].to_list()
+
+    yesterday_sales_quantity_sum = sum(yesterday_sales_quantity)
+
+    yesterdaySalesQtyPercentList = []
+
+    for i in yesterday_sales_quantity:
+        var = str(round(((i / yesterday_sales_quantity_sum) * 100), 2)) + '%'
+        yesterdaySalesQtyPercentList.append(var)
+
+    net_Sales_Value = dataf['Net Sales Value'].to_list()
+    net_Sales_Value_Sum = sum(net_Sales_Value)
+
+    netSalesValuePercentList = []
+
+    for i in net_Sales_Value:
+        var = str(round(((i / net_Sales_Value_Sum) * 100), 2)) + '%'
+        netSalesValuePercentList.append(var)
+
+    df_four = pd.DataFrame(yesterdaySalesQtyPercentList)
+    df_five = pd.DataFrame(netSalesValuePercentList)
+
+    col_one = 0, 1, 2, 3, 4, 5
+    dataframe_one = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', usecols=col_one)
+
+    col_two = 6, 7, 8
+    dataframe_two = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', usecols=col_two)
+
+    col_three = 9, 10
+    dataframe_three = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', usecols=col_three)
+
+    writer = pd.ExcelWriter('Data/item_wise_yesterday_sales_Copy2.xlsx', engine='xlsxwriter')
+    dataframe_one.to_excel(writer, sheet_name='Sheet1', index=False, startcol=0, startrow=0)
+    df_four.to_excel(writer, sheet_name='Sheet1', index=False, startcol=6, startrow=0)
+    dataframe_two.to_excel(writer, sheet_name='Sheet1', index=False, startcol=7, startrow=0)
+    df_five.to_excel(writer, sheet_name='Sheet1', index=False, startcol=10, startrow=0)
+    dataframe_three.to_excel(writer, sheet_name='Sheet1', index=False, startcol=11, startrow=0)
+
+    writer.save()
+
     print('11.1. Yesterday Item wise sales data saved')
 
 
-    excel_data_df = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', sheet_name='Sheet1',
+    excel_data_df = pd.read_excel('Data/item_wise_yesterday_sales_Copy2.xlsx', sheet_name='Sheet1',
                                   usecols=['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty'])
     bslno = ofn.create_dup_count_list(excel_data_df, 'BSL NO')
     brand = ofn.create_dup_count_list(excel_data_df, 'BRAND')
 
-    wb = xlrd.open_workbook('Data/item_wise_yesterday_sales.xlsx')
+    wb = xlrd.open_workbook('Data/item_wise_yesterday_sales_Copy2.xlsx')
     sh = wb.sheet_by_name('Sheet1')
 
     tabletd = ""
@@ -78,7 +123,7 @@ def item_wise_yesterday_sales_Records():
         for j in range(6, 7):
             # unit
             tabletd = tabletd + "<td class=\"number_style\">" + \
-                      ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
+                      str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(7, 8):
             # unit
@@ -91,6 +136,16 @@ def item_wise_yesterday_sales_Records():
                       ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
 
         for j in range(9, 10):
+            # unit
+            tabletd = tabletd + "<td class=\"number_style\">" + \
+                      ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
+
+        for j in range(10, 11):
+            # unit
+            tabletd = tabletd + "<td class=\"number_style\">" + \
+                      str((sh.cell_value(i, j))) + "</td>\n"
+
+        for j in range(11, 12):
             # unit
             tabletd = tabletd + "<td class=\"number_style\">" + \
                       ofn.number_style(str(int((sh.cell_value(i, j))))) + "</td>\n"
@@ -116,13 +171,15 @@ def grandtotal():
 
     tabletd = tabletd + "<tr>\n"
 
-    tabletd = tabletd + "<td colspan='7' class=\"grand_total\">" + str('Grand Total') + "</td>\n"
+    tabletd = tabletd + "<td colspan='8' class=\"grand_total\">" + str('Grand Total') + "</td>\n"
 
     tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" \
               + ofn.number_style(str(sum_yesterday_value)) + "</td>\n"
 
     tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" + ofn.number_style(
         str(sum_discountval_value)) + "</td>\n"
+
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" + '' + "</td>\n"
 
     tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" + ofn.number_style(str(
         sum_salesval_value)) + "</td>\n"

@@ -53,18 +53,18 @@ def create_item_wise_stock_days_data():
             limit_value = 35
             if i <= limit_value:
                 index_of_values = branch_stock_limit_list.index(i)
-                month = int(i / 30)
-                Day = int(i % 30)
+                # month = int(i / 30)
+                Day = int(i)
                 quantity_value = str(branch_current_stock[index_of_values])
-                value_to_be_shown = quantity_value + '  -' + str(month) + "M" + str(Day) + "D" + ""
+                value_to_be_shown = quantity_value + '  -' + str(Day) + "D" + ""
                 each_branch_analytics_value.append(value_to_be_shown)
             # Super Under Stock
             elif i > 35:
                 index_of_values = branch_stock_limit_list.index(i)
-                month = int(i / 30)
-                Day = int(i % 30)
+                # month = int(i / 30)
+                Day = int(i)
                 quantity_value = str(branch_current_stock[index_of_values])
-                value_to_be_shown = quantity_value + '  ' + str(month) + "M" + str(Day) + "D" + ""
+                value_to_be_shown = quantity_value + '  ' + str(Day) + "D" + ""
                 each_branch_analytics_value.append(value_to_be_shown)
         # print(each_branch_analytics_value)
         final_list.append(each_branch_analytics_value)

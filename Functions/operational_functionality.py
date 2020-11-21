@@ -16,7 +16,7 @@ def number_style(value):
         return value
 
 
-def warning(daily_sales, total_stock):
+def warning(daily_sales, total_stock, third):
     if daily_sales <= 0:
         return False
     else:
@@ -126,7 +126,7 @@ def status_color(status):
 
 def integer_converter(num):
     if num == '':
-        num
+        num = num
     else:
         num  = int(num)
     return num

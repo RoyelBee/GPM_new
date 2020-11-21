@@ -18,7 +18,7 @@ def brand_wise_target_sales():
         # mtd_achivemet = mtd_achivemet[:10]
 
         plt.subplots(figsize=(18, 6))
-        colors = ['#1031dd']
+        colors = ['#F5E634']
 
         new_label_list = []
         for x, y in zip(brand, mtd_achivemet):
@@ -30,7 +30,7 @@ def brand_wise_target_sales():
         plt.title("Brand wise Target VS Sold Quantity", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Brand', fontsize=12, color='black', fontweight='bold')
         plt.xticks(new_list, new_label_list, rotation=90, fontsize=9)
-        plt.ylabel('Quantity(K)', fontsize=12, color='black', fontweight='bold')
+        plt.ylabel('Quantity (K)', fontsize=12, color='black', fontweight='bold')
 
         # plt.rcParams['text.color'] = 'black'
         #
@@ -38,7 +38,7 @@ def brand_wise_target_sales():
             yval = bar.get_height()
             wval = bar.get_width()
             data = str(float("{:.1f}".format(yval / 1000, ','))) + 'K'
-            plt.text(bar.get_x() + .5 - wval / 2, yval * .5, data, color='#ffe94e', fontweight='bold', fontsize=8,
+            plt.text(bar.get_x() + .5 - wval / 2, yval * .5, data, color='#000543', fontweight='bold', fontsize=8,
                      rotation=90)  # -
             # wval / 2
 
@@ -53,6 +53,7 @@ def brand_wise_target_sales():
 
         plt.legend(['Target', 'Sales'], loc='best', fontsize='14')
         plt.tight_layout()
+        # plt.show()
         plt.savefig('./Images/brand_wise_target_vs_sold_quantity.png')
         print('6. Brand Figure generated \n')
 

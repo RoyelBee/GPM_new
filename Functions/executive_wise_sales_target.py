@@ -51,18 +51,24 @@ def executive_sales_target(name):
         new_name3 = MS_Replace(new_name2)
         # print(new_name3)
 
-        executive_sales_df = pd.read_sql_query(""" select CP01 as ExecutiveName, cast(isnull(sum(QTYSHIPPED),
-        0)/1000 as int) as ItemSales from OESalesDetails
-                                    left join PRINFOSKF
-                                    on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-                                    where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
-                                                    and convert(varchar(10),getdate(), 112)
-                                    and PRINFOSKF.GPMNAME like ?
-                                    group by CP01
-                                    order by CP01 asc """, connection, params={name})
+        executive_sales_df = pd.read_sql_query("""select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,cast(isnull(sum(QTYSHIPPED),
+            0)/1000 as int) as ItemSales from OESalesDetails
+            left join PRINFOSKF
+            on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+            left join
+            (select * from GPMExecutive_ShortName) as b
+            on b.[ExecutiveName]=PRINFOSKF.cp01
+            where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
+                            and convert(varchar(10),getdate(), 112)
+            and PRINFOSKF.GPMNAME like ?
+            group by CP01,b.[Executive ShortName]
+            order by CP01 asc""", connection, params={name})
 
+        # print(executive_target_df)
         Executive_sale = executive_sales_df['ItemSales'].tolist()
+        short_name = executive_sales_df['shortname'].tolist()
         # print(Executive_sale)
+        # print(short_name)
 
         achievement_list = []
         for x, y in zip(Executive_sale, Executive_target):
@@ -71,7 +77,7 @@ def executive_sales_target(name):
         # print("Achv list", achievement_list)
 
         new_label_list = []
-        for x, y in zip(new_name3, achievement_list):
+        for x, y in zip(short_name, achievement_list):
             new_label = str(x) + ' (' + str(round(y)) + '%)'
             new_label_list.append(new_label)
         # print("new label list", new_label_list)
@@ -86,7 +92,7 @@ def executive_sales_target(name):
         plt.title("Executive wise MTD Target & Sales", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Executive', fontsize=12, color='black', fontweight='bold')
         plt.xticks(new_label_list, rotation=45)
-        plt.ylabel('Quantity(K)', fontsize=12, color='black', fontweight='bold')
+        plt.ylabel('Quantity (K)', fontsize=12, color='black', fontweight='bold')
 
         plt.rcParams['text.color'] = 'black'
 

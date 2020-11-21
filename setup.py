@@ -58,8 +58,7 @@ except:
 # except:
 #     action.send_mail('Mr. Tafsir Bashar')
 
-
-# # --------- GPM Mr. Zahid Hossain Faisal --------------------------------
+# # --------- GPM Mr. Zahid Hossain Faisal ------------------------------
 # try:
 #     action.send_mail('Mr. Zahid Hossain Faisal')
 # except:
