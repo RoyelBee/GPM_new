@@ -71,7 +71,7 @@ def generate_layout(gpm_name):
                     td.serial{
                         width: 60px !important;
                         padding-left: 5px;
-                        text-align: left;
+                        text-align: center;
                         font-size: 12px;
                     }
                     serial1{
@@ -96,7 +96,7 @@ def generate_layout(gpm_name):
                     .serialno{
                         width: 30px !important;
                         padding-left: 5px;
-                        text-align: left;
+                        text-align: center;
                         font-size: 12px;
                     }
                     .brand {
@@ -111,11 +111,18 @@ def generate_layout(gpm_name):
                         background-color: #e5f0e5;
                         font-weight: bold;
                         color: black;
-                        text-align: left;
+                        text-align: center;
                     }
                     
                     .brandtd {
                         width: 50px !important;
+                        text-align: left;
+                        padding-left: 2px;
+                        font-weight: bold;
+                        font-size: 14px;
+                        color: black;
+                    }
+                    .branch_name{
                         text-align: left;
                         padding-left: 2px;
                         font-weight: bold;
@@ -352,7 +359,7 @@ def generate_layout(gpm_name):
                     <tr>
                         
                         <th rowspan="2" class="style1" style="text-align: left; width:8%;">Aging Days</th>
-                        <th rowspan="2" class="style1" style="text-align: left;">Brand</th>
+                        <th rowspan="2" class="style1" style="text-align: left;"> Product Brand </th>
                         <th rowspan="2" class="style1" style="width: 4%;text-align: center;">SL</th>
                         <th rowspan="2"class="style1" style="width: 20%;text-align: left;" >Item Description</th>
                         <th rowspan="2"class="style1">BOG</th>
@@ -410,9 +417,9 @@ def generate_layout(gpm_name):
                     </tr>
 
                     <tr>
-                        <th  class="brandsl" style="font-size: 14px;">BSL No.</th>
-                        <th class="brand" style="font-size: 14px;"> Brand </th>
-                        <th  class="item_sl" style="text-align: left; font-size: 14px;">Item SL</th>
+                        <th  class="brandsl" style="font-size: 14px;">SL</th>
+                        <th class="brand" style="font-size: 14px;"> Product Brand </th>
+                        <th  class="item_sl" style="text-align: center; font-size: 14px;">SL</th>
                         <th  class="description1" style="text-align: left; font-size: 14px; width:20%;">Item Description</th>
                         <th  class="uom" style="text-align: right; font-size: 14px;"> UOM</th>
                         <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Quantity</th>
@@ -433,9 +440,9 @@ def generate_layout(gpm_name):
                     </tr>
 
                     <tr>
-                        <th  class="brandsl" style="font-size: 14px;">BSL No.</th>
-                        <th class="brand" style="font-size: 14px;"> Brand </th>
-                        <th  class="brandsl" style="text-align: left; font-size: 14px;">Item SL</th>
+                        <th  class="brandsl" style="font-size: 14px;">SL</th>
+                        <th class="brand" style="font-size: 14px;"> Product Brand</th>
+                        <th  class="brandsl" style="text-align: center; font-size: 14px;">SL</th>
                         <th  class="description1" style="text-align: left; font-size: 14px;">Item Description</th
                         <th class="uom" style="text-align: right;  font-size: 14px;"> UOM</th>
 
@@ -450,9 +457,9 @@ def generate_layout(gpm_name):
                     </tr>
 
                     <tr>
-                        <th  class="brandsl" style="font-size: 14px;">BSL No.</th>
-                        <th class="brand" style="font-size: 14px;"> Brand </th>
-                        <th  class="brandsl" style="text-align: left; font-size: 14px;">Item SL</th>
+                        <th  class="brandsl" style="font-size: 14px;">SL</th>
+                        <th class="brand" style="font-size: 14px;"> Product Brand </th>
+                        <th  class="brandsl" style="text-align: center; font-size: 14px;">SL</th>
                         <th  class="description1" style="text-align: left; font-size: 14px;">Item Description</th
                         <th class="uom" style="text-align: right;  font-size: 14px;"> UOM</th>
                     </tr>
@@ -467,9 +474,9 @@ def generate_layout(gpm_name):
                     </tr>
 
                     <tr>
-                        <th  class="brandsl" style="font-size: 14px;">BSL No.</th>
+                        <th  class="brandsl" style="font-size: 14px;">SL</th>
                         <th class="brand" style="font-size: 14px;"> Brand </th>
-                        <th  class="brandsl" style="text-align: left; font-size: 14px;">Item SL</th>
+                        <th  class="brandsl" style="text-align: center; font-size: 14px;"> SL</th>
                         <th  class="description1" style="text-align: left; font-size: 14px;">Item Description</th
                         <th class="uom" style="text-align: right;  font-size: 14px;"> UOM</th>
                         <th class="uom" style="text-align: right;  font-size: 14px;">Total Ordered</th>
@@ -523,45 +530,51 @@ def generate_layout(gpm_name):
                 <tr> 
                     <th colspan='38' style="background-color: #f5f681;text-align: center; font-size:20px;"> Branch - Brand - SKU wise Stock Aging Status: Detailed</th> 
                 </tr>
-                    <tr>              
-                        <th class="style1" style="width: 4%;text-align: left;">BSL No.</th>
-                        <th class="style1" style="text-align: left;">Brand</th>
-                        <th class="style1" style="width: 4%;text-align: left;">Item SL</th>
-                        <th class="style1" style="width: 45%;text-align: left;" >Item Description</th>
-                        <th class="style1">BOG</th>
-                        <th class="style1">BSL</th>
-                        <th class="style1">COM</th>
-                        <th class="style1">COX</th>
-                        <th class="style1">CTG</th>
-                        <th class="style1">CTN</th>
-                        <th class="style1">DNJ</th>
-                        <th class="style1">FEN</th>
-                        <th class="style1">FRD</th>
-                        <th class="style1">GZP</th>
-                        <th class="style1">HZJ</th>
-                        <th class="style1">JES</th>
-                        <th class="style1">KHL</th>
-                        <th class="style1">KRN</th>
-                        <th class="style1">KSG</th>
-                        <th class="style1">KUS</th>
-                        <th class="style1">MHK</th>
-                        <th class="style1">MIR</th>
-                        <th class="style1">MLV</th>
-                        <th class="style1">MOT</th>
-                        <th class="style1">MYM</th>
-                        <th class="style1">NAJ</th>
-                        <th class="style1">NOK</th>
-                        <th class="style1">PAT</th>
-                        <th class="style1">PBN</th>
-                        <th class="style1">RAJ</th>
-                        <th class="style1">RNG</th>
-                        <th class="style1">SAV</th>
-                        <th class="style1">SYL</th>
-                        <th class="style1">TGL</th>
-                        <th class="style1">VRB</th>
-                        <th class="style1">SKF Rupganj Plant</th>
-                        <th class="style1">SKF Mirpur Plant</th>
-                        <th class="style1">SKF Tongi Plant</th>
+                    <tr>
+                        
+                        <th rowspan="2" class="style1" style="text-align: left; width:8%;">SL</th>
+                        <th rowspan="2" class="style1" style="text-align: left;"> Product Brand </th>
+                        <th rowspan="2" class="style1" style="width: 4%;text-align: center;">SL</th>
+                        <th rowspan="2"class="style1" style="width: 20%;text-align: left;" >Item Description</th>
+                        <th rowspan="2"class="style1">BOG</th>
+                        <th rowspan="2"class="style1">BSL</th>
+                        <th rowspan="2"class="style1">COM</th>
+                        <th rowspan="2"class="style1">COX</th>
+                        <th rowspan="2"class="style1">CTG</th>
+                        <th rowspan="2"class="style1">CTN</th>
+                        <th rowspan="2"class="style1">DNJ</th>
+                        <th rowspan="2"class="style1">FEN</th>
+                        <th rowspan="2"class="style1">FRD</th>
+                        <th rowspan="2"class="style1">GZP</th>
+                        <th rowspan="2"class="style1">HZJ</th>
+                        <th rowspan="2"class="style1">JES</th>
+                        <th rowspan="2"class="style1">KHL</th>
+                        <th rowspan="2"class="style1">KRN</th>
+                        <th rowspan="2"class="style1">KSG</th>
+                        <th rowspan="2"class="style1">KUS</th>
+                        <th rowspan="2"class="style1">MHK</th>
+                        <th rowspan="2"class="style1">MIR</th>
+                        <th rowspan="2"class="style1">MLV</th>
+                        <th rowspan="2"class="style1">MOT</th>
+                        <th rowspan="2"class="style1">MYM</th>
+                        <th rowspan="2"class="style1">NAJ</th>
+                        <th rowspan="2"class="style1">NOK</th>
+                        <th rowspan="2"class="style1">PAT</th>
+                        <th rowspan="2"class="style1">PBN</th>
+                        <th rowspan="2"class="style1">RAJ</th>
+                        <th rowspan="2"class="style1">RNG</th>
+                        <th rowspan="2"class="style1">SAV</th>
+                        <th rowspan="2"class="style1">SYL</th>
+                        <th rowspan="2"class="style1">TGL</th>
+                        <th rowspan="2"class="style1">VRB</th>
+                        <th colspan="3" >SK+F Plant</th>
+
+                   </tr>  
+                   <tr> 
+                        <th class="style1">Rupganj </th>
+                        <th class="style1">Mirpur </th>
+                        <th class="style1">Tongi </th>
+                   </tr>
                         
                 
                 

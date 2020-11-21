@@ -94,7 +94,7 @@ def item_wise_yesterday_sales_Records():
         for j in range(0, 1):
             # BSL NO
             if (bslno[i - 1] != 0):
-                tabletd = tabletd + "<td class=\"serial\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
+                tabletd = tabletd + "<td class=\"sl_center\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
                     int(sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(1, 2):
@@ -105,7 +105,7 @@ def item_wise_yesterday_sales_Records():
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"serial\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"sl_center\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
 
         for j in range(3, 4):
             # item name
