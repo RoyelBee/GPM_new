@@ -39,5 +39,12 @@
 # import Functions.item_wise_yesterday_sales as b
 # b.item_wise_yesterday_sales_Records()
 
-import Functions.branch_wise_stock_aging as b
-b.get_branch_aging_stock_status("Mr. A. K. M. Nawajesh Hossain")
+# import Functions.branch_wise_stock_aging as b
+# b.get_branch_aging_stock_status("Mr. A. K. M. Nawajesh Hossain")
+
+
+# import Functions.sales_and_stock_record as sl
+# sl.get_Sales_and_Stock_Records()
+
+import Functions.design_report_layout as de
+de.generate_layout('Mr. A. K. M. Nawajesh Hossain')

@@ -18,12 +18,12 @@ def get_branch_aging_stock_status(name):
         Select * from
         (select dense_rank() OVER (ORDER BY BRAND  ) [BSL NO], BRAND,(select ROW_NUMBER() OVER (ORDER BY (SELECT NULL))) AS [ISL NO],ITEMNAME,AUDTORG, Max(AGEING) AS AGEING   from
         (select ITEMNO,
-		case when [location] = ('4001') then  'SKF Mirpur Plant'
-         when [location] = ('4005') then  'SKF Tongi Plant'
-       when [location] = ('4016') then  'SKF Rupganj Plant'
-      else AUDTORG end as AUDTORG,AGEING,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot) as T1
+        case when [location] = ('4001') then  'SKF Mirpur Plant'
+        when [location] = ('4005') then  'SKF Tongi Plant'
+        when [location] = ('4016') then  'SKF Rupganj Plant'
+        else AUDTORG end as AUDTORG,AGEING,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot) as T1
         LEFT JOIN
-        (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
+        (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF )as T2
         ON (T1.ITEMNO=T2.ITEMNO)
         WHERE T2.GPMNAME like ?
         Group by  BRAND,ITEMNAME,AUDTORG ) as T3
@@ -31,16 +31,19 @@ def get_branch_aging_stock_status(name):
         pivot
         (Max(AGEING)
         for AUDTORG in ([BOGSKF],[BSLSKF],[COMSKF],[COXSKF],[CTGSKF],[CTNSKF],[DNJSKF],[FENSKF],[FRDSKF],[GZPSKF],[HZJSKF],[JESSKF],[KHLSKF],[KRNSKF],[KSGSKF],[KUSSKF],[MHKSKF],[MIRSKF],[MLVSKF],[MOTSKF],[MYMSKF],[NAJSKF],[NOKSKF],[PATSKF],[PBNSKF],[RAJSKF],[RNGSKF],[SAVSKF],[SKFDAT],[SYLSKF],[TGLSKF],[VRBSKF],[SKF Rupganj Plant],[SKF Mirpur Plant],[SKF Tongi Plant]
-         )) AS piv
+        )) AS piv
         ) as TblAging
         left join
         (select *
         from
         (Select * from
         (select dense_rank() OVER (ORDER BY BRAND  ) [BSL NO], BRAND,ITEMNAME,AUDTORG, Sum(QTYAVAIL) AS TotalStock   from
-        (select ITEMNO,AUDTORG,AGEING,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot) as T1
+        (select ITEMNO,case when [location] = ('4001') then  'SKF Mirpur Plant'
+        when [location] = ('4005') then  'SKF Tongi Plant'
+        when [location] = ('4016') then  'SKF Rupganj Plant'
+        else AUDTORG end as AUDTORG,AGEING,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot) as T1
         LEFT JOIN
-        (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
+        (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF )as T2
         ON (T1.ITEMNO=T2.ITEMNO)
         WHERE T2.GPMNAME like ?
         Group by  BRAND,ITEMNAME,AUDTORG ) as T3
@@ -49,10 +52,11 @@ def get_branch_aging_stock_status(name):
         (
         sum(TotalStock)
         for AUDTORG in ([BOGSKF],[BSLSKF],[COMSKF],[COXSKF],[CTGSKF],[CTNSKF],[DNJSKF],[FENSKF],[FRDSKF],[GZPSKF],[HZJSKF],[JESSKF],[KHLSKF],[KRNSKF],[KSGSKF],[KUSSKF],[MHKSKF],[MIRSKF],[MLVSKF],[MOTSKF],[MYMSKF],[NAJSKF],[NOKSKF],[PATSKF],[PBNSKF],[RAJSKF],[RNGSKF],[SAVSKF],[SKFDAT],[SYLSKF],[TGLSKF],[VRBSKF],[SKF Rupganj Plant],[SKF Mirpur Plant],[SKF Tongi Plant]
-         )
+        )
         ) AS piv) as tblsStock
         on (tblsStock.ITEMNAME=TblAging.ITEMNAME)
-     """, connection, params=(name, name))
+        
+             """, connection, params=(name, name))
 
     # column_values = range(1, len(df))
     # print(column_values)

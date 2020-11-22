@@ -88,10 +88,15 @@ def generate_layout(gpm_name):
                     #sss{
                 
                         padding-left: 5px;
-                        text-align: left;
+                        text-align: center;
                         font-size: 10px;
                     }
-                    
+                    #padding{
+                
+                        padding-left: 5px;
+                        text-align: right;
+                        font-size: 5px;
+                    }
                 
                     .serialno{
                         width: 30px !important;
@@ -209,8 +214,8 @@ def generate_layout(gpm_name):
                             color: red !important;
                       }
                     .nation_wide{
-                        background-color: #ddd9d9;
-                        text-align: right;
+                        
+                        text-align: center;
                         padding-right: 2px;
                         border: 1px solid gray;
                         padding-left: 10px;
@@ -338,7 +343,20 @@ def generate_layout(gpm_name):
                     width: 50%;
                     float: left;
                 }
-
+                
+                .colors{
+                    background-color: #b7fff8;
+                    text-align: center;
+                    padding-left: 2px;
+                    padding-right: 2px;
+    
+                }
+    
+            .branch_plant_color{
+                background-color: antiquewhite;
+                padding-left: 2px;
+                padding-right: 2px;
+            }
 
 
                 </style>
@@ -510,11 +528,11 @@ def generate_layout(gpm_name):
                  <table  style="border-style:none" width="100%">
                     <tr style="border-style:none;float: right;"> 
                         <th colspan='1' style=" font-size: 14px;width: 1000px;text-align: left;padding-left: 15px; border-style:none"></th>
-                        <th colspan='1' style=" background-color: #933636;font-size: 14px; width: 60px; border-style:1px solid black;"></th> 
+                        <th colspan='1' style=" background-color: #f40d0d;font-size: 14px; width: 60px; border-style:1px solid black;"></th> 
                         <th colspan='1' style=" font-size: 14px;width: 200px;text-align: left;padding-left: 15px;border-style:none">Expired</th> 
-                        <th colspan='1' style=" background-color:#f40d0d;font-size: 14px; width: 60px; border-style:1px solid black;"></th> 
+                        <th colspan='1' style=" background-color:#fd8947;font-size: 14px; width: 60px; border-style:1px solid black;"></th> 
                         <th colspan='1' style=" font-size: 14px;width: 200px;text-align: left;padding-left: 15px; border-style:none"> 0 - 15 Days </th>
-                        <th colspan='1' style=" background-color: #ff8600 ;font-size: 14px; width: 60px; border-style:1px solid black;"></th> 
+                        <th colspan='1' style=" background-color: #eaff3d ;font-size: 14px; width: 60px; border-style:1px solid black;"></th> 
                         <th colspan='1' style=" font-size: 14px;width: 200px;text-align: left;padding-left: 15px; border-style:none"> 16 - 30 Days  </th> 
                         <th colspan='1' style=" background-color: #e1e300 ;font-size: 14px; width: 60px; border-style:1px solid black;"></th>
                         <th colspan='1' style=" font-size: 14px;width: 200px;text-align: left;padding-left: 15px;border-style:none">31 - 60 Days </th> 
@@ -532,10 +550,10 @@ def generate_layout(gpm_name):
                 </tr>
                     <tr>
                         
-                        <th rowspan="2" class="style1" style="text-align: left; width:8%;">SL</th>
+                        <th rowspan="2" class="style1" style="text-align: center; width:8%;">SL</th>
                         <th rowspan="2" class="style1" style="text-align: left;"> Product Brand </th>
-                        <th rowspan="2" class="style1" style="width: 4%;text-align: center;">SL</th>
-                        <th rowspan="2"class="style1" style="width: 20%;text-align: left;" >Item Description</th>
+                        <th rowspan="2" class="style1" style="width: 5%;text-align: center;">SL</th>
+                        <th rowspan="2"class="style1" style="width: 25%;text-align: left;" >Item Description</th>
                         <th rowspan="2"class="style1">BOG</th>
                         <th rowspan="2"class="style1">BSL</th>
                         <th rowspan="2"class="style1">COM</th>
@@ -583,87 +601,126 @@ def generate_layout(gpm_name):
  
             </table>  <br><br>
                 
-                <table border="1px solid gray" style="width: 200%;">
-                 
-                 <tr>
-                    <th colspan='52' style="background-color: #f5f681;text-align: center; font-size:20px;"> Branch - Brand - SKU wise Stock Information: Detailed</th>
-                 </tr>
-                 <tr>
-                    <th colspan="16" class="info" style="text-align: left"> """ + gpm.getGPMNFullInfo(gpm_name) + """
-                    </th>
-                    <th colspan="3" style="font-weight: bolder; font-size: 12px; background-color: #e6a454 ;" >SKF Plant</th>
-                    <th rowspan="3" style="background-color: #d0ff89;font-size: 12px;text-align:right"><div>TDCL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Central WH</div></th>
-                    <th rowspan="3" style="background-color: #95ff89;font-size: 12px;"><div>Branch &nbsp;&nbsp;&nbsp;Total</div></th>
-                    <th colspan="5" style="background-color: #ff2300" class="color_style"> Nill</th>
-                    <th colspan="5" style="background-color: #ff971a" class="color_style">Super Under Stock</th>
-                    <th colspan="5" style="background-color: #eee298;" class="color_style">Under Stock</th>
-                    <th colspan="5" class="color_style">Normal Stock</th>
-                    <th colspan="5" style="background-color: #cbe14c; color: black"   class="color_style">Over Stock</th>
-                    <th colspan="6" style="background-color: #fff900; color: black"  class="color_style">Super Over Stock</th>
-                </tr>
-    
-                <tr>
-                    <th rowspan="2" class="style1" style="font-size: 12px;">BSL&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp</th>
-                    <th rowspan="2" class="brand" style="font-size: 12px;"> Brand &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp</th>
-                    <th rowspan="2" class="item_sl" style="font-size: 12px;">ISL &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                    <th rowspan="2" class="description" style="font-size: 12px;"> <div class="my_margin">.</div> Item Description &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                    <th rowspan="2" class="uom3" style="font-size: 12px;">  UOM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th rowspan="2" class="sales_monthly_trend" style="font-size: 12px;padding-left: 0;">Yesterday &nbsp;Sales </th>
-                    <th rowspan="2" class="sales_monthly_trend" style="font-size: 12px;padding-left: 0;">Avg Sales &nbsp;Per Day </th>
-                    <th rowspan="2" class="sales_monthly_trend" style="font-size: 12px;padding-left: 0;text-align: right;">Monthly &nbsp;&nbsp;Sales Target</th>
-                    <th rowspan="2" class="style2" style="font-size: 12px;text-align: right;"><div>MTD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Target</div></th>
-                    <th rowspan="2" class="style2" style="font-size: 12px;text-align: right;"><div>Actual &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales MTD</div></th>
-                    <th rowspan="2" class="style2" style="font-size: 12px;text-align: right;"><div>MTD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Achv %</div></th>
-                    <th rowspan="2" class="style2" style="font-size: 12px;text-align: right;"><div>Monthly &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Achv %</div></th>
-                    <th rowspan="2" class="style2" style="font-size: 12px;text-align: right;"><div>Monthly &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Trend</div></th>
-                    <th rowspan="2" class="style2" style="font-size: 12px;text-align: right;"> <div>Monthly &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Trend Achv</div></th>
-                    <th rowspan="2" class="remaining" style="font-size: 12px;padding-left: 0;"><div>Remaining &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity</div></th>
-                    <th rowspan="2" class="nation_wide" style="font-size: 12px;padding-left: 0;text-align: right;"><div>Nationwide&nbsp; Stock</div></th>
-                    <th class="style3" rowspan="2" style="font-size: 12px;text-align: right;">SKF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mirpur </th>
-                    <th class="style3" rowspan="2" style="font-size: 12px;text-align: right;">SKF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tongi </th>
-                    <th class="style3" rowspan="2" style="font-size: 12px;padding: 0;">SKF&nbsp;&nbsp;&nbsp;&nbsp;<br>Rupganj&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <table border="1px solid black" style="width: 300%;">
 
-                    <th colspan="31" style="font-weight: bolder; font-size: 14px;"> TDCL Branches</th>
-                </tr>
-                <tr>
-    
-                    <th class="branch_bg_color" style="font-size:9px; ">BOG &nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px; ">BSL &nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px; ">COM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px; ">COX &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px; ">CTG &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px; ">CTN &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px; "> DNJ &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px; ">FEN &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px; ">FRD &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">GZP &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">HZJ &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">JES &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">KHL &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">KRN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">KSG &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">KUS &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">MHK &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">MIR &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">MLV &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">MOT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">MYM &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">NAJ &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">NOK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">PAT &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">PBN &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">RAJ &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">RNG &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">SAV &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">SYL &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">TGL &nbsp;&nbsp;&nbsp;</th>
-                    <th class="branch_bg_color" style="font-size:9px;">VRB &nbsp;&nbsp;&nbsp;</th>
-    
-                    </tr>
+    <tr>
+        <th colspan='53' style="background-color: #f5f681;text-align: center; font-size:20px;"> Branch - Brand - SKU
+            wise Stock Information: Detailed
+        </th>
+    </tr>
+    <tr>
+        <th colspan="20" class="info" style="text-align: left"> """ + gpm.getGPMNFullInfo(gpm_name) + """
+        </th>
+        <th rowspan="3" style="background-color: #fed8b1;font-size: 12px;text-align:center">
+            <div>TDCL <br> Central <br> WH
+            </div>
+        </th>
+        <th rowspan="3" style="background-color: #fed8b1; font-size: 12px;">Total <br> Branch  <br> Qty</th>
+        <th colspan="5" style="background-color: #ff2300" class="color_style"> Nill</th>
+        <th colspan="5" style="background-color: #ff971a" class="color_style">Super Under Stock</th>
+        <th colspan="5" style="background-color: #eee298;" class="color_style">Under Stock</th>
+        <th colspan="5" class="color_style">Normal Stock</th>
+        <th colspan="5" style="background-color: #cbe14c; color: black" class="color_style">Over Stock</th>
+        <th colspan="6" style="background-color: #fff900; color: black" class="color_style">Super Over Stock</th>
+    </tr>
+
+    <tr>
+        <th rowspan="2" class="style1" style="font-size: 12px;background-color: #d7fed7;">SL &nbsp&nbsp</th>
+        <th rowspan="2" class="brand" style="font-size: 12px;background-color: #d7fed7;"> Product Brand
+
+        </th>
+        <th rowspan="2" class="item_sl" style="font-size: 12px;background-color: #d7fed7;"> SL
+
+        </th>
+        <th rowspan="2" class="description" style="width:14%; font-size: 12px;background-color: #d7fed7;text-align: 
+        left;">Item
+            <br> Description
+        </th>
+        <th rowspan="2" class="uom3" style="font-size: 12px;background-color: #d7fed7; text-align:left"> UOM</th>
+        <th rowspan="2" class="colors" style="font-size: 12px;padding: 0;text-align: center;">LD <br> Sales
+            <br>Qty
+        </th>
+        <th rowspan="2" class="colors" style="font-size: 12px;padding-left: 0;">Avg Sales/ <br> Day</th>
+        <th rowspan="2" class="colors" style="font-size: 12px;padding-left: 0;">TM <br> Sales <br> Target
+        </th>
+        <th rowspan="2" class="colors" style="font-size: 12px;">
+            <div>MTD <br> Sales <br> Target</div>
+        </th>
+        <th rowspan="2" class="colors" style="font-size: 12px;">
+            <div>MTD <br> Sales <br> Actual</div>
+        </th>
+        <th rowspan="2" class="colors" style="font-size: 12px;">
+            <div>MTD <br> Sales <br> Achv%</div>
+        </th>
+        <th rowspan="2" class="colors" style="font-size: 12px;">
+            <div>TM <br>Sales <br> Achv%
+            </div>
+        </th>
+        <th rowspan="2" class="colors" style="font-size: 12px;">
+            <div>TM <br> Sales <br> Trend
+            </div>
+        </th>
+        <th rowspan="2" class="colors" style="font-size: 12px;">
+            <div>TM Trend <br> Achv%
+            </div>
+        </th>
+        <th rowspan="2" class="remaining" style="font-size: 12px;padding-left: 0; background-color:#c8f22b ;">
+            <div>Remaining<br> TM Sales <br> Qty
+            </div>
+        </th>
+        <th rowspan="2" class="nation_wide" style="font-size: 12px;padding-left: 0;background-color:#f0e713;">
+            <div>Nationwide <br> Total <br> Stock</div>
+        </th>
+        <th rowspan="2" class="nation_wide" style="font-size: 12px;padding-left: 0;background-color: #fed8b1;">
+            <div>Total <br> SK+F <br> Qty</div>
+        </th>
+        <th colspan="3" style="font-weight: bolder; font-size: 12px;">SKF Plant</th>
+
+
+        <th colspan="31" style="font-weight: bolder; font-size: 14px;"> TDCL Branches</th>
+    </tr>
+    <tr>
+        <th class="branch_plant_color" rowspan="" style="font-size: 12px;text-align: center; ">Mirpur</th>
+        <th class="branch_plant_color" rowspan="" style="font-size: 12px;text-align: center; ">Tongi</th>
+        <th class="branch_plant_color" rowspan="" style="font-size: 12px;padding: 0; text-align: center; ">Rupganj</th>
+
+
+        <th class="branch_plant_color" style="font-size:9px; ">BOG</th>
+        <th class="branch_plant_color" style="font-size:9px; ">BSL</th>
+        <th class="branch_plant_color" style="font-size:9px; ">COM</th>
+        <th class="branch_plant_color" style="font-size:9px; ">COX</th>
+        <th class="branch_plant_color" style="font-size:9px; ">CTG</th>
+        <th class="branch_plant_color" style="font-size:9px; ">CTN</th>
+        <th class="branch_plant_color" style="font-size:9px; "> DNJ</th>
+        <th class="branch_plant_color" style="font-size:9px; ">FEN</th>
+        <th class="branch_plant_color" style="font-size:9px; ">FRD</th>
+        <th class="branch_plant_color" style="font-size:9px;">GZP</th>
+        <th class="branch_plant_color" style="font-size:9px;">HZJ</th>
+        <th class="branch_plant_color" style="font-size:9px;">JES</th>
+        <th class="branch_plant_color" style="font-size:9px;">KHL</th>
+        <th class="branch_plant_color" style="font-size:9px;">KRN</th>
+        <th class="branch_plant_color" style="font-size:9px;">KSG</th>
+        <th class="branch_plant_color" style="font-size:9px;">KUS</th>
+        <th class="branch_plant_color" style="font-size:9px;">MHK</th>
+        <th class="branch_plant_color" style="font-size:9px;">MIR</th>
+        <th class="branch_plant_color" style="font-size:9px;">MLV</th>
+        <th class="branch_plant_color" style="font-size:9px;">MOT</th>
+        <th class="branch_plant_color" style="font-size:9px;">MYM</th>
+        <th class="branch_plant_color" style="font-size:9px;">NAJ</th>
+        <th class="branch_plant_color" style="font-size:9px;">NOK</th>
+        <th class="branch_plant_color" style="font-size:9px;">PAT</th>
+        <th class="branch_plant_color" style="font-size:9px;">PBN</th>
+        <th class="branch_plant_color" style="font-size:9px;">RAJ</th>
+        <th class="branch_plant_color" style="font-size:9px;">RNG</th>
+        <th class="branch_plant_color" style="font-size:9px;">SAV</th>
+        <th class="branch_plant_color" style="font-size:9px;">SYL</th>
+        <th class="branch_plant_color" style="font-size:9px;">TGL</th>
+        <th class="branch_plant_color" style="font-size:9px;">VRB</th>
+
+    </tr>
     
                     """ + SalesStock.get_Sales_and_Stock_Records() + """
                 </table> <br>
-
 
 
                 </body>

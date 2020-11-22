@@ -51,7 +51,7 @@ def send_mail(gpm_name):
     ## 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
 
 
-    # # # --------- Add Image Border ---------------------------------------
+    # # --------- Add Image Border ---------------------------------------
     # from PIL import Image
     # da = Image.open("./Images/dashboard.png")
     # imageSize = Image.new('RGB', (962, 110))
@@ -104,9 +104,9 @@ def send_mail(gpm_name):
     #     bcc = ['', '']
     #     print('Report Sending to = ', to)
 
-    to = ['', '']
+    to = ['biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com']
     cc = ['', '']
-    bcc = ['rejaul.islam@transcombd.com', '']
+    bcc = ['rejaul.islam@transcombd.com', 'rafiul.ramjan@transcombd.com']
 
     msgRoot = MIMEMultipart('related')
     me = 'erp-bi.service@transcombd.com'

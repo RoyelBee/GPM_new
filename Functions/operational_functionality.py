@@ -15,8 +15,25 @@ def number_style(value):
     else:
         return value
 
+def day_calculator(value1, value2):
+    value1 = value1
+    value2 = int(value2)
+    if value2 >= 0  and  value1 > .001:
+        day = value2 / value1
+        if day > 35:
+            result = str(int(value2))  + '<br>'+ str(int(day)) + 'D'
+        else:
+            day = day - 35
+            result = str(int(value2)) + '<br>' + str(int(day)) + 'D'
 
-def warning(daily_sales, total_stock, third):
+
+    else:
+        result= str(value2)
+    return  result
+
+# print(day_calculator(.461, 162))
+def warning(daily_sales, total_stock):
+
     if daily_sales <= 0:
         return False
     else:
@@ -102,10 +119,10 @@ def create_dup_count_list(excel, colName):
 def status_color(status):
 
     if status == 'Within 15 Days':
-        color = '#f40d0d'
+        color = '#fd8947'
 
     elif status == 'Within 30 Days':
-        color = '#ff8600'
+        color = '#eaff3d'
 
     elif status == 'Within 60 Days':
         color = '#e1e300'
@@ -118,10 +135,10 @@ def status_color(status):
 
     elif status == 'More Than 1 Year':
         color = '#ffffff'
-    elif status == '':
+    elif status == '' or len(status) <1:
         color = '#ffffff'
     else:
-        color = '#933636'
+        color = '#f40d0d'
     return color
 
 def integer_converter(num):

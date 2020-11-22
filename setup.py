@@ -16,7 +16,7 @@ import error_alert as error
 #     error.send_error_msg('Dr. Mohammad Mizanur Rahman')
 
 
-# # --------- GPM Dr. Shafiqul Mawla  -----------------------------------
+# # --------- GPM Dr. Shafiqul Mawla  ------------------------------------
 
 # try:
 #     action.send_mail('Dr. Shafiqul Mawla')
