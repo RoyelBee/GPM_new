@@ -50,7 +50,7 @@ def get_No_Stock_Records():
                                                                                                      j))))) + "</td>\n"
 
         table1 = tabletd + "</tr>\n"
-    print("14. No Stock table Created\n")
+    print("15. No Stock Item: Last 3 Months table created \n")
     return table1
 
 

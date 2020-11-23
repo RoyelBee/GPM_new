@@ -100,7 +100,7 @@ def aging_stock_summary_status(name):
 
     wb.save('Data/aging_stock_summary_copy.xlsx')
     #
-    print('aging stock summary data saved')
+    print('11. Branch - Brand - SKU wise Stock Aging Status Dataaved')
 
 
     def check(val):
@@ -245,5 +245,5 @@ def aging_stock_summary_status(name):
             tabletd = tabletd + "<td class=\"number_style\">" + str((check(sh.cell_value(i, j)))) + "</td>\n"
 
         table = tabletd + "</tr>\n"
-    print("Branch wise aging stock summary table Created\n")
+    print("11.1. Branch - Brand - SKU wise Stock Aging Status: Summary Table created \n")
     return table

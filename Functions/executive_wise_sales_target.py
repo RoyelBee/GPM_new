@@ -1,14 +1,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-import pyodbc as db
 import numpy as np
 
-# name = 'Dr. Shafiqul Mawla'
+import Functions.db_connection as dbc
 
-connection = db.connect('DRIVER={SQL Server};'
-                        'SERVER=137.116.139.217;'
-                        'DATABASE=ARCHIVESKF;'
-                        'UID=sa;PWD=erp@123')
 
 def executive_sales_target(name):
     try:
@@ -27,7 +22,7 @@ def executive_sales_target(name):
                                 where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
                                 112) and GPMNAME like ?
                                 group by CP01
-                                order by CP01 asc """, connection, params={name})
+                                order by CP01 asc """, dbc.connection, params={name})
 
         Executive_name = executive_target_df['ExecutiveName'].tolist()
         Executive_target = executive_target_df['MTDTargetQty'].tolist()
@@ -62,7 +57,7 @@ def executive_sales_target(name):
                             and convert(varchar(10),getdate(), 112)
             and PRINFOSKF.GPMNAME like ?
             group by CP01,b.[Executive ShortName]
-            order by CP01 asc""", connection, params={name})
+            order by CP01 asc""", dbc.connection, params={name})
 
         # print(executive_target_df)
         Executive_sale = executive_sales_df['ItemSales'].tolist()

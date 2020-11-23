@@ -93,7 +93,7 @@ Group by  AGEING)as T3
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/brand_wise_aging_stock_information.png')
-        print('7.1 Brand wise Stock Aging figure generated \n')
+        print('7.1 Brand wise Stock Aging figure generated ')
 
 
     except:

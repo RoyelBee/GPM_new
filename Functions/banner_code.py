@@ -5,13 +5,7 @@ from PIL import Image
 from datetime import datetime
 import pandas as pd
 import path as dir
-import pyodbc as db
-
-con = db.connect('DRIVER={SQL Server};'
-                 'SERVER=137.116.139.217;'
-                 'DATABASE=ARCHIVESKF;'
-                 'UID=sa;PWD=erp@123')
-
+import Functions.db_connection as dbc
 
 def banner(name):
     date = datetime.today()
@@ -26,19 +20,14 @@ def banner(name):
     datetime_BD = datetime.now(tz_NY)
     time = datetime_BD.strftime("%I:%M %p")
 
-    conn = db.connect('DRIVER={SQL Server};'
-                      'SERVER=137.116.139.217;'
-                      'DATABASE=ARCHIVESKF;'
-                      'UID=sa;'
-                      'PWD=erp@123;')
 
     df_designation = pd.read_sql_query(""" select Name, Designation from GPMBRAND
                     where Name like ?
-                    group by Name,Designation """, conn, params={name})
+                    group by Name,Designation """, dbc.connection, params={name})
 
     date_time = pd.read_sql_query(
         """select max(datetime) as uptime from OESalesDetails
-        where LEFT(TRANSDATE, 8) = convert(varchar(8), getdate(), 112)""", conn)
+        where LEFT(TRANSDATE, 8) = convert(varchar(8), getdate(), 112)""", dbc.connection)
 
     designation = df_designation["Designation"].tolist()
 

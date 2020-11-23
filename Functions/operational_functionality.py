@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 def number_style(value):
     if (len(value) > 6):
         return str(value[0:len(value) - 6] + "," + value[len(value) - 6:len(value) - 3] + ","

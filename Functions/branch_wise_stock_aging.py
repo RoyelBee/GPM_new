@@ -78,7 +78,7 @@ def get_branch_aging_stock_status(name):
         ws[cell] = row[0]
     wb.save('Data/branch_wise_aging_stock.xlsx')
 
-    print('10. Branch wise aging stock data saved')
+    print('17. Branch - Brand - SKU wise Stock Aging Status: Detailed data saved')
 
     # sys.exit()
     excel_data_df = pd.read_excel('Data/branch_wise_aging_stock.xlsx', sheet_name='Sheet1',
@@ -357,5 +357,5 @@ def get_branch_aging_stock_status(name):
 
 
         table = tabletd + "</tr>\n"
-    print("10.1. Branch wise aging stock table Created\n")
+    print("17.1. Branch - Brand - SKU wise Stock Aging Status: Detailed table Created\n")
     return table

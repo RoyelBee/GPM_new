@@ -40,5 +40,5 @@ def get_No_Sales_Records():
 
         table1 = tabletd + "</tr>\n"
 
-    print("13. No Sales table Created\n")
+    print("14. No Sales Item: Last 3 Months table created\n")
     return table1

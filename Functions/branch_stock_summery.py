@@ -58,5 +58,5 @@ def branch_wise_nil_us_ss():
                       + str(ofn.number_style(str(int(sh.cell_value(i, j))))) + "</td>"
 
         table6 = tabletd + "</tr>\n"
-    print("15. Branch Wise Item Stock Category table created.\n")
+    print("16. Branch Wise Item Stock Category table created.\n")
     return table6

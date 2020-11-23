@@ -506,8 +506,7 @@ def generate_layout(gpm_name):
                 <table border="1px solid black" width="100%"> 
                     <tr> 
                         <th colspan='8' style=" background-color: #f4d3b5;text-align: center; font-size: 20px; "> 
-                        Branch 
-                        Wise Item Stock Category </th> 
+                        Branch Wise Item Stock Category </th> 
                     </tr>
 
                     <tr>

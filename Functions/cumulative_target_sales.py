@@ -5,7 +5,7 @@ import numpy as np
 from datetime import date
 import calendar
 import datetime
-
+import Functions.db_connection as dbc
 
 def convert(number):
     number = number / 1000
@@ -14,11 +14,6 @@ def convert(number):
     number = number + 'K'
     return number
 
-
-connection = db.connect('DRIVER={SQL Server};'
-                        'SERVER=137.116.139.217;'
-                        'DATABASE=ARCHIVESKF;'
-                        'UID=sa;PWD=erp@123')
 
 def cumulative_target_sales(name):
     try:
@@ -29,7 +24,7 @@ def cumulative_target_sales(name):
                                 where left(TRANSDATE,6) = convert(varchar(6),getdate(), 112)
                                 and PRINFOSKF.GPMNAME like ?
                                 group by right(TRANSDATE, 2)
-                                order by right(TRANSDATE, 2) """, connection, params={name})
+                                order by right(TRANSDATE, 2) """, dbc.connection, params={name})
 
         day_wise_date = everday_sale_df['Date'].tolist()
         day_to_day_sale = everday_sale_df['ItemSales'].tolist()
@@ -61,7 +56,7 @@ def cumulative_target_sales(name):
                                 on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
                                 where YEARMONTH=CONVERT(varchar(6), dateAdd(month,0,getdate()), 112) and GPMNAME 
                                 like ? 
-                                """, connection, params={name})
+                                """, dbc.connection, params={name})
 
         single_day_target = EveryDay_target_df['MonthsTargetQty'][0]
         # print('Single Day Target : ', single_day_target)
@@ -76,8 +71,7 @@ def cumulative_target_sales(name):
         # print('Final label to plot : ', labell_to_plot)
 
         # ----------------code for cumulitive sales------------
-        import calendar
-        import datetime
+
 
         now = datetime.datetime.now()
         total_days = calendar.monthrange(now.year, now.month)[1]

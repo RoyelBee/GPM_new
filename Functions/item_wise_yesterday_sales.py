@@ -21,7 +21,7 @@ def item_wise_yesterday_sales_Records():
     yesterday_no_sales.insert(loc=2, column='ISL NO', value=np.arange(len(yesterday_no_sales)) + 1)
     yesterday_no_sales = yesterday_no_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM']]
     yesterday_no_sales.to_excel('Data/yesterday_no_sales.xlsx', index=False)
-    print('11. Yesterday No Sales Data Saved')
+    print('12. Yesterday No Sales Data Saved')
 
     yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
        'TP', 'TP Sales Value', 'Net Sales Value', 'Discount']]
@@ -77,7 +77,7 @@ def item_wise_yesterday_sales_Records():
 
     writer.save()
 
-    print('11.1. Yesterday Item wise sales data saved')
+    print('12.1. Yesterday Item wise sales data saved')
 
 
     excel_data_df = pd.read_excel('Data/item_wise_yesterday_sales_Copy2.xlsx', sheet_name='Sheet1',
@@ -152,7 +152,7 @@ def item_wise_yesterday_sales_Records():
 
         table1 = tabletd + "</tr>\n"
 
-    print("11.2. Yesterday Item wise sale table Created")
+    print("12.2. Item wise Sales Quantity: Yesterday table generated")
     return table1
 
 
@@ -185,7 +185,7 @@ def grandtotal():
         sum_salesval_value)) + "</td>\n"
 
     tab = tabletd + "</tr>\n"
-    print("11.3. Yesterday grand total value added at the bottom of the table\n")
+    print("12.3. Item wise Sales Quantity: Yesterday Summery table generated\n")
     return tab
 
 
@@ -229,5 +229,5 @@ def item_wise_yesterday_no_sales_Records():
 
         table1 = tabletd + "</tr>\n"
 
-    print("12. Yesterday No sale table Created\n")
+    print("13. No Sales Item: Yesterday  table Created\n")
     return table1

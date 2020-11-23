@@ -1,63 +1,55 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-import pyodbc as db
-import numpy as np
-import sys
 
-# name ='Mr. A. K. M. Nawajesh Hossain'
-#
-connection = db.connect('DRIVER={SQL Server};'
-                        'SERVER=137.116.139.217;'
-                        'DATABASE=ARCHIVESKF;'
-                        'UID=sa;PWD=erp@123')
+import Functions.db_connection as dbc
 
 
 def stock_aging_chart(name):
     try:
         executive_target_df = pd.read_sql_query("""
                 Select  
-Sum(case when AGEING='Within 15 Days' then TotalStock Else 0 end) 'Within 15 Days' 
-,Sum(case when AGEING='Within 15 Days' then TotalBrand Else 0 end) '15 Days Brand' 
-,Sum(case when AGEING='Within 15 Days' then TotalSKU Else 0 end) '15 Days SKU' 
-
-,Sum(case when AGEING='Within 30 Days' then TotalStock Else 0 end) 'Within 30 Days' 
-,Sum(case when AGEING='Within 30 Days' then TotalBrand Else 0 end) '30 Days Brand'
-,Sum(case when AGEING='Within 30 Days' then TotalSKU Else 0 end) '30 Days SKU' 
-
-,Sum(case when AGEING='Within 60 Days' then TotalStock Else 0 end) 'Within 60 Days'
-,Sum(case when AGEING='Within 60 Days' then TotalBrand Else 0 end) '60 Days Brand'
-,Sum(case when AGEING='Within 60 Days' then TotalSKU Else 0 end) '60 Days SKU' 
-
-,sum(case when AGEING='Within 90 Days' then TotalStock Else 0 end) 'Within 90 Days' 
-,Sum(case when AGEING='Within 90 Days' then TotalBrand Else 0 end) '90 Days Brand'
-,Sum(case when AGEING='Within 90 Days' then TotalSKU Else 0 end) '90 Days SKU' 
-
-,Sum(case when AGEING='Within 120 Days' then TotalStock Else 0 end) 'Within 120 Days' 
-,Sum(case when AGEING='Within 120 Days' then TotalBrand Else 0 end) '120 Days Brand'
-,Sum(case when AGEING='Within 120 Days' then TotalSKU Else 0 end) '120 Days SKU'
-
-,Sum(case when AGEING='More Than 120 Days' then TotalStock Else 0 end) 'More Than 120 Days'
-,Sum(case when AGEING='More Than 120 Days' then TotalBrand Else 0 end) 'More Than 120 Days Brand'
-,Sum(case when AGEING='More Than 120 Days' then TotalSKU Else 0 end) 'More Than 120 Days SKU'
-
-
-,Sum(case when AGEING='More Than 1 Year' then TotalStock Else 0 end) 'More Than 1 Year'
-,Sum(case when AGEING='More Than 1 Year' then TotalBrand Else 0 end) 'More Than 1 Year Brand'
-,Sum(case when AGEING='More Than 1 Year' then TotalSKU Else 0 end) 'More Than 1 Year SKU'
-
-,Sum(case when AGEING='Expired' then TotalStock Else 0 end) 'Expired'
-,Sum(case when AGEING='Expired' then TotalBrand Else 0 end) 'Expired Brand'
-,Sum(case when AGEING='Expired' then TotalSKU Else 0 end) 'Expired SKU'
-
-from 
-(select AGEING,count(distinct brand) as TotalBrand,count (distinct itemname) as TotalSKU, SUM(QTYAVAIL) AS TotalStock  from 
-(select ITEMNO,AUDTORG,AGEING,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot WHERE AUDTORG<>'SKFDAT') as T1
-LEFT JOIN
-(select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
-ON (T1.ITEMNO=T2.ITEMNO)
-WHERE T2.GPMNAME like ?
-Group by  AGEING)as T3
-                 """, connection, params={name})
+                Sum(case when AGEING='Within 15 Days' then TotalStock Else 0 end) 'Within 15 Days' 
+                ,Sum(case when AGEING='Within 15 Days' then TotalBrand Else 0 end) '15 Days Brand' 
+                ,Sum(case when AGEING='Within 15 Days' then TotalSKU Else 0 end) '15 Days SKU' 
+                
+                ,Sum(case when AGEING='Within 30 Days' then TotalStock Else 0 end) 'Within 30 Days' 
+                ,Sum(case when AGEING='Within 30 Days' then TotalBrand Else 0 end) '30 Days Brand'
+                ,Sum(case when AGEING='Within 30 Days' then TotalSKU Else 0 end) '30 Days SKU' 
+                
+                ,Sum(case when AGEING='Within 60 Days' then TotalStock Else 0 end) 'Within 60 Days'
+                ,Sum(case when AGEING='Within 60 Days' then TotalBrand Else 0 end) '60 Days Brand'
+                ,Sum(case when AGEING='Within 60 Days' then TotalSKU Else 0 end) '60 Days SKU' 
+                
+                ,sum(case when AGEING='Within 90 Days' then TotalStock Else 0 end) 'Within 90 Days' 
+                ,Sum(case when AGEING='Within 90 Days' then TotalBrand Else 0 end) '90 Days Brand'
+                ,Sum(case when AGEING='Within 90 Days' then TotalSKU Else 0 end) '90 Days SKU' 
+                
+                ,Sum(case when AGEING='Within 120 Days' then TotalStock Else 0 end) 'Within 120 Days' 
+                ,Sum(case when AGEING='Within 120 Days' then TotalBrand Else 0 end) '120 Days Brand'
+                ,Sum(case when AGEING='Within 120 Days' then TotalSKU Else 0 end) '120 Days SKU'
+                
+                ,Sum(case when AGEING='More Than 120 Days' then TotalStock Else 0 end) 'More Than 120 Days'
+                ,Sum(case when AGEING='More Than 120 Days' then TotalBrand Else 0 end) 'More Than 120 Days Brand'
+                ,Sum(case when AGEING='More Than 120 Days' then TotalSKU Else 0 end) 'More Than 120 Days SKU'
+                
+                
+                ,Sum(case when AGEING='More Than 1 Year' then TotalStock Else 0 end) 'More Than 1 Year'
+                ,Sum(case when AGEING='More Than 1 Year' then TotalBrand Else 0 end) 'More Than 1 Year Brand'
+                ,Sum(case when AGEING='More Than 1 Year' then TotalSKU Else 0 end) 'More Than 1 Year SKU'
+                
+                ,Sum(case when AGEING='Expired' then TotalStock Else 0 end) 'Expired'
+                ,Sum(case when AGEING='Expired' then TotalBrand Else 0 end) 'Expired Brand'
+                ,Sum(case when AGEING='Expired' then TotalSKU Else 0 end) 'Expired SKU'
+                
+                from 
+                (select AGEING,count(distinct brand) as TotalBrand,count (distinct itemname) as TotalSKU, SUM(QTYAVAIL) AS TotalStock  from 
+                (select ITEMNO,AUDTORG,AGEING,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot WHERE AUDTORG<>'SKFDAT') as T1
+                LEFT JOIN
+                (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
+                ON (T1.ITEMNO=T2.ITEMNO)
+                WHERE T2.GPMNAME like ?
+                Group by  AGEING)as T3
+                 """, dbc.connection, params={name})
 
 
         fifteen_days = executive_target_df['Within 15 Days'].tolist()
@@ -104,4 +96,4 @@ Group by  AGEING)as T3
         ax.text(0.2, 0.5, 'Due to target unavailability the chart could not get generated.', color='red', fontsize=14)
         ax.legend(['Target', 'Sales'])
         ax.tight_layout()
-        print('7. Error !!!! Quantity wise Stock Aging figure not generated\n')
+        print('7.3 Error !!!! Quantity wise Stock Aging figure not generated\n')
