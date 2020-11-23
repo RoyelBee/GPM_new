@@ -11,7 +11,7 @@ connection = db.connect('DRIVER={SQL Server};'
                         'UID=sa;PWD=erp@123')
 
 def get_branch_aging_stock_status(name):
-    df = pd.read_sql_query("""Select * from
+    df = pd.read_sql_query(""" Select * from
         (select *
         from
         (

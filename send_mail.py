@@ -177,87 +177,87 @@ def send_mail(gpm_name):
     brand.add_header('Content-ID', '<brand>')
     msgRoot.attach(brand)
 
-    # # -----------------------------------------------------
-    # # --------- 19 Process all attached data --------------
-    attachdata.dataFormating()
-    # # -----------------------------------------------------
-
-    # 1. Add GPM branch wise aging Stock dataset
-    part = MIMEBase('application', "octet-stream")
-    file_location = d.get_directory() + '/Data/branch_wise_aging_stock_copy.xlsx'
-    filename = os.path.basename(file_location)
-    attachment = open(file_location, "rb")
-    part = MIMEBase('application', 'octet-stream')
-    part.set_payload(attachment.read())
-    encoders.encode_base64(part)
-    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    msgRoot.attach(part)
-
-    # 2. Add GPM branch wise stock status dataset
-    part = MIMEBase('application', "octet-stream")
-    file_location = d.get_directory() + '/Data/branch_wise_stock_status_copy.xlsx'
-    filename = os.path.basename(file_location)
-    attachment = open(file_location, "rb")
-    part = MIMEBase('application', 'octet-stream')
-    part.set_payload(attachment.read())
-    encoders.encode_base64(part)
-    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    msgRoot.attach(part)
-
-    # 3. Add GPM item wise yesterday sales dataset
-    part = MIMEBase('application', "octet-stream")
-    file_location = d.get_directory() + '/Data/item_wise_yesterday_sales_copy.xlsx'
-    filename = os.path.basename(file_location)
-    attachment = open(file_location, "rb")
-    part = MIMEBase('application', 'octet-stream')
-    part.set_payload(attachment.read())
-    encoders.encode_base64(part)
-    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    msgRoot.attach(part)
-
-    # 4. Add GPM last three month no sales dataset
-    part = MIMEBase('application', "octet-stream")
-    file_location = d.get_directory() + '/Data/NoSales_last_three_month_copy.xlsx'
-    filename = os.path.basename(file_location)
-    attachment = open(file_location, "rb")
-    part = MIMEBase('application', 'octet-stream')
-    part.set_payload(attachment.read())
-    encoders.encode_base64(part)
-    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    msgRoot.attach(part)
-
-    # 5. Add GPM No Stock last three month dataset
-    part = MIMEBase('application', "octet-stream")
-    file_location = d.get_directory() + '/Data/NoStock_last_three_month_copy.xlsx'
-    filename = os.path.basename(file_location)
-    attachment = open(file_location, "rb")
-    part = MIMEBase('application', 'octet-stream')
-    part.set_payload(attachment.read())
-    encoders.encode_base64(part)
-    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    msgRoot.attach(part)
-
-    # 6. Add GPM yesterday no sales dataset
-    part = MIMEBase('application', "octet-stream")
-    file_location = d.get_directory() + '/Data/yesterday_no_sales_copy.xlsx'
-    filename = os.path.basename(file_location)
-    attachment = open(file_location, "rb")
-    part = MIMEBase('application', 'octet-stream')
-    part.set_payload(attachment.read())
-    encoders.encode_base64(part)
-    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    msgRoot.attach(part)
-
-    # 7. Add GPM yesterday no sales dataset
-    part = MIMEBase('application', "octet-stream")
-    file_location = d.get_directory() + '/Data/branch_wise_detailed_data_Sales_and_Stock-Copy.xlsx'
-    filename = os.path.basename(file_location)
-    attachment = open(file_location, "rb")
-    part = MIMEBase('application', 'octet-stream')
-    part.set_payload(attachment.read())
-    encoders.encode_base64(part)
-    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    msgRoot.attach(part)
+    # # # -----------------------------------------------------
+    # # # --------- 19 Process all attached data --------------
+    # attachdata.dataFormating()
+    # # # -----------------------------------------------------
+    #
+    # # 1. Add GPM branch wise aging Stock dataset
+    # part = MIMEBase('application', "octet-stream")
+    # file_location = d.get_directory() + '/Data/branch_wise_aging_stock_copy.xlsx'
+    # filename = os.path.basename(file_location)
+    # attachment = open(file_location, "rb")
+    # part = MIMEBase('application', 'octet-stream')
+    # part.set_payload(attachment.read())
+    # encoders.encode_base64(part)
+    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    # msgRoot.attach(part)
+    #
+    # # 2. Add GPM branch wise stock status dataset
+    # part = MIMEBase('application', "octet-stream")
+    # file_location = d.get_directory() + '/Data/branch_wise_stock_status_copy.xlsx'
+    # filename = os.path.basename(file_location)
+    # attachment = open(file_location, "rb")
+    # part = MIMEBase('application', 'octet-stream')
+    # part.set_payload(attachment.read())
+    # encoders.encode_base64(part)
+    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    # msgRoot.attach(part)
+    #
+    # # 3. Add GPM item wise yesterday sales dataset
+    # part = MIMEBase('application', "octet-stream")
+    # file_location = d.get_directory() + '/Data/item_wise_yesterday_sales_copy.xlsx'
+    # filename = os.path.basename(file_location)
+    # attachment = open(file_location, "rb")
+    # part = MIMEBase('application', 'octet-stream')
+    # part.set_payload(attachment.read())
+    # encoders.encode_base64(part)
+    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    # msgRoot.attach(part)
+    #
+    # # 4. Add GPM last three month no sales dataset
+    # part = MIMEBase('application', "octet-stream")
+    # file_location = d.get_directory() + '/Data/NoSales_last_three_month_copy.xlsx'
+    # filename = os.path.basename(file_location)
+    # attachment = open(file_location, "rb")
+    # part = MIMEBase('application', 'octet-stream')
+    # part.set_payload(attachment.read())
+    # encoders.encode_base64(part)
+    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    # msgRoot.attach(part)
+    #
+    # # 5. Add GPM No Stock last three month dataset
+    # part = MIMEBase('application', "octet-stream")
+    # file_location = d.get_directory() + '/Data/NoStock_last_three_month_copy.xlsx'
+    # filename = os.path.basename(file_location)
+    # attachment = open(file_location, "rb")
+    # part = MIMEBase('application', 'octet-stream')
+    # part.set_payload(attachment.read())
+    # encoders.encode_base64(part)
+    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    # msgRoot.attach(part)
+    #
+    # # 6. Add GPM yesterday no sales dataset
+    # part = MIMEBase('application', "octet-stream")
+    # file_location = d.get_directory() + '/Data/yesterday_no_sales_copy.xlsx'
+    # filename = os.path.basename(file_location)
+    # attachment = open(file_location, "rb")
+    # part = MIMEBase('application', 'octet-stream')
+    # part.set_payload(attachment.read())
+    # encoders.encode_base64(part)
+    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    # msgRoot.attach(part)
+    #
+    # # 7. Add GPM yesterday no sales dataset
+    # part = MIMEBase('application', "octet-stream")
+    # file_location = d.get_directory() + '/Data/branch_wise_detailed_data_Sales_and_Stock-Copy.xlsx'
+    # filename = os.path.basename(file_location)
+    # attachment = open(file_location, "rb")
+    # part = MIMEBase('application', 'octet-stream')
+    # part.set_payload(attachment.read())
+    # encoders.encode_base64(part)
+    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    # msgRoot.attach(part)
 
     # #----------- Finally send mail and close server connection -----
     server = smtplib.SMTP(email_server_host, port)

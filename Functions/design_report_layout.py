@@ -91,6 +91,13 @@ def generate_layout(gpm_name):
                         text-align: center;
                         font-size: 10px;
                     }
+                    #ssstd{
+                
+                        padding-left: 3px;
+                        padding-right: 3px;
+                        text-align: right;
+                        font-size: 10px;
+                    }
                     #padding{
                 
                         padding-left: 5px;
@@ -124,7 +131,7 @@ def generate_layout(gpm_name):
                         text-align: left;
                         padding-left: 2px;
                         font-weight: bold;
-                        font-size: 14px;
+                        font-size: 12px;
                         color: black;
                     }
                     .branch_name{
@@ -250,8 +257,8 @@ def generate_layout(gpm_name):
                     
                     .y_desc_sales{
                         width: 250px !important;
-                        font-size: 14px;
-                        font-weight: bolder;
+                        font-size: 12px;
+                        font-weight: bold;
                         color: black;
                     }
                     
@@ -372,7 +379,9 @@ def generate_layout(gpm_name):
             
             <table border="1px solid gray" width='300%'>
                 <tr> 
-                    <th colspan='38' style="background-color: #f5f681;text-align: center; font-size:20px;"> Branch - Brand - SKU wise Stock Aging Status: Summary</th> 
+                    <th colspan='38' style="background-color: #f5f681;text-align: center; font-size:20px;"> 
+                    Brand Wise SKU Wise Stock Aging Report Status Summary (In between 90 Days to Expiry Days)
+                    </th> 
                 </tr>
                     <tr>
                         
@@ -431,7 +440,7 @@ def generate_layout(gpm_name):
             
             <table border="1px solid gray" width="100%"> 
                    <tr> 
-                        <th colspan='12' style=" background-color: #bcf19f; font-size: 18px;"> Item wise Sales Quantity: Yesterday </th> 
+                        <th colspan='12' style=" background-color: #bcf19f; font-size: 18px;"> Item wise Sales (Yesterday) </th> 
                     </tr>
 
                     <tr>
@@ -441,11 +450,11 @@ def generate_layout(gpm_name):
                         <th  class="description1" style="text-align: left; font-size: 14px; width:20%;">Item Description</th>
                         <th  class="uom" style="text-align: right; font-size: 14px;"> UOM</th>
                         <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Quantity</th>
-                        <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Quantity %</th>
+                        <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Qty Cont%</th>
                         <th  class="uom" style="text-align: right; font-size: 14px;"> TP </th>
                         <th  class="uom" style="text-align: right; font-size: 14px;"> TP Sales Value </th>
                         <th  class="uom" style="text-align: right ; font-size: 14px;"> Net Sales Value</th>
-                        <th  class="uom" style="text-align: right ; font-size: 14px;"> Net Sales %</th>
+                        <th  class="uom" style="text-align: right ; font-size: 14px;"> Nes Sales Cont%</th>
                         <th  class="uom" style="text-align: right ; font-size: 14px;"> Discount</th>
                     </tr>
 
@@ -552,7 +561,7 @@ def generate_layout(gpm_name):
                         <th rowspan="2" class="style1" style="text-align: center; width:8%;">SL</th>
                         <th rowspan="2" class="style1" style="text-align: left;"> Product Brand </th>
                         <th rowspan="2" class="style1" style="width: 5%;text-align: center;">SL</th>
-                        <th rowspan="2"class="style1" style="width: 25%;text-align: left;" >Item Description</th>
+                        <th rowspan="2"class="style1" style="width: 30%;text-align: left;" >Item Description</th>
                         <th rowspan="2"class="style1">BOG</th>
                         <th rowspan="2"class="style1">BSL</th>
                         <th rowspan="2"class="style1">COM</th>
@@ -625,13 +634,14 @@ def generate_layout(gpm_name):
 
     <tr>
         <th rowspan="2" class="style1" style="font-size: 12px;background-color: #d7fed7;">SL &nbsp&nbsp</th>
-        <th rowspan="2" class="brand" style="font-size: 12px;background-color: #d7fed7;"> Product Brand
+        <th rowspan="2" class="brand" style="font-size: 12px;font-weight: bolder; background-color: #d7fed7;"> 
+        Product Brand
 
         </th>
         <th rowspan="2" class="item_sl" style="font-size: 12px;background-color: #d7fed7;"> SL
 
         </th>
-        <th rowspan="2" class="description" style="width:14%; font-size: 12px;background-color: #d7fed7;text-align: 
+        <th rowspan="2" class="description" style="width:14%;font-weight: bolder; font-size: 12px;background-color: #d7fed7;text-align: 
         left;">Item
             <br> Description
         </th>

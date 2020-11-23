@@ -1,0 +1,17 @@
+In dashboard :
+    1. No sales SKU -> Brand Coverage
+    2. Need to add title for yesterday: Yesterday Brand wise SKU wise summary
+
+Branch - Brand - SKU wise Stock Aging Status: Summary table
+    3. Title : Brand Wise SKU Wise Stock Aging Report Status Summary (In between 90 Days to Expiry Days) * solved *
+
+Item wise Sales Quantity: Yesterday Table
+    4. Item wise Sales (Yesterday) * solved *
+    5. Sales Quantity % columns -> Sales Qty Cont%  * solved *
+        (Here Cont%) is contribute actually it is sales percent value
+    6. Net sales % columns => Nes Sales Cont%) * solved *
+    7. Need to add four more columns after Sales Quantity %
+        1. This month target
+        2. MTD target
+        3. LD target (months target - sold target) / remaining days in months
+        4. Remain target (Not clear)

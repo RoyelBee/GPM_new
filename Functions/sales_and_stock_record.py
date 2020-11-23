@@ -23,22 +23,22 @@ def get_Sales_and_Stock_Records():
         for j in range(0, 1):
             # BSL NO
             if (bslno[i - 1] != 0):
-                tabletd = tabletd + "<td id=\"sss\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
+                tabletd = tabletd + "<td id=\"serial\" rowspan=\"" + str(bslno[i - 1]) + "\"> " + str(
                     int(sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(1, 2):
             # Brand
             if (brand[i - 1] != 0):
-                tabletd = tabletd + "<td id=\"btd\" rowspan=\"" + str(brand[i - 1]) + "\">" + str(
+                tabletd = tabletd + "<td class=\"brandtd\" rowspan=\"" + str(brand[i - 1]) + "\">" + str(
                     sh.cell_value(i, j)) + "</td>\n"
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td id=\"sss\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
+            tabletd = tabletd + "<td id=\"serial\">" + str(int((sh.cell_value(i, j)))) + "</td>\n"
 
         for j in range(3, 4):
             # item name
-            tabletd = tabletd + "<td id=\"descriptionmain2\">" + str((sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"y_desc_sales\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(4, 5):
             # unit
@@ -96,11 +96,11 @@ def get_Sales_and_Stock_Records():
 
         for j in range(15, 16):
             NationwideStock = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"sss\">" + str(ofn.number_style(str(NationwideStock))) + "</td>\n"
+            tabletd = tabletd + "<td id=\"ssstd\">" + str(ofn.number_style(str(NationwideStock))) + "</td>\n"
 
         for j in range(16, 17):
             totalskfqty = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"sss\">" + str(ofn.number_style(str(totalskfqty))) + "</td>\n"
+            tabletd = tabletd + "<td id=\"ssstd\">" + str(ofn.number_style(str(totalskfqty))) + "</td>\n"
 
 
         for j in range(17, 18):
