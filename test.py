@@ -64,5 +64,9 @@
 # import Functions.sales_and_stock_record as sl
 # sl.get_Sales_and_Stock_Records()
 
-import Functions.design_report_layout as de
-de.generate_layout('Mr. A. K. M. Nawajesh Hossain')
+# import Functions.design_report_layout as de
+# de.generate_layout('Mr. A. K. M. Nawajesh Hossain')
+
+
+import Functions.item_wise_yesterday_sales as y
+y.item_wise_yesterday_sales_Records()

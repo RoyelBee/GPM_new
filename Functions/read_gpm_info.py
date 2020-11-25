@@ -9,16 +9,13 @@ import pyodbc as db
 # branch = []
 # total_brands = len(akhtar_data_df['brand'])
 
-connection = db.connect('DRIVER={SQL Server};'
-                        'SERVER=137.116.139.217;'
-                        'DATABASE=ARCHIVESKF;'
-                        'UID=sa;PWD=erp@123')
+import Functions.db_connection as dbc
 
 
 def getGPMName(name):
     df = pd.read_sql_query(""" select Name, Email, count(brand) as TotalBrands from GPMBRAND
             where Name like ?
-            group by Name, Email """, connection, params={name})
+            group by Name, Email """, dbc.connection, params={name})
     name = df['Name'].iloc[0]
     return name
 
@@ -26,7 +23,7 @@ def getGPMName(name):
 def getGPMEmail(name):
     df = pd.read_sql_query(""" select Name, Email, count(brand) as TotalBrands from GPMBRAND
             where Name like ?
-            group by Name, Email""", connection, params={name})
+            group by Name, Email""", dbc.connection, params={name})
     email = df['Email'].iloc[0]
     email_format = [email, '']
     brands = df['TotalBrands'].iloc[0]
@@ -36,7 +33,7 @@ def getGPMEmail(name):
 def getGPMNumberofBrands(name):
     df = pd.read_sql_query(""" select Name, Email, count(brand) as TotalBrands from GPMBRAND
                 where Name like ?
-                group by Name, Email""", connection, params={name})
+                group by Name, Email""", dbc.connection, params={name})
 
     brands = df['TotalBrands'].iloc[0]
     return brands
@@ -45,7 +42,7 @@ def getGPMNumberofBrands(name):
 def getGPMNFullInfo(name):
     df = pd.read_sql_query(""" select Name, Email,Phone, Designation, count(brand) as TotalBrands from GPMBRAND
                 where Name like ?
-                group by Name, Email, Phone, Designation """, connection, params={name})
+                group by Name, Email, Phone, Designation """, dbc.connection, params={name})
     name = str(df['Name'].iloc[0])
     email = str(df['Email'].iloc[0])
     phone = str(df['Phone'].iloc[0])

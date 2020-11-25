@@ -57,7 +57,7 @@ def executive_sales_target(name):
                             and convert(varchar(10),getdate(), 112)
             and PRINFOSKF.GPMNAME like ?
             group by CP01,b.[Executive ShortName]
-            order by CP01 asc""", dbc.connection, params={name})
+            order by CP01 asc """, dbc.connection, params={name})
 
         # print(executive_target_df)
         Executive_sale = executive_sales_df['ItemSales'].tolist()

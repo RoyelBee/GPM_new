@@ -38,7 +38,6 @@ except:
 # except:
 #     error.send_error_msg('Mr. Fazal Mohammad Tanim')
 
-
 # # --------- GPM Mr. Mohammad Akhter Alam Khan -------------------------
 # try:
 #     action.send_mail('Mr. Mohammad Akhter Alam Khan')

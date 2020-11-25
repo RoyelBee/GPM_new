@@ -108,7 +108,7 @@ def get_branch_aging_stock_status(name):
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"serial\">" + str(int(sh.cell_value(i, j))) + "</td>\n"
+            tabletd = tabletd + "<td class=\"serial\">" + str(int(sh.cell_value(i, j)))  + str('<br>')+ "</td>\n"
 
         for j in range(3, 4):
             # ITemNo

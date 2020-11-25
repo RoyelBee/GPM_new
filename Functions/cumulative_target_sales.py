@@ -198,8 +198,12 @@ def cumulative_target_sales(name):
         plt.ylabel('Quantity(K)', color='black', fontsize=12, fontweight='bold')
 
         date = datetime.datetime.now()
-        month = date.strftime("%B")
-        plt.title('Day wise Cumulative MTD Target VS Sales (' +str(month)+ ')', color='black', fontweight='bold',
+        month = date.strftime("%b")
+        year = date.strftime("%y")
+
+
+        plt.title('Day wise Cumulative MTD Target VS Sales (' +str(month)+"' "+ str(year)+ ')', color='black', \
+                                                                                              fontweight='bold',
                   fontsize=16)
 
         plt.legend(['Target', 'Trend with Achiv%' ,'Sales'], loc='upper left')

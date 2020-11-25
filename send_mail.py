@@ -49,7 +49,7 @@ def send_mail(gpm_name):
     # # --------- Add Image Border ---------------------------------------
     from PIL import Image
     da = Image.open("./Images/dashboard.png")
-    imageSize = Image.new('RGB', (962, 110))
+    imageSize = Image.new('RGB', (962, 122))
     imageSize.paste(da, (1, 0))
     imageSize.save("./Images/dashboard.png")
 
@@ -94,7 +94,7 @@ def send_mail(gpm_name):
 
     to = ['', '']
     cc = ['', '']
-    bcc = ['rejaul.islam@transcombd.com', '']
+    bcc = ['rejaul.islam@transcombd.com', '', '']
 
     msgRoot = MIMEMultipart('related')
     me = 'erp-bi.service@transcombd.com'

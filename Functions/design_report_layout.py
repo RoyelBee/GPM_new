@@ -380,7 +380,7 @@ def generate_layout(gpm_name):
             <table border="1px solid gray" width='300%'>
                 <tr> 
                     <th colspan='38' style="background-color: #f5f681;text-align: center; font-size:20px;"> 
-                    Brand Wise SKU Wise Stock Aging Report Status Summary (In between 90 Days to Expiry Days)
+                    Brand Wise SKU Wise Stock Aging Report Status Summary : In between 90 Days to Expiry Days
                     </th> 
                 </tr>
                     <tr>
@@ -440,25 +440,30 @@ def generate_layout(gpm_name):
             
             <table border="1px solid gray" width="100%"> 
                    <tr> 
-                        <th colspan='12' style=" background-color: #bcf19f; font-size: 18px;"> Item wise Sales (Yesterday) </th> 
+                        <th colspan='15' style=" background-color: #bcf19f; font-size: 18px;"> Item wise Sales : 
+                        Yesterday </th> 
                     </tr>
-
                     <tr>
-                        <th  class="brandsl" style="font-size: 14px;">SL</th>
-                        <th class="brand" style="font-size: 14px;"> Product Brand </th>
-                        <th  class="item_sl" style="text-align: center; font-size: 14px;">SL</th>
-                        <th  class="description1" style="text-align: left; font-size: 14px; width:20%;">Item Description</th>
-                        <th  class="uom" style="text-align: right; font-size: 14px;"> UOM</th>
-                        <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Quantity</th>
-                        <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Qty Cont%</th>
-                        <th  class="uom" style="text-align: right; font-size: 14px;"> TP </th>
-                        <th  class="uom" style="text-align: right; font-size: 14px;"> TP Sales Value </th>
-                        <th  class="uom" style="text-align: right ; font-size: 14px;"> Net Sales Value</th>
-                        <th  class="uom" style="text-align: right ; font-size: 14px;"> Nes Sales Cont%</th>
-                        <th  class="uom" style="text-align: right ; font-size: 14px;"> Discount</th>
+                         <th  class="brandsl" style="font-size: 14px;">SL</th>
+                         <th class="brand" style="font-size: 14px;"> Product Brand </th>
+                         <th  class="item_sl" style="text-align: center; font-size: 14px;">SL</th>
+                         <th  class="description1" style="text-align: left; font-size: 14px; width:20%;">Item Description</th>
+                         <th  class="uom" style="text-align: right; font-size: 14px;"> UOM</th>
+                         <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Quantity</th>
+                         <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Quantity %</th>
+                         <th  class="uom" style="text-align: right; font-size: 14px;"> Monthly Target </th>
+                         <th  class="uom" style="text-align: right; font-size: 14px;"> MTD Target </th>
+                         <th  class="uom" style="text-align: right; font-size: 14px;"> TP </th>
+                         <th  class="uom" style="text-align: right; font-size: 14px;"> TP Sales Value </th>
+                         <th  class="uom" style="text-align: right ; font-size: 14px;"> Net Sales Value</th>
+                         <th  class="uom" style="text-align: right ; font-size: 14px;"> Net Sales %</th>
+                         <th  class="uom" style="text-align: right ; font-size: 14px;"> Discount</th>
+                         <th  class="uom" style="text-align: right ; font-size: 14px;"> LD Target Qty/Day</th>
                     </tr>
 
-                   """ + yesterday.item_wise_yesterday_sales_Records() + yesterday.grandtotal() + """
+
+
+                   """ + yesterday.item_wise_yesterday_sales_Records()  + """
                 </table>  <br> 
 
             <table border="1px solid gray" width="100%"> 

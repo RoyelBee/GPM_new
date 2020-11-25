@@ -1,4 +1,3 @@
-
 from PIL import Image, ImageFont, ImageDraw
 import pyodbc
 import pandas as pd
@@ -7,14 +6,18 @@ from datetime import date, datetime
 import sys
 import path as dir
 
-import Functions.db_connection as dbc
+conn = pyodbc.connect('DRIVER={SQL Server};'
+                      'SERVER=137.116.139.217;'
+                      'DATABASE=ARCHIVESKF;'
+                      'UID=sa;'
+                      'PWD=erp@123;')
 
 def dash_kpi_generator(name):
     total_sku = pd.read_sql_query("""select gpmname,count(distinct BRAND) as 'total brand',count(itemno) as 'total_SKU' from PRINFOSKF
                    where status=1
                    and gpmname like ?
                    group by gpmname 
-                   """, dbc.connection, params={name})
+                   """, conn, params={name})
 
     total_sku_list = total_sku['total_SKU'].to_list()
     total_brand_list = total_sku['total brand'].tolist()
@@ -26,7 +29,7 @@ def dash_kpi_generator(name):
                    and transtype = 1
                   and left(transdate,6)=CONVERT(varchar(6), dateAdd(day,0,getdate()), 112)
 
-                   """, dbc.connection, params={name})
+                   """, conn, params={name})
 
     sold_sku_list = sold_sku['Sold_SKU'].to_list()
     no_sales_sku = total_sku_list[0] - sold_sku_list[0]
@@ -39,7 +42,7 @@ def dash_kpi_generator(name):
                        (select itemno,isnull(sum(QTYONHAND),0) as stock from ICStockStatusCurrentLOT
                        group by itemno) as b
                        on a.itemno = b.itemno
-                       where stock = 0 """, dbc.connection, params={name})
+                       where stock = 0 """, conn, params={name})
 
     no_stock_sku_list = no_stock_sku['no stock item'].to_list()
     read_file_for_all_data = pd.read_excel('./Data/gpm_data.xlsx')
@@ -70,7 +73,15 @@ def dash_kpi_generator(name):
     sold_sku_percentage = str(round((sold_sku_list[0] / total_sku_list[0]) * 100)) + '%'
     # print(sold_sku_percentage)
 
-    No_sold_sku_percentage = str(round((no_sales_sku / total_sku_list[0]) * 100)) + '%'
+    yesterdaySalesQty = pd.read_excel(dir.get_directory() + '/Data/html_data_Sales_and_Stock.xlsx')
+    # y = yesterdaySalesQty['YesterdaySalesQty'] != 0
+
+    y2 = yesterdaySalesQty['BRAND'].unique()
+
+
+
+    brand_coverage = str(round((len(y2) / total_brand_list[0]) * 100)) + '%'
+
     # print(No_sold_sku_percentage)
 
     No_stock_sku_percentage = str(round((no_stock_sku_list[0] / total_sku_list[0]) * 100)) + '%'
@@ -79,12 +90,13 @@ def dash_kpi_generator(name):
     image = Image.open(dir.get_directory() + "/Images/dash_kpi.png")
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype(dir.get_directory() + '/Images/FrancoisOne-Regular.ttf', 30)
-    draw.text((80, 50), str(total_brand_list[0]), font=font, fill=(39, 98, 236))
-    draw.text((270, 50), str(total_sku_list[0]), font=font, fill=(39, 98, 236))
-    draw.text((420, 50), str(sold_sku_list[0]) + ' (' + sold_sku_percentage + ')', font=font, fill=(39, 98, 236))
-    draw.text((615, 50), str(no_sales_sku) + ' (' + No_sold_sku_percentage + ')', font=font, fill=(39, 98, 236))
-    draw.text((805, 50), str(no_stock_sku_list[0]) + ' (' + No_stock_sku_percentage + ')', font=font,
-              fill=(39, 98, 236))
+    draw.text((80, 55), str(total_brand_list[0]), font=font, fill=(39, 98, 236))
+    draw.text((225, 55), str(len(y2)) + ' (' + brand_coverage + ')', font=font, fill=(39, 95, 236))
+    draw.text((460, 55), str(total_sku_list[0]), font=font, fill=(39, 98, 236))
+
+    draw.text((610, 55), str(sold_sku_list[0]) + ' (' + sold_sku_percentage + ')', font=font, fill=(39, 98, 236))
+    draw.text((805, 55), str(no_stock_sku_list[0]) + ' (' + No_stock_sku_percentage + ')', font=font, fill=(39, 98,
+                                                                                                            236))
 
     # draw.text((70, 220), str(int(sum(total_target) / 1000)) + 'K', font=font, fill=(255, 255, 255))
     # draw.text((260, 220), str(int(sum(total_sales) / 1000)) + 'K', font=font, fill=(255, 255, 255))
@@ -95,6 +107,3 @@ def dash_kpi_generator(name):
     image.save('./Images/dashboard.png')
 
     print('3. Dash generated\n')
-
-
-
