@@ -54,12 +54,14 @@ def generate_layout(gpm_name):
                         padding-right: 3px;
                         text-align: right;
                         font-size: 12px;   
+                        height: 40px;
                     }
                     
                     #number_style2{
                         padding-right: 3px;
                         text-align: right;
-                        font-size: 10px;   
+                        font-size: 10px;
+                        height: 40px;   
                     }
                     
                     .item_sl{
@@ -370,12 +372,13 @@ def generate_layout(gpm_name):
 
             </head>
             <body>
-                <img src="cid:banner_ai" width="90%"> <br>
+            <img src="cid:banner_ai" width="90%"> <br>
                 <img src="cid:dash" width="90%"> <br>
                 <img src="cid:cm" width="90%"> <br>
                 <img src="cid:executive" width="90%"> <br>
                 <img src="cid:brand"> <br>
                 <img src="cid:aging" width="100%"> <br> <br> <br> <br>
+                
             
             <table border="1px solid gray" width='300%'>
                 <tr> 
@@ -438,7 +441,7 @@ def generate_layout(gpm_name):
             </table>  <br><br>
             
             
-            <table border="1px solid gray" width="100%"> 
+            <table border="1px solid gray" width='300%'> 
                    <tr> 
                         <th colspan='15' style=" background-color: #bcf19f; font-size: 18px;"> Item wise Sales : 
                         Yesterday </th> 
@@ -447,10 +450,11 @@ def generate_layout(gpm_name):
                          <th  class="brandsl" style="font-size: 14px;">SL</th>
                          <th class="brand" style="font-size: 14px;"> Product Brand </th>
                          <th  class="item_sl" style="text-align: center; font-size: 14px;">SL</th>
-                         <th  class="description1" style="text-align: left; font-size: 14px; width:20%;">Item Description</th>
+                         <th  class="description1" style="text-align: left; font-size: 14px; width:20%;">Item 
+                              <br> Description</th>
                          <th  class="uom" style="text-align: right; font-size: 14px;"> UOM</th>
-                         <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Quantity</th>
-                         <th  class="uom" style="text-align: right; font-size: 14px;"> Sales Quantity %</th>
+                         <th  class="uom" style="text-align: right; font-size: 14px;"> Sales <br> Quantity</th>
+                         <th  class="uom" style="text-align: right; font-size: 14px;"> Sales <br> Quantity%</th>
                          <th  class="uom" style="text-align: right; font-size: 14px;"> Monthly Target </th>
                          <th  class="uom" style="text-align: right; font-size: 14px;"> MTD Target </th>
                          <th  class="uom" style="text-align: right; font-size: 14px;"> TP </th>
@@ -458,15 +462,15 @@ def generate_layout(gpm_name):
                          <th  class="uom" style="text-align: right ; font-size: 14px;"> Net Sales Value</th>
                          <th  class="uom" style="text-align: right ; font-size: 14px;"> Net Sales %</th>
                          <th  class="uom" style="text-align: right ; font-size: 14px;"> Discount</th>
-                         <th  class="uom" style="text-align: right ; font-size: 14px;"> LD Target Qty/Day</th>
+                         <th  class="uom" style="text-align: right ; font-size: 14px;"> LD Target <br> Qty/Day</th>
                     </tr>
 
 
 
-                   """ + yesterday.item_wise_yesterday_sales_Records()  + """
+                   """ + yesterday.item_wise_yesterday_sales_Records()  +  yesterday.grandtotal() + """
                 </table>  <br> 
 
-            <table border="1px solid gray" width="100%"> 
+            <table border="1px solid gray" width='300%'> 
                    <tr> 
                         <th colspan='5' style=" background-color: #ffc994; font-size: 20px; "> No Sales Item: Yesterday </th> 
                     </tr>
@@ -483,7 +487,7 @@ def generate_layout(gpm_name):
                   """ + yesterday.item_wise_yesterday_no_sales_Records() + """
                 </table>  <br> <br>
 
-                <table border="1px solid gray" width="100%">
+                <table border="1px solid gray" width='300%'>
                     <tr> 
                         <th colspan='5' style=" background-color: #f4d3b5 ;font-size: 20px;"> No Sales Item: Last 3 Months </th> 
                     </tr>
@@ -500,7 +504,7 @@ def generate_layout(gpm_name):
                 </table>  <br> 
 
 
-                <table border="1px solid black" width="100%"> 
+                <table border="1px solid black" width='300%'> 
                     <tr> 
                         <th colspan='7' style=" background-color: #f4d3b5; font-size: 20px;"> No Stock Item: Last 3 Months </th> 
                     </tr>
@@ -517,7 +521,7 @@ def generate_layout(gpm_name):
                     """ + noStock.get_No_Stock_Records() + """  </tr>
                 </table>  <br> 
 
-                <table border="1px solid black" width="100%"> 
+                <table border="1px solid black" width='300%'> 
                     <tr> 
                         <th colspan='8' style=" background-color: #f4d3b5;text-align: center; font-size: 20px; "> 
                         Branch Wise Item Stock Category </th> 
@@ -538,7 +542,7 @@ def generate_layout(gpm_name):
 
                 </table> <br> <br>  
             
-                 <table  style="border-style:none" width="100%">
+                 <table  style="border-style:none" width='300%'>
                     <tr style="border-style:none;float: right;"> 
                         <th colspan='1' style=" font-size: 14px;width: 1000px;text-align: left;padding-left: 15px; border-style:none"></th>
                         <th colspan='1' style=" background-color: #f40d0d;font-size: 14px; width: 60px; border-style:1px solid black;"></th> 

@@ -5,13 +5,15 @@ import numpy as np
 from calendar import monthrange
 from datetime import date, datetime
 
+
 def formater(val):
     val = str(val)
-    if len(val)> 0:
+    if len(val) > 0:
         val = int(val)
     else:
         val = ''
     return val
+
 
 def item_wise_yesterday_sales_Records():
     df_y_scock = pd.read_excel('Data/gpm_data.xlsx')
@@ -22,6 +24,8 @@ def item_wise_yesterday_sales_Records():
                             70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84]], axis=1)
 
     yesterday_sales = df_stock.loc[df_stock['YesterdaySalesQty'] >= 1]
+    masterData = df_y_scock.loc[df_stock['YesterdaySalesQty'] >= 1]
+
     yesterday_no_sales = df_stock.loc[df_stock['YesterdaySalesQty'] <= 0]
 
     import numpy as np
@@ -30,35 +34,27 @@ def item_wise_yesterday_sales_Records():
     yesterday_no_sales.insert(loc=2, column='ISL NO', value=np.arange(len(yesterday_no_sales)) + 1)
     yesterday_no_sales = yesterday_no_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM']]
     yesterday_no_sales.to_excel('Data/yesterday_no_sales.xlsx', index=False)
-    print('11. Yesterday No Sales Data Saved')
+
+    print('12. Yesterday No Sales Data Saved')
 
     yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
-       'TP', 'TP Sales Value', 'Net Sales Value', 'Discount']]
+                                       'TP', 'TP Sales Value', 'Net Sales Value', 'Discount']]
 
     yesterday_sales = yesterday_sales.drop(yesterday_sales.columns[[2]], axis=1)
     yesterday_sales.insert(loc=2, column='ISL NO', value=np.arange(len(yesterday_sales)) + 1)
-    # yesterday_sales = yesterday_sales[['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
-    #    'TP', 'TP Sales Value', 'Net Sales Value', 'Discount']]
-    # yesterday_sales.to_excel('Data/item_wise_yesterday_sales.xlsx', index=False)
 
 
-    #-----------------change excel percentage---------------------
+    # -----------------change excel percentage---------------------
 
-    dataf = pd.read_excel('Data/item_wise_yesterday_sales.xlsx')
-
-    yesterday_sales_quantity = dataf['Sales Quantity'].to_list()
-
+    yesterday_sales_quantity = yesterday_sales['YesterdaySalesQty'].to_list()
     yesterday_sales_quantity_sum = sum(yesterday_sales_quantity)
-
     yesterdaySalesQtyPercentList = []
 
     for i in yesterday_sales_quantity:
         var = str(round(((i / yesterday_sales_quantity_sum) * 100), 2)) + '%'
         yesterdaySalesQtyPercentList.append(var)
 
-
-
-    net_Sales_Value = dataf['Net Sales Value'].to_list()
+    net_Sales_Value = yesterday_sales['Net Sales Value'].to_list()
     net_Sales_Value_Sum = sum(net_Sales_Value)
 
     netSalesValuePercentList = []
@@ -67,26 +63,9 @@ def item_wise_yesterday_sales_Records():
         var = str(round(((i / net_Sales_Value_Sum) * 100), 2))
         netSalesValuePercentList.append(var)
 
-    df_four = pd.DataFrame(yesterdaySalesQtyPercentList)
-    df_five = pd.DataFrame(netSalesValuePercentList)
+    monthlySalesTarget = masterData['Monthly Sales Target'].to_list()
 
-    col_one = 0, 1, 2, 3, 4, 5
-    dataframe_one = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', usecols=col_one)
-
-    col_two = 6, 7, 8
-    dataframe_two = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', usecols=col_two)
-
-    col_three = 9, 10
-    dataframe_three = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', usecols=col_three)
-    # read new requirement data here
-
-    col_four = 7, 8
-    dataframe_six = pd.read_excel('Data/html_data_Sales_and_Stock.xlsx', usecols=col_four)
-
-    master_table = pd.read_excel('Data/html_data_Sales_and_Stock.xlsx')
-
-    monthlySalesTarget = master_table['Monthly Sales Target'].to_list()
-    actualSalesMTD = master_table['Actual Sales MTD'].to_list()
+    actualSalesMTD = masterData['Actual Sales MTD'].to_list()
 
     dayWiseTarget = np.subtract(monthlySalesTarget, actualSalesMTD)
 
@@ -103,13 +82,9 @@ def item_wise_yesterday_sales_Records():
     for a in dayWiseTarget3:
         dayTarget.append(int(a))
 
-    # print('month sles target = ', monthlySalesTarget)
-    # print('MTD sales  = ', actualSalesMTD)
-    # print('Day wise target =', dayWiseTarget2)
-    # print('Day Target =' , dayTarget)
 
-    df = pd.DataFrame() # 'BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
-       #'TP', 'TP Sales Value', 'Net Sales Value', 'Discount'
+    df = pd.DataFrame()  # 'BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
+    # 'TP', 'TP Sales Value', 'Net Sales Value', 'Discount'
     df['BSL NO'] = yesterday_sales['BSL NO']
     df['BRAND'] = yesterday_sales['BRAND']
     df['ISL NO'] = yesterday_sales['ISL NO']
@@ -129,10 +104,7 @@ def item_wise_yesterday_sales_Records():
     df['LD Target Qty/Day'] = dayTarget
     df.to_excel('Data/item_wise_yesterday_sales.xlsx', index=False)
 
-
-
-    print('11.1. Yesterday Item wise sales data saved')
-
+    print('12.1. Yesterday Item wise sales data saved')
 
     excel_data_df = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', sheet_name='Sheet1',
                                   usecols=['BSL NO', 'BRAND'])
@@ -170,7 +142,7 @@ def item_wise_yesterday_sales_Records():
 
         for j in range(6, 7):
             tabletd = tabletd + "<td class=\"number_style\">" + \
-                      str((sh.cell_value(i, j)))  + '%' +  "</td>\n"
+                      str((sh.cell_value(i, j))) + '%' + "</td>\n"
 
         for j in range(7, 8):
             tabletd = tabletd + "<td class=\"number_style\">" + \
@@ -204,45 +176,85 @@ def item_wise_yesterday_sales_Records():
 
         table1 = tabletd + "</tr>\n"
 
-    print("11.2. Yesterday Item wise sale table Created")
+    print("12.2. Yesterday Item wise sale table Created")
     return table1
 
 
 def grandtotal():
     excel_data_df = pd.read_excel('Data/item_wise_yesterday_sales.xlsx', sheet_name='Sheet1',
-                                  usecols=['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
-       'TP', 'TP Sales Value', 'Net Sales Value', 'Discount'])
-    yesterday_sale_list = excel_data_df['TP Sales Value'].tolist()
-    sum_yesterday_value = int(sum(yesterday_sale_list))
-    discountval_list = excel_data_df['Net Sales Value'].tolist()
-    sum_discountval_value = int(sum(discountval_list))
-    salesval_list = excel_data_df['Discount'].tolist()
-    sum_salesval_value = int(sum(salesval_list))
+                                  usecols=['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'Sales Quantity',
+                                           'Sales Quantity %', 'Monthly Target', 'MTD Sales Target', 'TP',
+                                           'TP Sales Value', 'Net Sales Value', 'Net Sakes %',
+                                           'Discount', 'LD Target Qty/Day'])
+
+    yesterday_sales_quantity_list = excel_data_df['Sales Quantity'].tolist()
+    sum_yesterday_sales_quantity_value = int(sum(yesterday_sales_quantity_list))
+
+    yesterday_sales_quantity_percent_list = excel_data_df['Sales Quantity %'].tolist()
+    sum_yesterday_sales_quantity_percent_value = sum(yesterday_sales_quantity_percent_list)
+
+    monthly_target_list = excel_data_df['Monthly Target'].tolist()
+    sum_monthly_target_value = sum(monthly_target_list)
+
+    MTD_target_list = excel_data_df['MTD Sales Target'].tolist()
+    sum_MTD_target_value = sum(MTD_target_list)
+
+    TP_sales_value_list = excel_data_df['TP Sales Value'].tolist()
+    sum_TP_Sales_value = sum(TP_sales_value_list)
+
+    Net_sales_value_list = excel_data_df['Net Sales Value'].tolist()
+    sum_Net_Sales_value = sum(Net_sales_value_list)
+
+    Net_sales_value_percent_list = excel_data_df['Net Sakes %'].tolist()
+    sum_Net_Sales_percent_value = sum(Net_sales_value_percent_list)
+
+    discount_list = excel_data_df['Discount'].tolist()
+    sum_discount_value = sum(discount_list)
+
+    LD_target_quantity_list = excel_data_df['LD Target Qty/Day'].tolist()
+    sum_LD_target_quantity_value = sum(LD_target_quantity_list)
 
     tabletd = ""
 
     tabletd = tabletd + "<tr>\n"
 
-    tabletd = tabletd + "<td colspan='8' class=\"grand_total\">" + str('Grand Total') + "</td>\n"
+    tabletd = tabletd + "<td colspan='5' class=\"grand_total\">" + str('Grand Total') + "</td>\n"
 
     tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" \
-              + ofn.number_style(str(sum_yesterday_value)) + "</td>\n"
+              + ofn.number_style(str(sum_yesterday_sales_quantity_value)) + "</td>\n"
 
-    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" + ofn.number_style(
-        str(sum_discountval_value)) + "</td>\n"
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" \
+              + str(round(sum_yesterday_sales_quantity_percent_value)) + "%" + "</td>\n"
+
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" \
+              + ofn.number_style(str(sum_monthly_target_value)) + "</td>\n"
+
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" \
+              + ofn.number_style(str(sum_MTD_target_value)) + "</td>\n"
 
     tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" + '' + "</td>\n"
 
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" \
+              + ofn.number_style(str(round(sum_TP_Sales_value))) + "</td>\n"
+
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" \
+              + ofn.number_style(str(round(sum_Net_Sales_value))) + "</td>\n"
+
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" \
+              + str(round(sum_Net_Sales_percent_value)) + "%" + "</td>\n"
+
+    tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" + ofn.number_style(
+        str(int(sum_discount_value))) + "</td>\n"
+
     tabletd = tabletd + "<td class=\"grand_total\" style=\"text-align: right\">" + ofn.number_style(str(
-        sum_salesval_value)) + "</td>\n"
+        sum_LD_target_quantity_value)) + "</td>\n"
 
     tab = tabletd + "</tr>\n"
-    print("11.3. Yesterday grand total value added at the bottom of the table\n")
+    print("12.3. Yesterday grand total value added at the bottom of the table")
     return tab
 
 
 def item_wise_yesterday_no_sales_Records():
-    df_y_scock = pd.read_excel('Data/yesterday_no_sales.xlsx')
 
     excel_data_df = pd.read_excel('Data/yesterday_no_sales.xlsx', sheet_name='Sheet1',
                                   usecols=['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM'])
@@ -281,5 +293,5 @@ def item_wise_yesterday_no_sales_Records():
 
         table1 = tabletd + "</tr>\n"
 
-    print("12. Yesterday No sale table Created\n")
+    print("13. Yesterday No sale table Created\n")
     return table1
