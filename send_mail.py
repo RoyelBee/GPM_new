@@ -31,7 +31,7 @@ def send_mail(gpm_name):
     import Functions.arranging_the_column_size as attachdata
 
     # ban.banner(gpm_name) # 01
-    gdata.GenerateReport(gpm_name) # 02
+    # gdata.GenerateReport(gpm_name) # 02
     # dash.dash_kpi_generator(gpm_name) # 03
     # cm.cumulative_target_sales(gpm_name) # 4
     # ex.executive_sales_target(gpm_name)  # 5
