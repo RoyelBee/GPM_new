@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/GPM_new_v15.iml" filepath="$PROJECT_DIR$/.idea/GPM_new_v15.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Scrapy/.idea/Scrapy.iml" filepath="$PROJECT_DIR$/../Scrapy/.idea/Scrapy.iml" />
     </modules>
   </component>
 </project>
