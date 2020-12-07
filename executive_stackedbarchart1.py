@@ -25,7 +25,8 @@ SET @query ='Select * from
         from
         (
       select sum(extinvmisc) as sale,Item.brand,item.itemno,[Executive ShortName] as Exe from
-(select * from oesalesdetails where  transdate>=convert(varchar(8),getdate(), 112)) as Sale
+(select * from oesalesdetails where  
+transtype =1 and transdate>=convert(varchar(8),getdate(), 112)) as Sale
 left join
 (select * from prinfoskf ) as Item
 on sale.item=item.itemno
@@ -66,32 +67,50 @@ EXEC SP_EXECUTESQL @query
 
 df = pd.read_sql(sql, dbc.connection)
 
-
 df.to_csv('initialdata.csv', index=False)
+coluns = df.columns.tolist()[1:]
 
 df = pd.read_csv('initialdata.csv')
-print('Total col = ', len(df.columns))
+# print('Total col = ', len(df.columns))
 
 df = df.reindex(sorted(df.columns), axis=1)
-df1 = df[ ['brand'] + [ col for col in df.columns if col != 'brand'] ]
-# print('After arranging Brand = ', len(df1.columns))
+
+
+
+df1 = df[['brand'] + [col for col in df.columns if col != 'brand']]
+
 
 # print(df1.columns)
-df1 = df1.iloc[:,:-3]
-# print('After removing duplicated brand and item = ',len(df1.columns))
-# print(df1.columns)
-threshLinit = (len(df1.columns))-3
+df1 = df1.iloc[:, :-3]
+master_col = []
+coluns = df1.columns.tolist()[1:]
+
+# # Arrange columns name with .S for sales and .T for Target
+for i in range(len(coluns)):
+    if i%2 == 0:
+        col = coluns[i]+' .S'
+        master_col.append(col)
+    else:
+        col = coluns[i].replace(".1", "")+' .T'
+        master_col.append(col)
+
+# print(master_col)
+
+
+threshLinit = (len(df1.columns)) - 3
 print(threshLinit)
-df1 = df1[df1.isnull().sum(axis=1) <=threshLinit]
+df1 = df1[df1.isnull().sum(axis=1) <= threshLinit]
 df1.to_csv('master_executive_target_sales_data.csv', index=False)
 
 # df = pd.read_csv('master_executive_target_sales_data.csv')
 df = df1.fillna(0)
+l = df.columns.tolist()
+Colvalues = l[1:]
 
-df = df.to_csv('master_executive_target_sales_data.csv', index=False)
-print('Executive Stacked Bar-chart Initial Data Saved ')
+df.sort_values(by=Colvalues, inplace=True)
 
-
+df.to_csv('master_executive_target_sales_data.csv', index=False)
+# print('Executive Stacked Bar-chart Initial Data Saved ')
 
 
 data = pd.read_csv('master_executive_target_sales_data.csv')
@@ -172,7 +191,7 @@ def plot_stacked_bar(data, series_labels, category_labels=None,
         cum_size += row_data
 
     if category_labels:
-        plt.xticks(ind, category_labels, rotation=90, fontsize=14, fontweight='bold')
+        plt.xticks(ind, master_col, rotation=90, fontsize=14, fontweight='bold')
 
     # if y_label:
     #     plt.ylabel(y_label)
