@@ -47,7 +47,6 @@ def send_mail(gpm_name):
 
     ## 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
 
-
     # # --------- Add Image Border ---------------------------------------
     from PIL import Image
     # da = Image.open("./Images/dashboard.png")
@@ -88,7 +87,6 @@ def send_mail(gpm_name):
     # imageSize.paste(kpi7_2, (602, 0))
     # imageSize.paste(kpi7_3, (1203, 0))
     # imageSize.save("./Images/aging_stock_information.png")
-
 
     # to = gpm.getGPMEmail(gpm_name)
     #
@@ -295,7 +293,7 @@ def send_mail(gpm_name):
     print('Mail Send')
     print('-------------------')
     server.close()
-    print('Time takes = ', (time.time() - start_time)/60, 'Min')
+    print('Time takes = ', (time.time() - start_time) / 60, 'Min')
 
     # # Html_file = open("testinghtml.html", "w")
     # # Html_file.write(layout.generate_layout(gpm_name))
