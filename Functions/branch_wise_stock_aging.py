@@ -108,7 +108,7 @@ def get_branch_aging_stock_status(name):
 
         for j in range(2, 3):
             # ITemNo
-            tabletd = tabletd + "<td class=\"serial\">" + str(int(sh.cell_value(i, j)))  + str('<br>')+ "</td>\n"
+            tabletd = tabletd + "<td class=\"serial\">" + str(int(sh.cell_value(i, j)))  + "</td>\n"
 
         for j in range(3, 4):
             # ITemNo
@@ -219,7 +219,7 @@ def get_branch_aging_stock_status(name):
 
         for j in range(42, 43):
             tabletd = tabletd + "<td class=\"number_style\"style=\"background-color:" + \
-                      str(ofn.status_color(bog)) + "\">" + str(ofn.integer_converter(sh.cell_value(i, j))) + "</td>\n"
+                      str(ofn.status_color(bog)) + "\">" + str(ofn.integer_converter(sh.cell_value(i, j)))  + "</td>\n"
 
         for j in range(43, 44):
             tabletd = tabletd + "<td class=\"number_style\"style=\"background-color:" + \
@@ -353,7 +353,8 @@ def get_branch_aging_stock_status(name):
 
         for j in range(76, 77):
             tabletd = tabletd + "<td class=\"number_style\"style=\"background-color:" + \
-                      str(ofn.status_color(Tongi)) + "\">" + str(ofn.integer_converter(sh.cell_value(i, j))) + "</td>\n"
+                      str(ofn.status_color(Tongi)) + "\">" + \
+                      str(ofn.integer_converter(sh.cell_value(i, j))) + "</td>\n"
 
 
         table = tabletd + "</tr>\n"

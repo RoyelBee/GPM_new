@@ -15,7 +15,7 @@ connection = db.connect('DRIVER={SQL Server};'
 def stock_aging_chart(name):
     try:
         executive_target_df = pd.read_sql_query("""
-                Select  
+Select  
 Sum(case when AGEING='Within 15 Days' then TotalStock Else 0 end) 'Within 15 Days' 
 ,Sum(case when AGEING='Within 15 Days' then TotalBrand Else 0 end) '15 Days Brand' 
 ,Sum(case when AGEING='Within 15 Days' then TotalSKU Else 0 end) '15 Days SKU' 
@@ -32,13 +32,17 @@ Sum(case when AGEING='Within 15 Days' then TotalStock Else 0 end) 'Within 15 Day
 ,Sum(case when AGEING='Within 90 Days' then TotalBrand Else 0 end) '90 Days Brand'
 ,Sum(case when AGEING='Within 90 Days' then TotalSKU Else 0 end) '90 Days SKU' 
 
-,Sum(case when AGEING='Within 120 Days' then TotalStock Else 0 end) 'Within 120 Days' 
-,Sum(case when AGEING='Within 120 Days' then TotalBrand Else 0 end) '120 Days Brand'
-,Sum(case when AGEING='Within 120 Days' then TotalSKU Else 0 end) '120 Days SKU'
+,Sum(case when AGEING='Within 180 Days' then TotalStock Else 0 end) 'Within 180 Days' 
+,Sum(case when AGEING='Within 180 Days' then TotalBrand Else 0 end) '180 Days Brand'
+,Sum(case when AGEING='Within 180 Days' then TotalSKU Else 0 end) '180 Days SKU'
 
-,Sum(case when AGEING='More Than 120 Days' then TotalStock Else 0 end) 'More Than 120 Days'
-,Sum(case when AGEING='More Than 120 Days' then TotalBrand Else 0 end) 'More Than 120 Days Brand'
-,Sum(case when AGEING='More Than 120 Days' then TotalSKU Else 0 end) 'More Than 120 Days SKU'
+,Sum(case when AGEING='Within 210 Days' then TotalStock Else 0 end) 'Within 210 Days'
+,Sum(case when AGEING='Within 210 Days' then TotalBrand Else 0 end) 'Within 210 Days Brand'
+,Sum(case when AGEING='Within 210 Days' then TotalSKU Else 0 end) 'Within 210 Days SKU'
+
+,Sum(case when AGEING='More Than 210 Days' then TotalStock Else 0 end) 'More Than 210 Days'
+,Sum(case when AGEING='More Than 210 Days' then TotalBrand Else 0 end) 'More Than 210 Days Brand'
+,Sum(case when AGEING='More Than 210 Days' then TotalSKU Else 0 end) 'More Than 210 Days SKU'
 
 
 ,Sum(case when AGEING='More Than 1 Year' then TotalStock Else 0 end) 'More Than 1 Year'
@@ -65,19 +69,24 @@ Group by  AGEING)as T3
         sixty_days_brand = executive_target_df['60 Days Brand'].tolist()
         ninety_days_brand = executive_target_df['90 Days Brand'].tolist()
         Expired_brand = executive_target_df['Expired Brand'].tolist()
+        one_eighty_days_brand = executive_target_df['180 Days Brand'].tolist()
+        two_ten_days_brand = executive_target_df['Within 210 Days Brand'].tolist()
+        print(one_eighty_days_brand)
 
         list_to_brand = [int(Expired_brand[0]), int(fifteen_days_brand[0]), int(thirty_days_brand[0]),
-                         int(sixty_days_brand[0]), int(ninety_days_brand[0])]
+                         int(sixty_days_brand[0]), int(ninety_days_brand[0]), int(one_eighty_days_brand[0]),
+                         int(two_ten_days_brand[0])]
         total=sum(list_to_brand)
 
-        list_of_label = ['Expired', '1 - 15 Days', '16 - 30 Days', '31 - 60 Days', '61 - 90 Days']
+        list_of_label = ['Expired', '1 - 15 Days', '16 - 30 Days', '31 - 60 Days', '61 - 90 Days', '91 - 180 Days',
+                         '181 - 210 Days']
 
         fig, ax = plt.subplots(figsize=(6, 4.8))
         width = 1
 
         # colors = ['yellow', 'orange', 'violet', '#DADADA', '#003f5c', '#665191', '#a05195', '#d45087', '#ff7c43',
         #           '#ffa600']
-        colors = ['#933636', '#f40d0d', '#ff8600', '#e1e300', '#b2eb05']
+        colors = ['#933636', '#f40d0d', '#ff8600', '#e1e300', '#b2eb05', '#629B00', '#124B00']
         bars = plt.bar(list_of_label, height=list_to_brand, color=colors, width=.4)
 
         plt.title("Brand wise Stock Aging ("+str(total)+")", fontsize=16, color='black', fontweight='bold')
@@ -89,7 +98,7 @@ Group by  AGEING)as T3
             yval = bar.get_height()
             wval = bar.get_width()
             data = format(int(yval))
-            plt.text((bar.get_x() + wval / 3) + 0.04, yval, data, fontweight='bold')
+            plt.text((bar.get_x() + wval / 4), yval, data, fontweight='bold',rotation=30)
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/brand_wise_aging_stock_information.png')

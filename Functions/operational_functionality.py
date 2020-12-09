@@ -130,7 +130,13 @@ def status_color(status):
     elif status == 'Within 90 Days':
         color = '#b2eb05'
 
-    elif status == 'More Than 120 Days' or status== 'Within 120 Days':
+    elif status == 'Within 180 Days':
+        color = '#629B00'
+
+    elif status == 'Within 210 Days':
+        color = '#124B00'
+
+    elif status == 'More Than 210 Days':
         color = '#ffffff'
 
     elif status == 'More Than 1 Year':

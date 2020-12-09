@@ -11,19 +11,29 @@ connection = db.connect('DRIVER={SQL Server};'
                         'UID=sa;PWD=erp@123')
 
 def aging_stock_summary_status(name):
-    df = pd.read_sql_query("""select * from 
+    df = pd.read_sql_query("""select * 
+from 
 
     (select * from 
-    (select AGEING as Aging_Days,BRAND,count (distinct T2.ITEMNO) as TotalSKU,itemname , sum(QTYAVAIL) AS TotalStock, T1.AUDTORG  from 
+    (select Aging as Aging_Days,BRAND,count (distinct T2.ITEMNO) as TotalSKU,itemname , sum(QTYAVAIL) AS TotalStock, T1.AUDTORG  from 
     (select ITEMNO,case when [location] = ('4001') then  'SKF Mirpur Plant'
              when [location] = ('4005') then  'SKF Tongi Plant'
            when [location] = ('4016') then  'SKF Rupganj Plant'
-          else AUDTORG end as AUDTORG,AGEING,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot WHERE AUDTORG<>'SKFDAT') as T1
+          else AUDTORG end as AUDTORG,CASE
+    WHEN AGEING = 'Within 15 Days' THEN 'Within 15 Days'
+    WHEN AGEING = 'Within 30 Days' THEN 'Within 30 Days'
+	WHEN AGEING = 'Within 60 Days' THEN 'Within 60 Days'
+	WHEN AGEING = 'Within 90 Days' THEN 'Within 90 Days'
+	WHEN AGEING = 'Within 180 Days' THEN 'Within 180 Days'
+	WHEN AGEING = 'Within 210 Days' THEN 'Within 210 Days'
+	WHEN AGEING = 'Expired' THEN 'Expired'
+    END  as Aging
+,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot WHERE AUDTORG<>'SKFDAT') as T1
     LEFT JOIN
     (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
     ON (T1.ITEMNO=T2.ITEMNO)
-    WHERE T2.GPMNAME like ? AND AGEING in ('Within 15 Days','Within 30 Days', 'Within 60 Days', 'Within 90 Days', 'Expired')
-    Group by BRAND, AGEING,AUDTORG, itemname
+    WHERE T2.GPMNAME like ? AND Aging in ('Within 15 Days','Within 30 Days', 'Within 60 Days', 'Within 90 Days', 'Within 180 Days', 'Within 210 Days', 'Expired')
+    Group by BRAND, Aging,AUDTORG, itemname
     )as T3
     ) t
     pivot
@@ -33,13 +43,21 @@ def aging_stock_summary_status(name):
     [MYMSKF],[NAJSKF],[NOKSKF],[PATSKF],[PBNSKF],[RAJSKF],[RNGSKF],[SAVSKF],[SYLSKF],[TGLSKF],[VRBSKF],[SKF Rupganj Plant],[SKF Mirpur Plant],[SKF Tongi Plant]
     )) AS piv
     
-    order by  Aging_Days asc , brand asc
-    
+    order by CASE
+    WHEN Aging_Days = 'Within 15 Days' THEN 1
+    WHEN Aging_Days = 'Within 30 Days' THEN 2
+	WHEN Aging_Days = 'Within 60 Days' THEN 3
+	WHEN Aging_Days = 'Within 90 Days' THEN 4
+	WHEN Aging_Days = 'Within 180 Days' THEN 5
+	WHEN Aging_Days = 'Within 210 Days' THEN 6
+	WHEN Aging_Days = 'Expired' THEN 7
+    END 
          """, connection, params={name})
 
     # column_values = range(1, len(df))
     # print(column_values)
     # sys.exit()
+    # df2 = df.fillna(0)
 
     writer = pd.ExcelWriter('Data/aging_stock_summary.xlsx', engine='openpyxl')
     wb = writer.book
@@ -55,6 +73,8 @@ def aging_stock_summary_status(name):
     df_age = df_age.replace(['Within 30 Days'], '16 - 30 Days')
     df_age = df_age.replace(['Within 60 Days'], '31 - 60 Days')
     df_age = df_age.replace(['Within 90 Days'], '61 - 90 Days')
+    df_age = df_age.replace(['Within 180 Days'], '91 - 180 Days')
+    df_age = df_age.replace(['Within 210 Days'], '181 - 210 Days')
     # print(df_age)
 
 
@@ -112,7 +132,7 @@ def aging_stock_summary_status(name):
     excel_data_df = pd.read_excel('Data/aging_stock_summary_copy.xlsx', sheet_name='Sheet1',
                                   usecols=['Aging_Days', 'BRAND'])
     aging_days = ofn.create_dup_count_list(excel_data_df, 'Aging_Days')
-    brand = ofn.create_dup_count_list(excel_data_df, 'BRAND')
+    # brand = ofn.create_dup_count_list(excel_data_df, 'BRAND')
 
     wb = xlrd.open_workbook('Data/aging_stock_summary_copy.xlsx')
     sh = wb.sheet_by_name('Sheet1')
@@ -130,9 +150,7 @@ def aging_stock_summary_status(name):
 
         for j in range(1, 2):
             # Brand
-            if (brand[i - 1] != 0):
-                tabletd = tabletd + "<td class=\"brandtd\" rowspan=\"" + str(brand[i - 1]) + "\">" + str(
-                    sh.cell_value(i, j)) + "</td>\n"
+             tabletd = tabletd + "<td class=\"y_desc_sales\">" + str((sh.cell_value(i, j))) + "</td>\n"
 
         for j in range(2, 3):
             # ITemNo
