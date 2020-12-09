@@ -11,6 +11,7 @@ def GenerateReport(gpm_name):
 declare @firstday varchar(8)
 declare @pdatefrom varchar(8)
 declare @pdateTo varchar(8)
+
 declare @TotalDays int
 declare @MTDdays int=(SELECT DAY(getdate()) )
                         
