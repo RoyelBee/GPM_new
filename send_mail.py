@@ -21,7 +21,7 @@ def send_mail(gpm_name):
     import Functions.dashboard as dash
     import Functions.cumulative_target_sales as cm
     import Functions.executive_wise_sales_target as ex
-    import Functions.executive_brand_target_sales_stacked_bar as stacked
+    import Functions.executive_stackedbarchart1 as stacked
     import Functions.brand_wise_target_sales as b
     import Functions.brand_wise_aging_information_bar as brand_bar
     import Functions.SKU_wise_aging_information_bar as SKU_bar
@@ -31,62 +31,62 @@ def send_mail(gpm_name):
     import Functions.branch_stock_summery_data as bsdata
     import Functions.arranging_the_column_size as attachdata
 
-    # ban.banner(gpm_name) # 01
-    # gdata.GenerateReport(gpm_name) # 02
-    # dash.dash_kpi_generator(gpm_name) # 03
-    # cm.cumulative_target_sales(gpm_name) # 4
-    # ex.executive_sales_target(gpm_name)  # 5
-    # stacked.executives_brand_target_sales_chart(gpm_name)
-    # b.brand_wise_target_sales()  # 6
-    # brand_bar.stock_aging_chart(gpm_name)#7.1
-    # SKU_bar.stock_aging_chart(gpm_name)#7.2
-    # quantity_bar.stock_aging_chart(gpm_name)#7.3
-    # item_stock_days_data.create_item_wise_stock_days_data() # 8
-    # bsdata.branch_stock_summery_data() # 9
-    # branch_stock_aging.get_branch_aging_stock_status(gpm_name) # 10
+    ban.banner(gpm_name) # 01
+    gdata.GenerateReport(gpm_name) # 02
+    dash.dash_kpi_generator(gpm_name) # 03
+    cm.cumulative_target_sales(gpm_name) # 4
+    ex.executive_sales_target(gpm_name)  # 5
+    stacked.executives_brand_target_sales_chart(gpm_name) # 6
+    b.brand_wise_target_sales()  # 7
+    brand_bar.stock_aging_chart(gpm_name) # 8.1
+    SKU_bar.stock_aging_chart(gpm_name) # 8.2
+    quantity_bar.stock_aging_chart(gpm_name) # 8.3
+    item_stock_days_data.create_item_wise_stock_days_data() # 9
+    bsdata.branch_stock_summery_data() # 10
+   # # branch_stock_aging.get_branch_aging_stock_status(gpm_name) # 17
 
-    ## 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
+    # 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
 
-    # # --------- Add Image Border ---------------------------------------
+    # --------- Add Image Border ---------------------------------------
     from PIL import Image
-    # da = Image.open("./Images/dashboard.png")
-    # imageSize = Image.new('RGB', (962, 232))
-    # imageSize.paste(da, (1, 0))
-    # imageSize.save("./Images/dashboard.png")
-    #
-    # kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi1, (1, 0))
-    # imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    #
-    # kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi2, (1, 0))
-    # imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
-    #
-    # kpistock = Image.open("./Images/mainexecutive.png")
-    # imageSize = Image.new('RGB', (1802, 1001))
-    # imageSize.paste(kpistock, (1, 0))
-    # imageSize.save("./Images/main_executive_with_margin.png")
-    #
-    # kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
-    # imageSize = Image.new('RGB', (1802, 601))
-    # imageSize.paste(kpi3, (1, 0))
-    # imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
-    #
-    # kpi4 = Image.open("./Images/aging_stock_information.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi4, (1, 0))
-    # imageSize.save("./Images/aging_stock_information.png")
-    # kpi7_1 = Image.open("./Images/brand_wise_aging_stock_information.png")
-    # kpi7_2 = Image.open("./Images/SKU_wise_aging_stock_information.png")
-    # kpi7_3 = Image.open("./Images/Quantity_wise_aging_stock_information.png")
-    #
-    # imageSize = Image.new('RGB', (1804, 481))
-    # imageSize.paste(kpi7_1, (1, 0))
-    # imageSize.paste(kpi7_2, (602, 0))
-    # imageSize.paste(kpi7_3, (1203, 0))
-    # imageSize.save("./Images/aging_stock_information.png")
+    da = Image.open("./Images/dashboard.png")
+    imageSize = Image.new('RGB', (962, 232))
+    imageSize.paste(da, (1, 0))
+    imageSize.save("./Images/dashboard.png")
+
+    kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi1, (1, 0))
+    imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+
+    kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi2, (1, 0))
+    imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
+
+    kpistock = Image.open("./Images/mainexecutive.png")
+    imageSize = Image.new('RGB', (1802, 901))
+    imageSize.paste(kpistock, (1, 0))
+    imageSize.save("./Images/main_executive_with_margin.png")
+
+    kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
+    imageSize = Image.new('RGB', (1802, 601))
+    imageSize.paste(kpi3, (1, 0))
+    imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
+
+    kpi4 = Image.open("./Images/aging_stock_information.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi4, (1, 0))
+    imageSize.save("./Images/aging_stock_information.png")
+    kpi7_1 = Image.open("./Images/brand_wise_aging_stock_information.png")
+    kpi7_2 = Image.open("./Images/SKU_wise_aging_stock_information.png")
+    kpi7_3 = Image.open("./Images/Quantity_wise_aging_stock_information.png")
+
+    imageSize = Image.new('RGB', (1804, 481))
+    imageSize.paste(kpi7_1, (1, 0))
+    imageSize.paste(kpi7_2, (602, 0))
+    imageSize.paste(kpi7_3, (1203, 0))
+    imageSize.save("./Images/aging_stock_information.png")
 
     # to = gpm.getGPMEmail(gpm_name)
     #
@@ -96,7 +96,7 @@ def send_mail(gpm_name):
     #     bcc = ['', '']
     #     print('Report Sending to = ', to)
 
-    to = ['fazle.rabby@transcombd.com', '']
+    to = ['rejaul.islam@transcombd.com', '']
     cc = ['', '']
     bcc = ['', '']
 
@@ -142,7 +142,7 @@ def send_mail(gpm_name):
 
     # # We reference the image in the IMG SRC attribute by the ID we give it below
     msgText = MIMEText("""
-                            """ + layout.generate_layout(gpm_name) + """ 
+                            """ + layout.generate_layout(gpm_name) + """
                         """, 'html')
 
     msgAlternative.attach(msgText)

@@ -63,8 +63,8 @@ Group by  AGEING)as T3
         Expired = executive_target_df['Expired'].tolist()
         one_eighty_days = executive_target_df['Within 180 Days'].tolist()
         two_ten_days = executive_target_df['Within 210 Days'].tolist()
-        print(one_eighty_days)
-        print(two_ten_days)
+        # print(one_eighty_days)
+        # print(two_ten_days)
 
         list_to_plot = [Expired[0], fifteen_days[0], thirty_days[0], sixty_days[0], ninety_days[0],
                         one_eighty_days[0], two_ten_days[0]]
@@ -80,7 +80,7 @@ Group by  AGEING)as T3
         # colors = ['yellow', 'orange', 'violet', '#DADADA', '#003f5c', '#665191', '#a05195', '#d45087', '#ff7c43',
         #           '#ffa600']
         colors = ['#933636', '#f40d0d', '#ff8600', '#e1e300', '#b2eb05', '#629B00', '#124B00']
-        bars = plt.bar(list_of_label, height=list_to_plot, color=colors, width=.4)
+        bars = plt.bar(list_of_label, height=list_to_plot, color=colors, width=.6)
 
         plt.title("Quantity wise Stock Aging ("+str(int(total))+")", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Aging Days', fontsize=12, color='black', fontweight='bold')
@@ -91,11 +91,11 @@ Group by  AGEING)as T3
             yval = bar.get_height()
             wval = bar.get_width()
             data = format(int(yval))
-            plt.text(bar.get_x()+.1, yval, data, fontweight='bold',rotation=30)
+            plt.text(bar.get_x()+.2, yval+.05, data, fontweight='bold')
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/Quantity_wise_aging_stock_information.png')
-        print('7.3 Quantity wise Stock Aging figure generated \n')
+        print('8.3 Quantity wise Stock Aging figure generated \n')
 
 
     except:
@@ -106,4 +106,4 @@ Group by  AGEING)as T3
         plt.text(0.2, 0.5, 'Due to target unavailability the chart could not get generated.', color='red', fontsize=14)
         plt.legend(['Target', 'Sales'])
         plt.tight_layout()
-        print('7.3 Error !!!! Quantity wise Stock Aging figure not generated\n')
+        print('8.3 Error !!!! Quantity wise Stock Aging figure not generated\n')

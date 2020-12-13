@@ -106,4 +106,4 @@ def branch_stock_summery_data():
             # print(c)
             worksheet.write(a + 1, b + 1, c)
     workbook.close()
-    print('9. Branch wise stock status data generated \n')
+    print('10. Branch wise stock status data generated \n')

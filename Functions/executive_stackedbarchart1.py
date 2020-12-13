@@ -2,6 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import Functions.db_connection as dbc
+def thousand_converter(number):
+    number = int(number / 1000)
+    number = format(number, ',')
+    number = number + 'K'
+    return number
 
 def executives_brand_target_sales_chart(name):
     sql = """
@@ -11,7 +16,7 @@ def executives_brand_target_sales_chart(name):
                        FROM
                        (
                             SELECT distinct [executive shortname] from [dbo].[GPMExecutive_ShortName] where gpmname 
-                            like ?) PV
+                             LIKE ?) PV
                        ORDER BY [executive shortname]
         DECLARE @query NVARCHAR(MAX)
         SET @query ='Select * from
@@ -20,7 +25,8 @@ def executives_brand_target_sales_chart(name):
                 (
               select sum(extinvmisc) as sale,Item.brand,[Executive ShortName] as Exe from
         (select * from oesalesdetails where  
-        transtype =1 and transdate>=convert(varchar(8),getdate(), 112)) as Sale
+        transtype =1 and transdate between convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112) and 
+		 convert(varchar(8),getdate(), 112)) as Sale
         left join
         (select * from prinfoskf ) as Item
         on sale.item=item.itemno
@@ -37,10 +43,10 @@ def executives_brand_target_sales_chart(name):
                       left join
                     (select *
                 from
-        (select [Executive ShortName] as Exe,item.brand,sum(trgval) as Target from
+        (select [Executive ShortName] as Exe,item.brand,(sum(trgval)/30)*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target from
         (select * from [ARCSECONDARY].[dbo].[PRODUCT_WISE_TRG] where yrm=convert(varchar(6),getdate(), 112)) as Tar
         right join
-        (select * from prinfoskf  ) as Item
+        (select * from prinfoskf) as Item
         on tar.exid=item.exid
         and item.itemno=tar.item
         left join
@@ -66,21 +72,20 @@ def executives_brand_target_sales_chart(name):
     df = pd.read_csv('./Data/initialdata.csv')
 
     df = df.reindex(sorted(df.columns), axis=1)
-
     df1 = df[['brand'] + [col for col in df.columns if col != 'brand']]
 
     # print(df1.columns)
     df1 = df1.iloc[:, :-1]
     master_col = []
-    coluns = df1.columns.tolist()[1:]
+    coluns = df1.columns.tolist()[1:][::-1]
 
     # # Arrange columns name with .S for sales and .T for Target
     for i in range(len(coluns)):
         if i % 2 == 0:
-            col = coluns[i] + ' .S'
+            col = coluns[i].replace(".1", "")  + ' .T'
             master_col.append(col)
         else:
-            col = coluns[i].replace(".1", "") + ' .T'
+            col = coluns[i].replace(".1", "") + ' .S'
             master_col.append(col)
 
     # print(master_col)
@@ -96,8 +101,9 @@ def executives_brand_target_sales_chart(name):
 
     # # Short data by values (All Sales and Target)
     colv = df.columns.tolist()
-    Colvalues = colv[1:]
-    df.sort_values(by=Colvalues, inplace=True)
+    Colvalues = colv[1::]
+    # print(Colvalues)
+    df.sort_values(by=Colvalues, inplace=True) # For Largest to smallest
 
     df.to_csv('./Data/master_executive_target_sales_data.csv', index=False)
 
@@ -107,6 +113,8 @@ def executives_brand_target_sales_chart(name):
     for i in range(data.shape[0]):
         all_data.append((data.loc[i].tolist())[1:])
 
+    # print(all_data)
+    # print(len(all_data))
     writer = pd.ExcelWriter('./Data/new_testdata2.xlsx', engine='xlsxwriter')
     for j in range(0, np.shape(all_data)[1]):
         vars()['new_list' + str(j)] = []
@@ -132,27 +140,17 @@ def executives_brand_target_sales_chart(name):
 
     barWidth = 0.90
     executive_names = data.columns.tolist()[1:]
-
-
-    # print(executive_names)
-    def zero_checker(val):
-        if val == 0.0:
-            val = ''
-        else:
-            val = str(val)  # + '%'
-        return val
-
+    exe = executive_names[::-1]
 
     def zero_label_checker(val, label):
         if val == 0.0:
             lable = ''
         else:
-            lable = label + '\n' + str(round(val, 2)) + '%'
+            lable = label + '\n' + str(int(val/1000)) + 'K'
             # lable =  str(round(val, 2)) #+ '%'
         return lable
 
-
-    plt.subplots(figsize=(18, 10))
+    plt.subplots(figsize=(18, 9))
 
 
     def plot_stacked_bar(data, brands, category_labels=None,
@@ -165,7 +163,6 @@ def executives_brand_target_sales_chart(name):
         cum_size = np.zeros(ny)
 
         data = np.array(data)
-
 
         if reverse:
             data = np.flip(data, axis=1)
@@ -182,45 +179,23 @@ def executives_brand_target_sales_chart(name):
         if category_labels:
             plt.xticks(ind, master_col, rotation=45, fontsize=14, fontweight='bold')
 
-        # if y_label:
-        #     plt.ylabel(y_label)
-
-        # plt.legend()
-
-        # if grid:
-        #     plt.grid()
-
         if show_values:
             i = 0
             for axis in axes:
 
                 for bar in axis:
                     w, h = bar.get_width(), bar.get_height()
-                    # plt.text(bar.get_x() + w / 2, bar.get_y() + h / 2,
-                    #          zero_label_checker(h, brands[i]), ha="center",
-                    #          va="center", rotation=0, fontsize=14)
-
                     plt.text(bar.get_x() + w / 2, bar.get_y() + h / 2,
                              zero_label_checker(h, brands[i]), ha="center",
                              va="center", rotation=0, fontsize=12)
                 i = i + 1
 
-
     brands = data['brand'].tolist()
 
-    # colors = ['#ff8f00', '#96ff00', '#e4ff00', '#e7bcec', '#b3fff3', '#f1ca97', '#c6ff76', '#6abafe', '#e500ff',
-    #           '#6afeae', '#d8ef3c', '#3cd8ef', '#ffd1dd', '#ff8f00', '#96ff00', '#e4ff00', '#e7bcec', '#b3fff3', '#f1ca97',
-    #           '#c6ff76', '#6abafe', '#e500ff',
-    #           '#6afeae', '#d8ef3c', '#3cd8ef', '#ffd1dd', '#ff8f00', '#96ff00', '#e4ff00', '#e7bcec', '#b3fff3', '#f1ca97',
-    #           '#c6ff76', '#6abafe', '#e500ff',
-    #           '#6afeae', '#d8ef3c', '#3cd8ef', '#ffd1dd', '#ff8f00', '#96ff00', '#e4ff00', '#e7bcec', '#b3fff3', '#f1ca97',
-    #           '#c6ff76', '#6abafe', '#e500ff',
-    #           '#6afeae', '#d8ef3c', '#3cd8ef', '#ffd1dd']
-
     plot_stacked_bar(
-        new_all_data,
+        all_data,
         brands,
-        category_labels=executive_names,
+        category_labels=exe,
         show_values=True,
         value_format='{:.1f}' + '%'
         # ,colors=colors
@@ -228,11 +203,12 @@ def executives_brand_target_sales_chart(name):
     )
 
     plt.xlabel("Executive Name", fontweight='bold', fontsize=14)
-    plt.ylabel("Percent %", fontweight='bold', fontsize=14)
-    plt.title('Executives Brand MTD Target ans Sales', fontsize=16, fontweight='bold', color='#3e0a75')
+    plt.ylabel("Amounts (K)", fontweight='bold', fontsize=14)
+    plt.title('Executives Brand wise MTD Target and Sales', fontsize=16, fontweight='bold', color='#3e0a75')
     # plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
     #                fancybox=True, shadow=True, ncol=7)
 
     # plt.show()
+    plt.tight_layout()
     plt.savefig('./Images/mainexecutive.png')
-    print('Brand wise Executives Target & Sales Figure Generated')
+    print('6. Brand wise Executives Target & Sales Figure Generated')

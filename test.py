@@ -73,8 +73,6 @@
 # import Functions.item_wise_yesterday_sales as y
 # y.item_wise_yesterday_sales_Records()
 
-import test3 as exb
-exb.executives_brand_target_sales_chart('Mr. A. K. M. Nawajesh Hossain')
 
 # import itertools
 #
@@ -95,5 +93,11 @@ exb.executives_brand_target_sales_chart('Mr. A. K. M. Nawajesh Hossain')
 # print(z)
 
 
+# import Functions.executive_stackedbarchart1 as exe
+# exe.executives_brand_target_sales_chart('Mr. A. K. M. Nawajesh Hossain')
 
+# import Functions.executive_wise_sales_target as ec
+# ec.executive_sales_target('Mr. A. K. M. Nawajesh Hossain')
 
+# import Functions.brand_wise_aging_information_bar as b
+# b.stock_aging_chart('Mr. A. K. M. Nawajesh Hossain')

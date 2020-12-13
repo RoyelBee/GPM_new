@@ -112,4 +112,4 @@ def create_item_wise_stock_days_data():
             # print(c)
             worksheet.write(a, b, c)
     workbook.close()
-    print('8. Item wise stock days data generated\n')
+    print('9. Item wise stock days data generated\n')

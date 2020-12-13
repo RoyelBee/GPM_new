@@ -78,7 +78,7 @@ Group by  AGEING)as T3
         # colors = ['yellow', 'orange', 'violet', '#DADADA', '#003f5c', '#665191', '#a05195', '#d45087', '#ff7c43',
         #           '#ffa600']
         colors = ['#933636', '#f40d0d', '#ff8600', '#e1e300', '#b2eb05', '#629B00', '#124B00']
-        bars = plt.bar(list_of_label, height=list_to_sku, color=colors, width=.4)
+        bars = plt.bar(list_of_label, height=list_to_sku, color=colors, width=.6)
 
         plt.title("SKU wise Stock Aging ("+str(total)+")", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Aging Days', fontsize=12, color='black', fontweight='bold')
@@ -89,11 +89,12 @@ Group by  AGEING)as T3
             yval = bar.get_height()
             wval = bar.get_width()
             data = format(int(yval))
-            plt.text((bar.get_x() + wval / 4), yval, data, fontweight='bold',rotation=30)
+            plt.text(bar.get_x() + .2, yval + .05, data, fontweight='bold')
+
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/SKU_wise_aging_stock_information.png')
-        print('7.2 SKU wise Stock Aging figure generated ')
+        print('8.2 SKU wise Stock Aging figure generated ')
 
     except:
         fig, ax = plt.subplots(figsize=(6, 4.8))
@@ -103,4 +104,4 @@ Group by  AGEING)as T3
         ax.text(0.2, 0.5, 'Due to target unavailability the chart could not get generated.', color='red', fontsize=14)
         ax.legend(['Target', 'Sales'])
         ax.tight_layout()
-        print('7.2 Error !!!! SKU wise Stock Aging figure not generated\n')
+        print('8.2 Error !!!! SKU wise Stock Aging figure not generated\n')

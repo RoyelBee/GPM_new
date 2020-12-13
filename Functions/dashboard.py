@@ -139,16 +139,16 @@ def dash_kpi_generator(name):
     # print(GPM_SALES_SUM)
 
     Sales_value_in_crore = str(round((GPM_SALES_SUM / 10000000), 1)) + ' Cr'
-    print(Sales_value_in_crore)
+    # print(Sales_value_in_crore)
     try:
         achievement_target_sales = str(round(((GPM_SALES_SUM/GPM_TARGET_SUM)*100),1)) + ' %'
-        print(achievement_target_sales)
+        # print(achievement_target_sales)
     except:
         achievement_target_sales = str(0)+' %'
     brand_no_of_invoice = str(int(gpm_invoice_sum/1000))+' K'
-    print(brand_no_of_invoice)
+    # print(brand_no_of_invoice)
     average_no_of_invoice_line = str(round(gpm_invoice_line_sum/gpm_invoice_sum,2))
-    print(average_no_of_invoice_line)
+    # print(average_no_of_invoice_line)
 
     image = Image.open(dir.get_directory() + "/Images/dash_kpi10.png")
     draw = ImageDraw.Draw(image)

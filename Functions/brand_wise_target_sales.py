@@ -55,7 +55,7 @@ def brand_wise_target_sales():
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/brand_wise_target_vs_sold_quantity.png')
-        print('6. Brand Figure generated \n')
+        print('7. Brand Figure generated \n')
 
     except:
 
@@ -69,4 +69,4 @@ def brand_wise_target_sales():
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/brand_wise_target_vs_sold_quantity.png')
-        print('6. exception for Brand Figure generated \n')
+        print('7. exception for Brand Figure generated \n')

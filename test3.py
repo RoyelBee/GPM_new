@@ -129,7 +129,7 @@ def executives_brand_target_sales_chart(name):
     for i in range(new_data.shape[0]):
         new_all_data.append((new_data.loc[i].tolist()[0:]))
 
-    print(new_all_data)
+    # print(new_all_data)
 
     new_data2 = pd.read_excel('./Data/new_testdata2.xlsx','Sheet2')
     new_all_data2 = []
@@ -137,7 +137,7 @@ def executives_brand_target_sales_chart(name):
     for i in range(new_data2.shape[0]):
         new_all_data2.append((new_data2.loc[i].tolist()[0:]))
 
-    print(new_all_data2)
+    # print(new_all_data2)
 
     import itertools
 
@@ -146,7 +146,7 @@ def executives_brand_target_sales_chart(name):
 
     new_all_data2=oneDArray(new_all_data2)
 
-    print(new_all_data2)
+    # print(new_all_data2)
 
     for value in new_all_data2:
         if value <= 0:
@@ -236,6 +236,9 @@ def executives_brand_target_sales_chart(name):
     #           '#6afeae', '#d8ef3c', '#3cd8ef', '#ffd1dd', '#ff8f00', '#96ff00', '#e4ff00', '#e7bcec', '#b3fff3', '#f1ca97',
     #           '#c6ff76', '#6abafe', '#e500ff',
     #           '#6afeae', '#d8ef3c', '#3cd8ef', '#ffd1dd']
+
+    # print(len(new_all_data))
+    # print(len(new_all_data2))
 
     plot_stacked_bar(
         new_all_data,
