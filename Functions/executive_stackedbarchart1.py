@@ -2,11 +2,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import Functions.db_connection as dbc
+
+
 def thousand_converter(number):
     number = int(number / 1000)
     number = format(number, ',')
     number = number + 'K'
     return number
+
 
 def executives_brand_target_sales_chart(name):
     sql = """
@@ -16,14 +19,14 @@ def executives_brand_target_sales_chart(name):
                        FROM
                        (
                             SELECT distinct [executive shortname] from [dbo].[GPMExecutive_ShortName] where gpmname 
-                             LIKE ?) PV
+                             like ?) PV
                        ORDER BY [executive shortname]
         DECLARE @query NVARCHAR(MAX)
         SET @query ='Select * from
                 (select *
                 from
                 (
-              select sum(extinvmisc) as sale,Item.brand,[Executive ShortName] as Exe from
+        select sum(QTYSHIPPED) as sale,Item.brand,[Executive ShortName] as Exe from
         (select * from oesalesdetails where  
         transtype =1 and transdate between convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112) and 
 		 convert(varchar(8),getdate(), 112)) as Sale
@@ -32,7 +35,7 @@ def executives_brand_target_sales_chart(name):
         on sale.item=item.itemno
         
         left join
-        (select * from [GPMExecutive_ShortName]) as Exe on
+        (select distinct [Executive ShortName],ExecutiveName from [GPMExecutive_ShortName]) as Exe on
         exe.ExecutiveName=item.cp01
         group by [Executive ShortName],item.exid,item.brand
                 ) src
@@ -43,15 +46,16 @@ def executives_brand_target_sales_chart(name):
                       left join
                     (select *
                 from
-        (select [Executive ShortName] as Exe,item.brand,(sum(trgval)/30)*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target from
+        (select [Executive ShortName] as Exe,item.brand,(sum(TRGQTY)/30)*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target from
         (select * from [ARCSECONDARY].[dbo].[PRODUCT_WISE_TRG] where yrm=convert(varchar(6),getdate(), 112)) as Tar
-        right join
+        left join
         (select * from prinfoskf) as Item
         on tar.exid=item.exid
         and item.itemno=tar.item
         left join
-        (select * from [GPMExecutive_ShortName]) as Exe on
+        (select distinct [Executive ShortName],ExecutiveName from [GPMExecutive_ShortName]) as Exe on
         exe.ExecutiveName=item.cp01
+	
         group by tar.exid,[Executive ShortName] ,item.Brand
                 ) src
                 pivot
@@ -82,14 +86,13 @@ def executives_brand_target_sales_chart(name):
     # # Arrange columns name with .S for sales and .T for Target
     for i in range(len(coluns)):
         if i % 2 == 0:
-            col = coluns[i].replace(".1", "")  + ' .T'
+            col = coluns[i].replace(".1", "") + ' .T'
             master_col.append(col)
         else:
             col = coluns[i].replace(".1", "") + ' .S'
             master_col.append(col)
 
     # print(master_col)
-
 
     threshLinit = (len(df1.columns)) - 3
     # print(threshLinit)
@@ -103,7 +106,7 @@ def executives_brand_target_sales_chart(name):
     colv = df.columns.tolist()
     Colvalues = colv[1::]
     # print(Colvalues)
-    df.sort_values(by=Colvalues, inplace=True) # For Largest to smallest
+    df.sort_values(by=Colvalues, inplace=True)  # For Largest to smallest
 
     df.to_csv('./Data/master_executive_target_sales_data.csv', index=False)
 
@@ -146,12 +149,11 @@ def executives_brand_target_sales_chart(name):
         if val == 0.0:
             lable = ''
         else:
-            lable = label + '\n' + str(int(val/1000)) + 'K'
+            lable = label + '\n' + str(int(val / 1000)) + 'K'
             # lable =  str(round(val, 2)) #+ '%'
         return lable
 
     plt.subplots(figsize=(18, 9))
-
 
     def plot_stacked_bar(data, brands, category_labels=None,
                          show_values=True, value_format="{}", y_label=None,
@@ -204,7 +206,7 @@ def executives_brand_target_sales_chart(name):
 
     plt.xlabel("Executive Name", fontweight='bold', fontsize=14)
     plt.ylabel("Amounts (K)", fontweight='bold', fontsize=14)
-    plt.title('Executives Brand wise MTD Target and Sales', fontsize=16, fontweight='bold', color='#3e0a75')
+    plt.title('Executives Brand wise MTD Target and Sales', fontsize=16, fontweight='bold', color='black')
     # plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
     #                fancybox=True, shadow=True, ncol=7)
 

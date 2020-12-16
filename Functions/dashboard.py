@@ -61,7 +61,10 @@ def dash_kpi_generator(name):
     num_days = monthrange(datee.year, datee.month)[1]
     trend = (sum(total_sales) / date_val) * num_days
 
-    trend_achivement = (sum(total_sales) / trend) * 100
+    if trend <= 0:
+        trend_achivement = 0
+    else:
+        trend_achivement = (sum(total_sales) / trend) * 100
 
     # def currency_converter(num):
     #     num_size = len(str(num))
@@ -136,7 +139,7 @@ def dash_kpi_generator(name):
     GPM_SALES_SUM = sum(GPM_sales_list)
     gpm_invoice_sum = sum(gpm_invoice_list)
     gpm_invoice_line_sum = sum(gpm_invoice_line_list)
-    # print(GPM_SALES_SUM)
+    # print(gpm_invoice_sum)
 
     Sales_value_in_crore = str(round((GPM_SALES_SUM / 10000000), 1)) + ' Cr'
     # print(Sales_value_in_crore)
@@ -147,7 +150,11 @@ def dash_kpi_generator(name):
         achievement_target_sales = str(0)+' %'
     brand_no_of_invoice = str(int(gpm_invoice_sum/1000))+' K'
     # print(brand_no_of_invoice)
-    average_no_of_invoice_line = str(round(gpm_invoice_line_sum/gpm_invoice_sum,2))
+
+    if gpm_invoice_sum <= 0:
+        average_no_of_invoice_line= 0
+    else:
+        average_no_of_invoice_line = str(round(gpm_invoice_line_sum/gpm_invoice_sum,2))
     # print(average_no_of_invoice_line)
 
     image = Image.open(dir.get_directory() + "/Images/dash_kpi10.png")
@@ -165,7 +172,7 @@ def dash_kpi_generator(name):
     draw.text((250, 177),Sales_value_in_crore , font=font, fill=(39, 98, 236))
     draw.text((435, 177),achievement_target_sales , font=font, fill=(39, 98, 236))
     draw.text((640, 177), brand_no_of_invoice, font=font, fill=(39, 98, 236))
-    draw.text((835, 177), average_no_of_invoice_line, font=font, fill=(39, 98, 236))
+    draw.text((835, 177), str(average_no_of_invoice_line), font=font, fill=(39, 98, 236))
     # image.show()
     image.save('./Images/dashboard.png')
 

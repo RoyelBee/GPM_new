@@ -12,7 +12,6 @@ import Functions.aging_summary as aging_summary
 
 
 def generate_layout(gpm_name):
-    # print('GPM Name  = ', gpm_name)
     results = """ <!DOCTYPE html>
             <html>
             <head>

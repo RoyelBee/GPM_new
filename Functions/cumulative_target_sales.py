@@ -206,7 +206,8 @@ def cumulative_target_sales(name):
                                                                                               fontweight='bold',
                   fontsize=16)
 
-        plt.legend(['Target', 'Trend with Achiv%' ,'Sales'], loc='upper left')
+        plt.legend(['Target', 'Trend with Achiv%' ,'Sales'])
+        print(max(cumulative_target_that_needs_to_plot))
         plt.yticks(
             np.arange(0, max(cumulative_target_that_needs_to_plot) + 0.4 * max(cumulative_target_that_needs_to_plot),
                       max(cumulative_target_that_needs_to_plot) / 5))
@@ -224,7 +225,7 @@ def cumulative_target_sales(name):
         plt.ylabel('Amount(K)', color='black', fontsize=10, fontweight='bold')
         plt.title('Cumulative Day Wise Stock & Sales', color='black', fontweight='bold', fontsize=12)
 
-        # plt.legend(['Target', 'Sales'], loc='upper left', fontsize='14')
+
         plt.tight_layout()
 
         plt.savefig("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")

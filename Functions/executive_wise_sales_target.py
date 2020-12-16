@@ -26,7 +26,6 @@ def executive_sales_target(name):
 
         Executive_name = executive_target_df['ExecutiveName'].tolist()
         Executive_target = executive_target_df['MTDTargetQty'].tolist()
-
         # print(Executive_name)
         # print(Executive_target)
 
@@ -47,7 +46,7 @@ def executive_sales_target(name):
         new_name3 = MS_Replace(new_name2)
         # print(new_name3)
 
-        executive_sales_df = pd.read_sql_query(""" select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,cast(isnull(sum(QTYSHIPPED),
+        executive_sales_df = pd.read_sql_query("""select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,cast(isnull(sum(QTYSHIPPED),
             0)/1000 as int) as ItemSales from OESalesDetails
             left join PRINFOSKF
             on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
@@ -83,9 +82,9 @@ def executive_sales_target(name):
         fig, ax = plt.subplots(figsize=(9.6, 4.8))
 
         colors = ['#3F93D0']
-        bars = plt.bar(new_label_list, Executive_sale, color=colors, width=.70)
+        bars = plt.bar(new_label_list, Executive_sale, color=colors, width=.6)
 
-        plt.title("Executive Items Quantity wise MTD Target & Sales", fontsize=16, color='black', fontweight='bold')
+        plt.title("Executive wise MTD Target & Sales", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Executive', fontsize=12, color='black', fontweight='bold')
         plt.xticks(new_label_list, rotation=45)
         plt.ylabel('Quantity (K)', fontsize=12, color='black', fontweight='bold')
@@ -96,12 +95,11 @@ def executive_sales_target(name):
             yval = bar.get_height()
             wval = bar.get_width()
             data = format(int(yval), ',') + 'K'  # + '\n' + str(achv) + '%'
-            plt.text(bar.get_x() + .6 - wval / 2, yval / 2, data)
+            plt.text(bar.get_x() + .45 - wval / 2, yval / 2, data)
 
         plt.plot(new_label_list, Executive_target, 'o-', color='Red')
         plt.yticks(
-            np.arange(0, int(max(Executive_target) + 0.5 * max(Executive_target)), int(max(Executive_target) / 5)))
-
+            np.arange(0, int(max(Executive_target) + 0.9 * max(Executive_target)), int(max(Executive_target) / 5)))
         for i, j in zip(new_label_list, Executive_target):
             label = format(int(j), ',') + 'K'
             plt.annotate(label, (i, j), textcoords="offset points", xytext=(0, 4), ha='center')
@@ -119,7 +117,7 @@ def executive_sales_target(name):
         plt.ylabel('Sales', fontsize=10, color='black', fontweight='bold')
 
         plt.text(0.2, 0.5, 'Due to target unavailability the chart could not get generated.', color='red', fontsize=14)
-        plt.legend(['Target', 'Sales'], loc='left')
+        plt.legend(['Target', 'Sales'])
         plt.tight_layout()
         # plt.show()
         plt.savefig('./Images/executive_wise_target_vs_sold_quantity.png')

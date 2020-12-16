@@ -11,47 +11,48 @@ connection = db.connect('DRIVER={SQL Server};'
                         'UID=sa;PWD=erp@123')
 
 def aging_stock_summary_status(name):
+    print('gpm name from first table', name)
     df = pd.read_sql_query("""select * 
-from 
-
-    (select * from 
-    (select Aging as Aging_Days,BRAND,count (distinct T2.ITEMNO) as TotalSKU,itemname , sum(QTYAVAIL) AS TotalStock, T1.AUDTORG  from 
-    (select ITEMNO,case when [location] = ('4001') then  'SKF Mirpur Plant'
-             when [location] = ('4005') then  'SKF Tongi Plant'
-           when [location] = ('4016') then  'SKF Rupganj Plant'
-          else AUDTORG end as AUDTORG,CASE
-    WHEN AGEING = 'Within 15 Days' THEN 'Within 15 Days'
-    WHEN AGEING = 'Within 30 Days' THEN 'Within 30 Days'
-	WHEN AGEING = 'Within 60 Days' THEN 'Within 60 Days'
-	WHEN AGEING = 'Within 90 Days' THEN 'Within 90 Days'
-	WHEN AGEING = 'Within 180 Days' THEN 'Within 180 Days'
-	WHEN AGEING = 'Within 210 Days' THEN 'Within 210 Days'
-	WHEN AGEING = 'Expired' THEN 'Expired'
-    END  as Aging
-,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot WHERE AUDTORG<>'SKFDAT') as T1
-    LEFT JOIN
-    (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
-    ON (T1.ITEMNO=T2.ITEMNO)
-    WHERE T2.GPMNAME like ? AND Aging in ('Within 15 Days','Within 30 Days', 'Within 60 Days', 'Within 90 Days', 'Within 180 Days', 'Within 210 Days', 'Expired')
-    Group by BRAND, Aging,AUDTORG, itemname
-    )as T3
-    ) t
-    pivot
-    (sum(TotalStock)
-           for AUDTORG in ([BOGSKF],[BSLSKF],[COMSKF],[COXSKF],[CTGSKF],[CTNSKF],[DNJSKF],[FENSKF],[FRDSKF],
-    [GZPSKF],[HZJSKF],[JESSKF],[KHLSKF],[KRNSKF],[KSGSKF],[KUSSKF],[MHKSKF],[MIRSKF],[MLVSKF],[MOTSKF],
-    [MYMSKF],[NAJSKF],[NOKSKF],[PATSKF],[PBNSKF],[RAJSKF],[RNGSKF],[SAVSKF],[SYLSKF],[TGLSKF],[VRBSKF],[SKF Rupganj Plant],[SKF Mirpur Plant],[SKF Tongi Plant]
-    )) AS piv
+    from 
     
-    order by CASE
-    WHEN Aging_Days = 'Within 15 Days' THEN 1
-    WHEN Aging_Days = 'Within 30 Days' THEN 2
-	WHEN Aging_Days = 'Within 60 Days' THEN 3
-	WHEN Aging_Days = 'Within 90 Days' THEN 4
-	WHEN Aging_Days = 'Within 180 Days' THEN 5
-	WHEN Aging_Days = 'Within 210 Days' THEN 6
-	WHEN Aging_Days = 'Expired' THEN 7
-    END 
+        (select * from 
+        (select Aging as Aging_Days,BRAND,count (distinct T2.ITEMNO) as TotalSKU,itemname , sum(QTYAVAIL) AS TotalStock, T1.AUDTORG  from 
+        (select ITEMNO,case when [location] = ('4001') then  'SKF Mirpur Plant'
+                 when [location] = ('4005') then  'SKF Tongi Plant'
+               when [location] = ('4016') then  'SKF Rupganj Plant'
+              else AUDTORG end as AUDTORG,CASE
+        WHEN AGEING = 'Within 15 Days' THEN 'Within 15 Days'
+        WHEN AGEING = 'Within 30 Days' THEN 'Within 30 Days'
+        WHEN AGEING = 'Within 60 Days' THEN 'Within 60 Days'
+        WHEN AGEING = 'Within 90 Days' THEN 'Within 90 Days'
+        WHEN AGEING = 'Within 180 Days' THEN 'Within 180 Days'
+        WHEN AGEING = 'Within 210 Days' THEN 'Within 210 Days'
+        WHEN AGEING = 'Expired' THEN 'Expired'
+        END  as Aging
+    ,QTYAVAIL,EXPIRYDATE from ICStockCurrent_Lot WHERE AUDTORG<>'SKFDAT') as T1
+        LEFT JOIN
+        (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
+        ON (T1.ITEMNO=T2.ITEMNO)
+        WHERE T2.GPMNAME like ? AND Aging in ('Within 15 Days','Within 30 Days', 'Within 60 Days', 'Within 90 Days', 'Within 180 Days', 'Within 210 Days', 'Expired')
+        Group by BRAND, Aging,AUDTORG, itemname
+        )as T3
+        ) t
+        pivot
+        (sum(TotalStock)
+               for AUDTORG in ([BOGSKF],[BSLSKF],[COMSKF],[COXSKF],[CTGSKF],[CTNSKF],[DNJSKF],[FENSKF],[FRDSKF],
+        [GZPSKF],[HZJSKF],[JESSKF],[KHLSKF],[KRNSKF],[KSGSKF],[KUSSKF],[MHKSKF],[MIRSKF],[MLVSKF],[MOTSKF],
+        [MYMSKF],[NAJSKF],[NOKSKF],[PATSKF],[PBNSKF],[RAJSKF],[RNGSKF],[SAVSKF],[SYLSKF],[TGLSKF],[VRBSKF],[SKF Rupganj Plant],[SKF Mirpur Plant],[SKF Tongi Plant]
+        )) AS piv
+        
+        order by CASE
+        WHEN Aging_Days = 'Within 15 Days' THEN 1
+        WHEN Aging_Days = 'Within 30 Days' THEN 2
+        WHEN Aging_Days = 'Within 60 Days' THEN 3
+        WHEN Aging_Days = 'Within 90 Days' THEN 4
+        WHEN Aging_Days = 'Within 180 Days' THEN 5
+        WHEN Aging_Days = 'Within 210 Days' THEN 6
+        WHEN Aging_Days = 'Expired' THEN 7
+        END 
          """, connection, params={name})
 
     # column_values = range(1, len(df))

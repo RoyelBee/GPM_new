@@ -11,10 +11,11 @@ import Functions.design_report_layout as layout
 import path as d
 import time
 
-
 def send_mail(gpm_name):
+
     start_time = time.time()
     print('This project has 19 KPI, It takes time to generate. Keep patience.\n')
+
 
     import Functions.banner_code as ban
     import Functions.generate_data as gdata
@@ -31,24 +32,27 @@ def send_mail(gpm_name):
     import Functions.branch_stock_summery_data as bsdata
     import Functions.arranging_the_column_size as attachdata
 
-    ban.banner(gpm_name) # 01
-    gdata.GenerateReport(gpm_name) # 02
-    dash.dash_kpi_generator(gpm_name) # 03
-    cm.cumulative_target_sales(gpm_name) # 4
+    ban.banner(gpm_name)  # 01
+    gdata.GenerateReport(gpm_name)  # 02
+    dash.dash_kpi_generator(gpm_name)  # 03
+    cm.cumulative_target_sales(gpm_name)  # 4
     ex.executive_sales_target(gpm_name)  # 5
-    stacked.executives_brand_target_sales_chart(gpm_name) # 6
+    stacked.executives_brand_target_sales_chart(gpm_name)  # 6
     b.brand_wise_target_sales()  # 7
-    brand_bar.stock_aging_chart(gpm_name) # 8.1
-    SKU_bar.stock_aging_chart(gpm_name) # 8.2
-    quantity_bar.stock_aging_chart(gpm_name) # 8.3
-    item_stock_days_data.create_item_wise_stock_days_data() # 9
-    bsdata.branch_stock_summery_data() # 10
-   # # branch_stock_aging.get_branch_aging_stock_status(gpm_name) # 17
+    brand_bar.stock_aging_chart(gpm_name)  # 8.1
+    SKU_bar.stock_aging_chart(gpm_name)  # 8.2
+    quantity_bar.stock_aging_chart(gpm_name)  # 8.3
+    item_stock_days_data.create_item_wise_stock_days_data()  # 9 This data used in branch_stock_summery.py file
+    bsdata.branch_stock_summery_data()  # 10
+
+    # # branch_stock_aging.get_branch_aging_stock_status(gpm_name) # 17
 
     # 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
 
+
     # --------- Add Image Border ---------------------------------------
     from PIL import Image
+
     da = Image.open("./Images/dashboard.png")
     imageSize = Image.new('RGB', (962, 232))
     imageSize.paste(da, (1, 0))
@@ -74,19 +78,15 @@ def send_mail(gpm_name):
     imageSize.paste(kpi3, (1, 0))
     imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
 
-    kpi4 = Image.open("./Images/aging_stock_information.png")
-    imageSize = Image.new('RGB', (962, 481))
-    imageSize.paste(kpi4, (1, 0))
-    imageSize.save("./Images/aging_stock_information.png")
     kpi7_1 = Image.open("./Images/brand_wise_aging_stock_information.png")
     kpi7_2 = Image.open("./Images/SKU_wise_aging_stock_information.png")
     kpi7_3 = Image.open("./Images/Quantity_wise_aging_stock_information.png")
 
-    imageSize = Image.new('RGB', (1804, 481))
-    imageSize.paste(kpi7_1, (1, 0))
-    imageSize.paste(kpi7_2, (602, 0))
-    imageSize.paste(kpi7_3, (1203, 0))
-    imageSize.save("./Images/aging_stock_information.png")
+    img = Image.new('RGB', (1804, 481))
+    img.paste(kpi7_1, (1, 0))
+    img.paste(kpi7_2, (602, 0))
+    img.paste(kpi7_3, (1203, 0))
+    img.save("./Images/aging_stock_information.png")
 
     # to = gpm.getGPMEmail(gpm_name)
     #
@@ -97,7 +97,7 @@ def send_mail(gpm_name):
     #     print('Report Sending to = ', to)
 
     to = ['rejaul.islam@transcombd.com', '']
-    cc = ['', '']
+    cc = ['', 'fazle.rabby@transcombd.com']
     bcc = ['', '']
 
     # to = ['biswascma@yahoo.com', 'mdshbiswas@gmail.com','biswas@transcombd.com']
@@ -114,7 +114,6 @@ def send_mail(gpm_name):
     # to = 'biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com'
     # cc = ['biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com']
     # bcc = ['rejaul.islam@transcombd.com', 'aftab.uddin@transcombd.com', 'fazle.rabby@transcombd.com']
-
     recipient = to + cc + bcc
 
     date = datetime.today()
@@ -139,6 +138,8 @@ def send_mail(gpm_name):
     msgRoot.attach(msgAlternative)
     msgText = MIMEText('This is the alternative plain text message.')
     msgAlternative.attach(msgText)
+
+
 
     # # We reference the image in the IMG SRC attribute by the ID we give it below
     msgText = MIMEText("""
@@ -194,13 +195,6 @@ def send_mail(gpm_name):
     fp.close()
     brand.add_header('Content-ID', '<brand>')
     msgRoot.attach(brand)
-
-    # # --- yesterday summary title--------------------------
-    # fp = open(d.get_directory() + '/images/yesterday_summary.png', 'rb')
-    # brand = MIMEImage(fp.read())
-    # fp.close()
-    # brand.add_header('Content-ID', '<summary>')
-    # msgRoot.attach(brand)
 
     # # # -----------------------------------------------------
     # # # --------- 19 Process all attached data --------------
@@ -293,7 +287,7 @@ def send_mail(gpm_name):
     print('Mail Send')
     print('-------------------')
     server.close()
-    print('Time takes = ', (time.time() - start_time) / 60, 'Min')
+    print('Time takes = ', round((time.time() - start_time) / 60, 2), 'Min')
 
     # # Html_file = open("testinghtml.html", "w")
     # # Html_file.write(layout.generate_layout(gpm_name))
