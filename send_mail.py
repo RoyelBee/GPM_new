@@ -196,6 +196,8 @@ def send_mail(gpm_name):
     brand.add_header('Content-ID', '<brand>')
     msgRoot.attach(brand)
 
+
+
     # # # -----------------------------------------------------
     # # # --------- 19 Process all attached data --------------
     # attachdata.dataFormating()

@@ -162,7 +162,7 @@ def cumulative_target_sales(name):
         plt.plot(length_of_cumulative_target, cumulative_target_that_needs_to_plot, color="red", linewidth=3,
                  linestyle="-")
 
-        plt.text(list_index_for_target - 1, cumulative_trend_that_needs_to_plot[list_index_for_target] + 50,
+        plt.text(list_index_for_target - 1, cumulative_trend_that_needs_to_plot[list_index_for_target] +2 ,
                  format(round(cumulative_trend_that_needs_to_plot[list_index_for_target]), ',') + 'K\n('
                  +str(round((cumulative_trend_that_needs_to_plot[list_index_for_target]/cumulative_target_that_needs_to_plot[list_index_for_target])*100,1))+'%)' ,
                  color='black', fontsize=10, fontweight='bold')
@@ -171,7 +171,7 @@ def cumulative_target_sales(name):
                     facecolors='green', edgecolors='white')
 
 
-        plt.text(list_index_for_sale - 1, cumulative_target_that_needs_to_plot[list_index_for_sale]+50,
+        plt.text(list_index_for_sale - 1, cumulative_target_that_needs_to_plot[list_index_for_sale],
                  format(round(cumulative_target_that_needs_to_plot[list_index_for_sale], 1), ',') + 'K',
                  color='black', fontsize=10, fontweight='bold')
         plt.scatter(list_index_for_sale, cumulative_target_that_needs_to_plot[list_index_for_sale], s=60, facecolors='red',
@@ -184,7 +184,7 @@ def cumulative_target_sales(name):
         plt.scatter(list_index_for_sale, new_array_of_cumulative_sales[list_index_for_sale], s=60, facecolors='#113d3c',
                     edgecolors='white')
 
-        plt.text(list_index_for_target - 1, cumulative_target_that_needs_to_plot[list_index_for_target]+50,
+        plt.text(list_index_for_target - 1, cumulative_target_that_needs_to_plot[list_index_for_target] +2,
                  format(round(cumulative_target_that_needs_to_plot[list_index_for_target]), ',') + 'K',
                  color='black', fontsize=10, fontweight='bold')
         plt.scatter(list_index_for_target, cumulative_target_that_needs_to_plot[list_index_for_target], s=60,
@@ -206,8 +206,8 @@ def cumulative_target_sales(name):
                                                                                               fontweight='bold',
                   fontsize=16)
 
-        plt.legend(['Target', 'Trend with Achiv%' ,'Sales'])
-        print(max(cumulative_target_that_needs_to_plot))
+        plt.legend(['Target', 'Trend with Achiv%' ,'Sales'], loc= 'upper left')
+        # print(max(cumulative_target_that_needs_to_plot))
         plt.yticks(
             np.arange(0, max(cumulative_target_that_needs_to_plot) + 0.4 * max(cumulative_target_that_needs_to_plot),
                       max(cumulative_target_that_needs_to_plot) / 5))

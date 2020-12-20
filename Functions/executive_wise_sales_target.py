@@ -26,8 +26,6 @@ def executive_sales_target(name):
 
         Executive_name = executive_target_df['ExecutiveName'].tolist()
         Executive_target = executive_target_df['MTDTargetQty'].tolist()
-        # print(Executive_name)
-        # print(Executive_target)
 
         def Dr_Replace(customer_name):
             md_replaced_result = [sub.replace('Dr. ', '') for sub in customer_name]

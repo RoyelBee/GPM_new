@@ -17,13 +17,13 @@ import error_alert as error
 
 
 # # --------- GPM Dr. Shafiqul Mawla  ------------------------------------
+
 try:
     action.send_mail('Dr. Shafiqul Mawla')
 except:
     error.send_error_msg('Dr. Shafiqul Mawla')
 
-
-# # # --------- GPM Mr. A. K. M. Nawajesh Hossain  ----------------------
+# # # --------- GPM Mr. A. K. M. Nawajesh Hossain  -----------------------
 
 # try:
 #     action.send_mail('Mr. A. K. M. Nawajesh Hossain')
@@ -50,10 +50,11 @@ except:
 #     action.send_mail('Mr. Rubaeadul Hasan Lashkar')
 
 # # # --------- GPM Mr. Tafsir Bashar -----------------------------------
+
 # try:
-#     action.send_mail('Mr. Tafsir Bashar')
+#     action.send_mail('Mr. Md. Tafsir Bashar')
 # except:
-#     action.send_mail('Mr. Tafsir Bashar')
+#     action.send_mail('Mr. Md. Tafsir Bashar')
 
 # # --------- GPM Mr. Zahid Hossain Faisal ------------------------------
 # try:

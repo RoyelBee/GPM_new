@@ -55,9 +55,8 @@ def brand_wise_target_sales():
             yval = bar.get_height()
             wval = bar.get_width()
             data = str(float("{:.1f}".format(yval / 1000, ','))) + 'K'
-            plt.text(bar.get_x() +.4 - wval / 2, yval * .5, data, color='#000543', fontweight='bold', fontsize=8
-                     )  # -
-            # wval / 2
+            plt.text(bar.get_x() +.6 - wval / 2, yval * .5, data, color='#000543', fontweight='bold', fontsize=8
+                     )
 
         lines = plt.plot(new_list, mtd_target, 'o-', color='Red')
         #
