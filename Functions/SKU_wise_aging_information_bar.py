@@ -52,8 +52,9 @@ LEFT JOIN
 (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
 ON (T1.ITEMNO=T2.ITEMNO)
 WHERE T2.GPMNAME like ?
+AND T2.BRAND in (select distinct brand from GPMBRAND where Name like ?)
 Group by  AGEING)as T3
-                 """, dbc.connection, params={name})
+                 """, dbc.connection, params=(name,name))
 
 
         fifteen_days_sku = executive_target_df['15 Days SKU'].tolist()

@@ -26,18 +26,6 @@ import time
 
 
 # # # --------- GPM Mr. A. K. M. Nawajesh Hossain  ----------------------
-def auto_generate():
-    try:
-        action.send_mail('Mr. A. K. M. Nawajesh Hossain')
-    except:
-        error.send_error_msg('Mr. A. K. M. Nawajesh Hossain')
-
-schedule.every().day.at("15:21").do(auto_generate)
-schedule.every().day.at("15:31").do(auto_generate)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
 
 
 # # # --------- GPM Mr. Fazal Mohammad Tanim ----------------------------

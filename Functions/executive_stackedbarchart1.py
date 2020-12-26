@@ -14,30 +14,30 @@ def thousand_converter(number):
 def executives_brand_target_sales_chart(name):
     sql = """
         DECLARE @cols NVARCHAR (MAX)
-    
+
         SELECT @cols = COALESCE (@cols + ',[' + [executive shortname] + ']', '[' + [executive shortname] + ']')
                        FROM
                        (
-                            SELECT distinct [executive shortname] from [dbo].[GPMExecutive_ShortName] where gpmname 
-                             like ?) PV
+                            select [executive shortname] from(
+SELECT distinct [executive shortname] as [executive shortname], ExecutiveName from [dbo].[GPMExecutive_ShortName] a left join PRINFOSKF b
+on a.ExecutiveName=b.CP01 
+where a.GPMNAME like ? and b.BRAND in (select distinct brand from GPMBRAND where Name like ?)) as ttt) PV
                        ORDER BY [executive shortname]
         DECLARE @query NVARCHAR(MAX)
         SET @query ='Select * from
                 (select *
                 from
                 (
-        select sum(QTYSHIPPED) as sale,Item.brand,[Executive ShortName] as Exe from
-        (select * from oesalesdetails where  
-        transtype =1 and transdate between convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112) and 
-		 convert(varchar(8),getdate(), 112)) as Sale
-        left join
-        (select * from prinfoskf ) as Item
-        on sale.item=item.itemno
-        
-        left join
-        (select distinct [Executive ShortName],ExecutiveName from [GPMExecutive_ShortName]) as Exe on
-        exe.ExecutiveName=item.cp01
-        group by [Executive ShortName],item.exid,item.brand
+        select b.[Executive ShortName] as exe,PRINFOSKF.brand as brand,sum(QTYSHIPPED) as sale from OESalesDetails
+left join PRINFOSKF
+on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+left join
+(select * from GPMExecutive_ShortName) as b
+on b.[ExecutiveName]=PRINFOSKF.cp01
+where transtype =1 and transdate between convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112) and 
+		 convert(varchar(8),getdate(), 112)
+and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
+group by b.[Executive ShortName],PRINFOSKF.brand
                 ) src
                 pivot
                 (Max(Sale)
@@ -46,17 +46,19 @@ def executives_brand_target_sales_chart(name):
                       left join
                     (select *
                 from
-        (select [Executive ShortName] as Exe,item.brand,(sum(TRGQTY)/30)*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target from
-        (select * from [ARCSECONDARY].[dbo].[PRODUCT_WISE_TRG] where yrm=convert(varchar(6),getdate(), 112)) as Tar
-        left join
-        (select * from prinfoskf) as Item
-        on tar.exid=item.exid
-        and item.itemno=tar.item
-        left join
+        (
+select [Executive ShortName] as Exe,prinfoskf.brand as brand, sum(trgqty)/ DAY(EOMONTH(GETDATE()))*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target
+from PRINFOSKF 
+left join ARCSECONDARY.dbo.[PRODUCT_WISE_TRG]
+on [PRODUCT_WISE_TRG].ITEM = PRINFOSKF.ITEMNO
+ left join
         (select distinct [Executive ShortName],ExecutiveName from [GPMExecutive_ShortName]) as Exe on
-        exe.ExecutiveName=item.cp01
-	
-        group by tar.exid,[Executive ShortName] ,item.Brand
+        exe.ExecutiveName=PRINFOSKF.cp01
+where yrm=CONVERT(varchar(6), dateAdd(month,0,getdate()), 
+112)
+and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
+group by [Executive ShortName],prinfoskf.brand
+
                 ) src
                 pivot
                 (
@@ -65,11 +67,11 @@ def executives_brand_target_sales_chart(name):
                  )
                 ) AS piv) as tblsTarget
                 on (tblsTarget.brand=TblSale.brand)'
-        
+
         EXEC SP_EXECUTESQL @query
         """
 
-    df = pd.read_sql(sql, dbc.connection, params={name})
+    df = pd.read_sql(sql, dbc.connection, params=(name, name))
 
     df.to_csv('./Data/initialdata.csv', index=False)
 
@@ -82,15 +84,6 @@ def executives_brand_target_sales_chart(name):
     df1 = df1.iloc[:, :-1]
     master_col = []
     coluns = df1.columns.tolist()[1:][::-1]
-
-    # # Arrange columns name with .S for sales and .T for Target
-    for i in range(len(coluns)):
-        if i % 2 == 0:
-            col = coluns[i].replace(".1", "") + ' .T'
-            master_col.append(col)
-        else:
-            col = coluns[i].replace(".1", "") + ' .S'
-            master_col.append(col)
 
     # print(master_col)
 
@@ -116,6 +109,41 @@ def executives_brand_target_sales_chart(name):
     for i in range(data.shape[0]):
         all_data.append((data.loc[i].tolist())[1:])
 
+    row, col = data.shape
+    print(col)
+
+    col_alll = range(1, col)
+    print(col_alll)
+
+    df_main_per = pd.read_csv('./Data/master_executive_target_sales_data.csv', usecols=col_alll)
+    df_test = df_main_per.sum(axis=0)
+    list_of_sum_value = df_test.tolist()
+    print(list_of_sum_value)
+
+    list_of_target = []
+    list_of_sales = []
+    for i in range(0, col - 1):
+        if i % 2 == 0:
+            list_of_sales.append(list_of_sum_value[i])
+        else:
+            list_of_target.append(list_of_sum_value[i])
+
+    print(list_of_target)
+    print(list_of_sales)
+
+    list_of_achv = np.divide(list_of_sales, list_of_target) * 100
+    print(list_of_achv)
+
+    # # Arrange columns name with .S for sales and .T for Target
+    t = len(list_of_achv)
+    for i in range(len(coluns)):
+        if i % 2 == 0:
+            col = coluns[i].replace(".1", "") + ' .T'
+            master_col.append(col)
+        else:
+            col = coluns[i].replace(".1", "") + ' .S (' + str("{:.1f}".format(list_of_achv[t - 1])) + ' %)'
+            master_col.append(col)
+            t = t - 1
     # print(all_data)
     # print(len(all_data))
     writer = pd.ExcelWriter('./Data/new_testdata2.xlsx', engine='xlsxwriter')
@@ -130,6 +158,7 @@ def executives_brand_target_sales_chart(name):
                                                         vars()['new_list' + str(j) + 'sum']) * 100
         vars()['new_list' + str(j) + 'df'] = pd.DataFrame(vars()['new_list' + str(j) + 'per'])
 
+        # vars()['new_list' + str(j)+ 'sum'].to_excel(writer, sheet_name='Sheet2', index=False, startcol=j, startrow=0)
         vars()['new_list' + str(j) + 'df'].to_excel(writer, sheet_name='Sheet1', index=False, startcol=j, startrow=0)
     writer.save()
 
@@ -138,6 +167,11 @@ def executives_brand_target_sales_chart(name):
 
     for i in range(new_data.shape[0]):
         new_all_data.append((new_data.loc[i].tolist()[0:]))
+
+    # data_for_percentage = df.groupby('BRAND')['MTD Sales Target', 'Actual Sales MTD'].sum()
+    # print(data)
+    # MTD_Achivment = (data['Actual Sales MTD'] / data['MTD Sales Target']) * 100
+    # print(MTD_Achivment)
 
     # # # --------------------- Creating fig-----------------------------------------
 
@@ -205,8 +239,8 @@ def executives_brand_target_sales_chart(name):
     )
 
     plt.xlabel("Executive Name", fontweight='bold', fontsize=14)
-    plt.ylabel("Amounts (K)", fontweight='bold', fontsize=14)
-    plt.title('Executives Brand wise MTD Target and Sales', fontsize=16, fontweight='bold', color='black')
+    plt.ylabel("Quantity (K)", fontweight='bold', fontsize=14)
+    plt.title('Executive Brands Quantity wise MTD Target and Sales', fontsize=16, fontweight='bold', color='black')
     # plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
     #                fancybox=True, shadow=True, ncol=7)
 

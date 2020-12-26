@@ -7,27 +7,40 @@ import Functions.db_connection as dbc
 
 def executive_sales_target(name):
     try:
-        executive_target_df = pd.read_sql_query("""
+        executive_target_sales_df = pd.read_sql_query("""
                                 Declare @CurrentMonth NVARCHAR(MAX);
-                                Declare @DaysInMonth NVARCHAR(MAX);
-                                Declare @DaysInMonthtilltoday NVARCHAR(MAX);
-                                SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
-                                SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
-                                SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
-                                select CP01 as ExecutiveName, cast(isnull((sum(QTY)/@DaysInMonth)*@DaysInMonthtilltoday,
-                                0)/1000 as int) as MTDTargetQty
-                                from PRINFOSKF 
-                                left join ARCSECONDARY.dbo.RfieldForceProductTRG
-                                on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
-                                where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
-                                112) and GPMNAME like ?
-                                group by CP01
-                                order by CP01 asc """, dbc.connection, params={name})
+Declare @DaysInMonth NVARCHAR(MAX);
+Declare @DaysInMonthtilltoday NVARCHAR(MAX);
+SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
+SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
+SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
+select exe_sales.ExecutiveName as ExecutiveName,exe_sales.shortname as shortname,exe_sales.ItemSales as ItemSales,exe_target.MTDTargetQty as MTDTargetQty from
+(select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,cast(isnull(sum(QTYSHIPPED),
+0)/1000 as int) as ItemSales from OESalesDetails
+left join PRINFOSKF
+on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+left join
+(select * from GPMExecutive_ShortName) as b
+on b.[ExecutiveName]=PRINFOSKF.cp01
+where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
+                and convert(varchar(10),getdate(), 112)
+and PRINFOSKF.GPMNAME like ?
+and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+group by CP01,b.[Executive ShortName]) as exe_sales
+left join
+(select CP01 as ExecutiveName, cast(isnull((sum(QTY)/@DaysInMonth)*@DaysInMonthtilltoday,0)/1000 as int) as MTDTargetQty
+from PRINFOSKF 
+left join ARCSECONDARY.dbo.RfieldForceProductTRG
+on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
+where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
+112) and GPMNAME like ?
+and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+group by CP01) as exe_target
+on exe_sales.ExecutiveName = exe_target.ExecutiveName
+order by exe_sales.ItemSales desc""", dbc.connection, params=(name,name,name,name))
 
-        Executive_name = executive_target_df['ExecutiveName'].tolist()
-        Executive_target = executive_target_df['MTDTargetQty'].tolist()
-        # print(Executive_name)
-        # print(Executive_target)
+        Executive_name = executive_target_sales_df['ExecutiveName'].tolist()
+        Executive_target = executive_target_sales_df['MTDTargetQty'].tolist()
 
         def Dr_Replace(customer_name):
             md_replaced_result = [sub.replace('Dr. ', '') for sub in customer_name]
@@ -46,22 +59,9 @@ def executive_sales_target(name):
         new_name3 = MS_Replace(new_name2)
         # print(new_name3)
 
-        executive_sales_df = pd.read_sql_query("""select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,cast(isnull(sum(QTYSHIPPED),
-            0)/1000 as int) as ItemSales from OESalesDetails
-            left join PRINFOSKF
-            on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-            left join
-            (select * from GPMExecutive_ShortName) as b
-            on b.[ExecutiveName]=PRINFOSKF.cp01
-            where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
-                            and convert(varchar(10),getdate(), 112)
-            and PRINFOSKF.GPMNAME like ?
-            group by CP01,b.[Executive ShortName]
-            order by CP01 asc """, dbc.connection, params={name})
-
         # print(executive_target_df)
-        Executive_sale = executive_sales_df['ItemSales'].tolist()
-        short_name = executive_sales_df['shortname'].tolist()
+        Executive_sale = executive_target_sales_df['ItemSales'].tolist()
+        short_name = executive_target_sales_df['shortname'].tolist()
         # print(Executive_sale)
         # print(short_name)
 

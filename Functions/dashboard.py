@@ -14,41 +14,45 @@ conn = pyodbc.connect('DRIVER={SQL Server};'
 
 
 def dash_kpi_generator(name):
-    total_sku = pd.read_sql_query("""select gpmname,count(distinct BRAND) as 'total brand',count(itemno) as 'total_SKU' from PRINFOSKF
-                   where status=1
-                   and gpmname like ?
-                   group by gpmname 
-                   """, conn, params={name})
+    # print('start')
+    total_sku = pd.read_sql_query(""" select gpmname,count(distinct BRAND) as 'total brand',count(itemno) as 'total_SKU' from PRINFOSKF
+                    where status=1 and brand in (select distinct brand from GPMBRAND where Name like ?)
+                    and gpmname like ?
+                    group by gpmname  
+                   """, conn, params=(name, name))
 
     total_sku_list = total_sku['total_SKU'].to_list()
     total_brand_list = total_sku['total brand'].tolist()
+    # print('one')
 
-    sold_sku = pd.read_sql_query("""select count(distinct item) as 'Sold_SKU' from OESalesDetails
-                   where item in(select itemno from PRINFOSKF
-                   where status=1
-                   and gpmname like ? )
-                   and transtype = 1
-                  and left(transdate,6)=CONVERT(varchar(6), dateAdd(day,0,getdate()), 112)
-
-                   """, conn, params={name})
+    sold_sku = pd.read_sql_query(""" select count(distinct item) as 'Sold_SKU' from OESalesDetails
+                where item in(select itemno from PRINFOSKF
+                where status=1 and brand in (select distinct brand from GPMBRAND where Name like ?)
+                and gpmname like ?)
+                and transtype = 1
+                and left(transdate,6)=CONVERT(varchar(6), dateAdd(day,0,getdate()), 112)
+                
+                                   """, conn, params=(name, name))
 
     sold_sku_list = sold_sku['Sold_SKU'].to_list()
-    no_sales_sku = total_sku_list[0] - sold_sku_list[0]
+    # no_sales_sku = total_sku_list[0] - sold_sku_list[0]
+    # print('two')
 
     no_stock_sku = pd.read_sql_query("""select count(a.itemno) 'no stock item' from
-                       (select itemno from PRINFOSKF
-                       where status=1
-                       and gpmname like ? ) as a
-                       left join
-                       (select itemno,isnull(sum(QTYONHAND),0) as stock from ICStockStatusCurrentLOT
-                       group by itemno) as b
-                       on a.itemno = b.itemno
-                       where stock = 0 """, conn, params={name})
+            (select itemno from PRINFOSKF
+            where status=1 and brand in (select distinct brand from GPMBRAND where Name like ?)
+            and gpmname like ? ) as a
+            left join
+            (select itemno,isnull(sum(QTYONHAND),0) as stock from ICStockStatusCurrentLOT
+            group by itemno) as b
+            on a.itemno = b.itemno
+            where stock = 0 """, conn, params=(name, name))
 
     no_stock_sku_list = no_stock_sku['no stock item'].to_list()
     read_file_for_all_data = pd.read_excel('./Data/gpm_data.xlsx')
     total_target = read_file_for_all_data['MTD Sales Target'].to_list()
     total_sales = read_file_for_all_data['Actual Sales MTD'].to_list()
+    # print('three')
 
     if sum(total_target) == 0:
         achivemet = 0
@@ -89,48 +93,51 @@ def dash_kpi_generator(name):
     No_stock_sku_percentage = str(round((no_stock_sku_list[0] / total_sku_list[0]) * 100)) + '%'
     # print(No_stock_sku_percentage)
 
+    # ----------------------------------------------------------------------------------------------------
+    # ---------------------------------kpi 6-10 ------------------------------------------
 
-#----------------------------------------------------------------------------------------------------
-    #---------------------------------kpi 6-10 ------------------------------------------
-    try:
+    gpm_target = pd.read_sql_query(""" Declare @CurrentMonth NVARCHAR(MAX);
+                    Declare @DaysInMonth NVARCHAR(MAX);
+                    Declare @DaysInMonthtilltoday NVARCHAR(MAX);
+                    SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
+                    SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
+                    SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
+                    select CP01 as ExecutiveName, isnull(sum(QTY),0) as TargetQty,isnull(sum(VALUE)/@DaysInMonth,0) as Targetvalue
+                    from PRINFOSKF 
+                    left join ARCSECONDARY.dbo.RfieldForceProductTRG
+                    on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
+                    where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
+                    112) and GPMNAME like ?
+                    and brand in (select distinct brand from GPMBRAND where Name like ?)
+                    group by CP01
+                    order by CP01 asc """, conn, params=(name, name))
 
-        gpm_target = pd.read_sql_query("""Declare @CurrentMonth NVARCHAR(MAX);
-                                    Declare @DaysInMonth NVARCHAR(MAX);
-                                    Declare @DaysInMonthtilltoday NVARCHAR(MAX);
-                                    SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
-                                    SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
-                                    SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
-    select CP01 as ExecutiveName, isnull(sum(QTY),0) as TargetQty,isnull(sum(VALUE)/@DaysInMonth,0) as Targetvalue
-                                            from PRINFOSKF 
-                                            left join ARCSECONDARY.dbo.RfieldForceProductTRG
-                                            on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
-                                            where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
-                                            112) and GPMNAME like ?
-                                            group by CP01
-                                            order by CP01 asc""", conn, params={name})
+    GPM_target_list = gpm_target['Targetvalue'].to_list()
+    # print(GPM_target_list)
+    GPM_TARGET_SUM = sum(GPM_target_list)
+    # print('four')
 
-        GPM_target_list = gpm_target['Targetvalue'].to_list()
-        # print(GPM_target_list)
-        GPM_TARGET_SUM=sum(GPM_target_list)
-        # print(GPM_TARGET_SUM)
+    if len(str(int(GPM_TARGET_SUM))) >= 8:
+        Target_value_in_crore = str("{:.2f}".format((GPM_TARGET_SUM / 10000000), 2)) + ' Cr'
+    else:
+        Target_value_in_crore = str("{:.2f}".format((GPM_TARGET_SUM / 1000000), 2)) + ' M'
 
-        Target_value_in_crore = str(round((GPM_TARGET_SUM/10000000),1))+' Cr'
-        # print(Target_value_in_crore)
-    except:
-        Target_value_in_crore = str(0)+" Cr"
+    # print('target = ', Target_value_in_crore)
 
-    gpm_sales_inv_line = pd.read_sql_query("""select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,
-                            isnull(sum(EXTINVMISC),0) as SalesValue,count(distinct INVNUMBER)
-                            as num_of_inv,count(INVNUMBER) as num_of_inv_line from OESalesDetails
-                            left join PRINFOSKF
-                            on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-                            left join
-                            (select * from GPMExecutive_ShortName) as b
-                            on b.[ExecutiveName]=PRINFOSKF.cp01
-                            where left(TRANSDATE,8)=convert(varchar(10),getdate()-1, 112)
-                            and PRINFOSKF.GPMNAME like ?
-                            group by CP01,b.[Executive ShortName]
-                            order by CP01 asc""", conn, params={name})
+    gpm_sales_inv_line = pd.read_sql_query(""" 
+                    
+                select GPMNAME,GPMID,EXID,CP01,isnull(sum(EXTINVMISC), 0) as SalesValue,
+                isnull(count(distinct INVNUMBER), 0) as  num_of_inv,
+                isnull(sum(LINECOUNT), 0) as num_of_inv_line from (
+                select item,INVNUMBER,sum(EXTINVMISC) as EXTINVMISC,sum(QTYSHIPPED) as QTYSHIPPED,count(item) as LINECOUNT from OESalesDetails
+                where TRANSDATe= convert(varchar(10),getdate()-1, 112) and TRANSTYPE=1
+                group by item,INVNUMBER) sales
+                right join 
+                (select ITEMNO,GPMNAME,GPMID,EXID,CP01 from PRINFOSKF where GPMNAME like ?
+                and brand in (select distinct BRAND from gpmbrand where [name] like ? )) as item
+                on sales.ITEM=item.ITEMNO
+                group by GPMNAME,GPMID,EXID,CP01
+                         """, conn, params=(name, name))
 
     GPM_sales_list = gpm_sales_inv_line['SalesValue'].to_list()
     gpm_invoice_list = gpm_sales_inv_line['num_of_inv'].to_list()
@@ -140,21 +147,28 @@ def dash_kpi_generator(name):
     gpm_invoice_sum = sum(gpm_invoice_list)
     gpm_invoice_line_sum = sum(gpm_invoice_line_list)
     # print(gpm_invoice_sum)
+    # print('Sales', GPM_SALES_SUM)
+    # print('five')
 
-    Sales_value_in_crore = str(round((GPM_SALES_SUM / 10000000), 1)) + ' Cr'
-    # print(Sales_value_in_crore)
+    if len(str(int(GPM_SALES_SUM))) >= 8:
+        Sales_value_in_crore = str("{:.2f}".format((GPM_SALES_SUM / 10000000), 2)) + ' Cr'
+    else:
+        Sales_value_in_crore = str("{:.2f}".format((GPM_SALES_SUM / 1000000), 2)) + ' M'
+
+    # print('Sales', Sales_value_in_crore)
+
     try:
-        achievement_target_sales = str(round(((GPM_SALES_SUM/GPM_TARGET_SUM)*100),1)) + ' %'
+        achievement_target_sales = str("{:.2f}".format(((GPM_SALES_SUM / GPM_TARGET_SUM) * 100), 2)) + ' %'
         # print(achievement_target_sales)
     except:
-        achievement_target_sales = str(0)+' %'
-    brand_no_of_invoice = str(int(gpm_invoice_sum/1000))+' K'
+        achievement_target_sales = str(0) + ' %'
+    brand_no_of_invoice = str("{:.2f}".format(gpm_invoice_sum / 1000, 2)) + ' K'
     # print(brand_no_of_invoice)
 
     if gpm_invoice_sum <= 0:
-        average_no_of_invoice_line= 0
+        average_no_of_invoice_line = 0
     else:
-        average_no_of_invoice_line = str(round(gpm_invoice_line_sum/gpm_invoice_sum,2))
+        average_no_of_invoice_line = str("{:.2f}".format(gpm_invoice_line_sum / gpm_invoice_sum, 2))
     # print(average_no_of_invoice_line)
 
     image = Image.open(dir.get_directory() + "/Images/dash_kpi10.png")
@@ -168,9 +182,9 @@ def dash_kpi_generator(name):
     draw.text((805, 83), str(no_stock_sku_list[0]) + ' (' + No_stock_sku_percentage + ')', font=font, fill=(39, 98,
                                                                                                             236))
 
-    draw.text((60, 177),Target_value_in_crore , font=font, fill=(39, 98, 236))
-    draw.text((250, 177),Sales_value_in_crore , font=font, fill=(39, 98, 236))
-    draw.text((435, 177),achievement_target_sales , font=font, fill=(39, 98, 236))
+    draw.text((60, 177), Target_value_in_crore, font=font, fill=(39, 98, 236))
+    draw.text((250, 177), Sales_value_in_crore, font=font, fill=(39, 98, 236))
+    draw.text((435, 177), achievement_target_sales, font=font, fill=(39, 98, 236))
     draw.text((640, 177), brand_no_of_invoice, font=font, fill=(39, 98, 236))
     draw.text((835, 177), str(average_no_of_invoice_line), font=font, fill=(39, 98, 236))
     # image.show()

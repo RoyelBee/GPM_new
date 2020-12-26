@@ -136,7 +136,7 @@ def GenerateReport(gpm_name):
                         
                 from
                 (select distinct ITEMNO,  TRADEPRICE ,[ITEMNAME] as Itemname, BRAND,PACKSIZE from PRINFOSKF where ITEMNO not like '9%'
-                and BRAND IN (SELECT BRAND FROM GPMBRAND WHERE Name like ? )
+                and BRAND IN (SELECT BRAND FROM GPMBRAND WHERE Name like ?) and GPMNAME like ?
                 ) as ProductBrand
                 Left join
                 (
@@ -243,7 +243,7 @@ def GenerateReport(gpm_name):
                 
         """
 
-    df = pd.read_sql_query(sql_queryes, conn.connection, params={gpm_name})
+    df = pd.read_sql_query(sql_queryes, conn.connection, params=(gpm_name, gpm_name))
     df.to_excel('Data/gpm_data.xlsx', index=False)
     print('2. Master Dataset Created')
 

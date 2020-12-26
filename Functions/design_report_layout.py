@@ -436,6 +436,8 @@ def generate_layout(gpm_name):
                  
                  
                  """ + aging_summary.aging_stock_summary_status(gpm_name) + """
+                 
+                 
 
             </table>  <br><br>
             

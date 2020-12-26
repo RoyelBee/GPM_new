@@ -17,14 +17,15 @@ def convert(number):
 
 def cumulative_target_sales(name):
     try:
-        everday_sale_df = pd.read_sql_query(""" select  right(TRANSDATE, 2) as Date, isnull(sum(QTYSHIPPED),
-                                0) as ItemSales from OESalesDetails
-                                left join PRINFOSKF
-                                on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-                                where left(TRANSDATE,6) = convert(varchar(6),getdate(), 112)
-                                and PRINFOSKF.GPMNAME like ?
-                                group by right(TRANSDATE, 2)
-                                order by right(TRANSDATE, 2) """, dbc.connection, params={name})
+        everday_sale_df = pd.read_sql_query("""select  right(TRANSDATE, 2) as Date, isnull(sum(QTYSHIPPED),
+0) as ItemSales from OESalesDetails
+left join PRINFOSKF
+on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+where left(TRANSDATE,6) = convert(varchar(6),getdate(), 112)
+and PRINFOSKF.GPMNAME like ?
+and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+group by right(TRANSDATE, 2)
+order by right(TRANSDATE, 2)""", dbc.connection, params=(name,name))
 
         day_wise_date = everday_sale_df['Date'].tolist()
         day_to_day_sale = everday_sale_df['ItemSales'].tolist()
@@ -47,16 +48,16 @@ def cumulative_target_sales(name):
         # print('Sales Taken According to the value of days : ', final_sales_array)
 
         EveryDay_target_df = pd.read_sql_query(""" Declare @CurrentMonth NVARCHAR(MAX);
-                                Declare @DaysInMonth NVARCHAR(MAX);
-                                SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
-                                SET @DaysInMonth = DAY(EOMONTH(GETDATE())) 
-                                select  isnull(sum(QTY),0)/@DaysInMonth as MonthsTargetQty 
-                                from ARCSECONDARY.dbo.RfieldForceProductTRG
-                                left join PRINFOSKF
-                                on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
-                                where YEARMONTH=CONVERT(varchar(6), dateAdd(month,0,getdate()), 112) and GPMNAME 
-                                like ? 
-                                """, dbc.connection, params={name})
+Declare @DaysInMonth NVARCHAR(MAX);
+SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
+SET @DaysInMonth = DAY(EOMONTH(GETDATE())) 
+select  isnull(sum(QTY),0)/@DaysInMonth as MonthsTargetQty 
+from ARCSECONDARY.dbo.RfieldForceProductTRG
+left join PRINFOSKF
+on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
+where YEARMONTH=CONVERT(varchar(6), dateAdd(month,0,getdate()), 112) and GPMNAME like ?
+and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+                                """, dbc.connection, params=(name,name))
 
         single_day_target = EveryDay_target_df['MonthsTargetQty'][0]
         # print('Single Day Target : ', single_day_target)
@@ -162,7 +163,7 @@ def cumulative_target_sales(name):
         plt.plot(length_of_cumulative_target, cumulative_target_that_needs_to_plot, color="red", linewidth=3,
                  linestyle="-")
 
-        plt.text(list_index_for_target - 1, cumulative_trend_that_needs_to_plot[list_index_for_target] + 50,
+        plt.text(list_index_for_target - 1, cumulative_trend_that_needs_to_plot[list_index_for_target] +2 ,
                  format(round(cumulative_trend_that_needs_to_plot[list_index_for_target]), ',') + 'K\n('
                  +str(round((cumulative_trend_that_needs_to_plot[list_index_for_target]/cumulative_target_that_needs_to_plot[list_index_for_target])*100,1))+'%)' ,
                  color='black', fontsize=10, fontweight='bold')
@@ -171,7 +172,7 @@ def cumulative_target_sales(name):
                     facecolors='green', edgecolors='white')
 
 
-        plt.text(list_index_for_sale - 1, cumulative_target_that_needs_to_plot[list_index_for_sale]+50,
+        plt.text(list_index_for_sale - 1, cumulative_target_that_needs_to_plot[list_index_for_sale],
                  format(round(cumulative_target_that_needs_to_plot[list_index_for_sale], 1), ',') + 'K',
                  color='black', fontsize=10, fontweight='bold')
         plt.scatter(list_index_for_sale, cumulative_target_that_needs_to_plot[list_index_for_sale], s=60, facecolors='red',
@@ -184,7 +185,7 @@ def cumulative_target_sales(name):
         plt.scatter(list_index_for_sale, new_array_of_cumulative_sales[list_index_for_sale], s=60, facecolors='#113d3c',
                     edgecolors='white')
 
-        plt.text(list_index_for_target - 1, cumulative_target_that_needs_to_plot[list_index_for_target]+50,
+        plt.text(list_index_for_target - 1, cumulative_target_that_needs_to_plot[list_index_for_target] +2,
                  format(round(cumulative_target_that_needs_to_plot[list_index_for_target]), ',') + 'K',
                  color='black', fontsize=10, fontweight='bold')
         plt.scatter(list_index_for_target, cumulative_target_that_needs_to_plot[list_index_for_target], s=60,
@@ -206,8 +207,8 @@ def cumulative_target_sales(name):
                                                                                               fontweight='bold',
                   fontsize=16)
 
-        plt.legend(['Target', 'Trend with Achiv%' ,'Sales'])
-        print(max(cumulative_target_that_needs_to_plot))
+        plt.legend(['Target', 'Trend with Achiv%' ,'Sales'], loc= 'upper left')
+        # print(max(cumulative_target_that_needs_to_plot))
         plt.yticks(
             np.arange(0, max(cumulative_target_that_needs_to_plot) + 0.4 * max(cumulative_target_that_needs_to_plot),
                       max(cumulative_target_that_needs_to_plot) / 5))

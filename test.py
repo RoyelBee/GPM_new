@@ -1,18 +1,18 @@
-# import Functions.dashboard as d
-# d.dash_kpi_generator('Dr. Mohammad Mizanur Rahman')
+import Functions.dashboard as d
+d.dash_kpi_generator('Mr. A. K. M. Nawajesh Hossain')
 
 
 # import Functions.brand_wise_target_sales as bts
 # bts.brand_wise_target_sales()
 
-import Functions.cumulative_target_sales as cs
-cs.cumulative_target_sales('Dr. Shafiqul Mawla')
+# import Functions.cumulative_target_sales as cs
+# cs.cumulative_target_sales('Mr. A. K. M. Nawajesh Hossain')
 
-# # ------ 1 -------------------------------
+# # ------ 1 -----------------------------------------
 # import Functions.banner_code as b
 # b.banner('Mr. A. K. M. Nawajesh Hossain')
 
-# # ------------- 2 ------------------------
+# # ------------- 2 ----------------------------------
 # import Functions.generate_data as data
 # data.GenerateReport('Mr. A. K. M. Nawajesh Hossain')
 
@@ -35,7 +35,7 @@ cs.cumulative_target_sales('Dr. Shafiqul Mawla')
 
 # # --------------- 7.1 --------------------------------
 # import Functions.brand_wise_aging_information_bar as bs
-# bs.stock_aging_chart("Mr. A. K. M. Nawajesh Hossain")
+# bs.stock_aging_chart('Mr. Md. Tafsir Bashar')
 
 
 # # --------------- 7.2 --------------------------------
@@ -73,4 +73,8 @@ cs.cumulative_target_sales('Dr. Shafiqul Mawla')
 # import Functions.item_wise_yesterday_sales as y
 # y.item_wise_yesterday_sales_Records()
 
+# import Functions.design_report_layout as layout
+# layout.generate_layout('Mr. A. K. M. Nawajesh Hossain')
 
+# import Functions.executive_stackedbarchart1 as exts
+# exts.executives_brand_target_sales_chart('Mr. Md. Tafsir Bashar')

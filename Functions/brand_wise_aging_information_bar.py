@@ -60,8 +60,9 @@ def stock_aging_chart(name):
             (select ITEMNO,ITEMNAME,BRAND,PACKSIZE,GPMNAME from PRINFOSKF)as T2
             ON (T1.ITEMNO=T2.ITEMNO)
             WHERE T2.GPMNAME like ?
+            AND T2.BRAND in (select distinct brand from GPMBRAND where Name like ?)
             Group by  AGEING)as T3
-                 """, connection, params={name})
+                 """, connection, params=(name,name))
 
         fifteen_days_brand = executive_target_df['15 Days Brand'].tolist()
         thirty_days_brand = executive_target_df['30 Days Brand'].tolist()

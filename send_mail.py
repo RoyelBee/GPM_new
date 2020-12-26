@@ -10,12 +10,12 @@ import os
 import Functions.design_report_layout as layout
 import path as d
 import time
+import Functions.read_gpm_info as gpm
+
 
 def send_mail(gpm_name):
-
     start_time = time.time()
     print('This project has 19 KPI, It takes time to generate. Keep patience.\n')
-
 
     import Functions.banner_code as ban
     import Functions.generate_data as gdata
@@ -48,7 +48,6 @@ def send_mail(gpm_name):
     # # branch_stock_aging.get_branch_aging_stock_status(gpm_name) # 17
 
     # 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
-
 
     # --------- Add Image Border ---------------------------------------
     from PIL import Image
@@ -88,32 +87,38 @@ def send_mail(gpm_name):
     img.paste(kpi7_3, (1203, 0))
     img.save("./Images/aging_stock_information.png")
 
-    # to = gpm.getGPMEmail(gpm_name)
-    #
-    # if (to == ['nawajesh@skf.transcombd.com', '']):
+    to = gpm.getGPMEmail(gpm_name)
+    print('mail send to ', to)
+
+    # if (to == ['tafsir.bashar@skf.transcombd.com', '']):
     #     to = ['rejaul.islam@transcombd.com', '']
     #     cc = ['', '']
     #     bcc = ['', '']
     #     print('Report Sending to = ', to)
 
-    to = ['rejaul.islam@transcombd.com', '']
-    cc = ['', 'fazle.rabby@transcombd.com']
-    bcc = ['', '']
+    # to = ['biswascma@yahoo.com', 'biswas@transcombd.com']
+    # cc = ['yakub@transcombd.com', '']
+    # bcc = ['aftab.uddin@transcombd.com','rejaul.islam@transcombd.com', 'fazle.rabby@transcombd.com']
 
     # to = ['biswascma@yahoo.com', 'mdshbiswas@gmail.com','biswas@transcombd.com']
     # cc = ['yakub@transcombd.com', 'aftab.uddin@transcombd.com']
     # bcc = ['fazle.rabby@transcombd.com', 'rejaul.islam@transcombd.com', '']
 
-    # to = ['drmizan@skf.transcombd.com', '']
-    # cc = ['mdshbiswas@gmail.com','biswas@transcombd.com', 'zubair@transcombd.com']
-    # bcc = ['aftab.uddin@transcombd.com','fazle.rabby@transcombd.com', 'rejaul.islam@transcombd.com']
-
     msgRoot = MIMEMultipart('related')
+
     me = 'erp-bi.service@transcombd.com'
+    # to = ['fazle.rabby@transcombd.com','rejaul.islam@transcombd.com']
+    # cc = ['', '']
+    # bcc = ['', '']
 
     # to = 'biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com'
     # cc = ['biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com']
     # bcc = ['rejaul.islam@transcombd.com', 'aftab.uddin@transcombd.com', 'fazle.rabby@transcombd.com']
+
+    cc = ['', '']
+    bcc = ['mdshbiswas@gmail.com', 'biswas@transcombd.com', 'zubair@transcombd.com','yakub@transcombd.com', 'aftab.uddin@transcombd.com',
+           'fazle.rabby@transcombd.com', 'rejaul.islam@transcombd.com']
+
     recipient = to + cc + bcc
 
     date = datetime.today()
@@ -138,8 +143,6 @@ def send_mail(gpm_name):
     msgRoot.attach(msgAlternative)
     msgText = MIMEText('This is the alternative plain text message.')
     msgAlternative.attach(msgText)
-
-
 
     # # We reference the image in the IMG SRC attribute by the ID we give it below
     msgText = MIMEText("""
@@ -195,6 +198,13 @@ def send_mail(gpm_name):
     fp.close()
     brand.add_header('Content-ID', '<brand>')
     msgRoot.attach(brand)
+
+    # # --- Logo
+    # fp = open(d.get_directory() + '/images/logo.png', 'rb')
+    # logo = MIMEImage(fp.read())
+    # fp.close()
+    # logo.add_header('Content-ID', '<logo>')
+    # msgRoot.attach(logo)
 
     # # # -----------------------------------------------------
     # # # --------- 19 Process all attached data --------------
