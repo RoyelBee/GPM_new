@@ -32,12 +32,12 @@ def send_mail(gpm_name):
     import Functions.branch_stock_summery_data as bsdata
     import Functions.arranging_the_column_size as attachdata
 
-    ban.banner(gpm_name)  # 01
-    gdata.GenerateReport(gpm_name)  # 02
-    dash.dash_kpi_generator(gpm_name)  # 03
-    cm.cumulative_target_sales(gpm_name)  # 4
-    ex.executive_sales_target(gpm_name)  # 5
-    stacked.executives_brand_target_sales_chart(gpm_name)  # 6
+    # ban.banner(gpm_name)  # 01
+    # gdata.GenerateReport(gpm_name)  # 02
+    # dash.dash_kpi_generator(gpm_name)  # 03
+    # cm.cumulative_target_sales(gpm_name)  # 4
+    # ex.executive_sales_target(gpm_name)  # 5
+    # stacked.executives_brand_target_sales_chart(gpm_name)  # 6
     b.brand_wise_target_sales()  # 7
     brand_bar.stock_aging_chart(gpm_name)  # 8.1
     SKU_bar.stock_aging_chart(gpm_name)  # 8.2
@@ -53,7 +53,7 @@ def send_mail(gpm_name):
     from PIL import Image
 
     da = Image.open("./Images/dashboard.png")
-    imageSize = Image.new('RGB', (962, 232))
+    imageSize = Image.new('RGB', (962, 375))
     imageSize.paste(da, (1, 0))
     imageSize.save("./Images/dashboard.png")
 
@@ -87,8 +87,8 @@ def send_mail(gpm_name):
     img.paste(kpi7_3, (1203, 0))
     img.save("./Images/aging_stock_information.png")
 
-    to = gpm.getGPMEmail(gpm_name)
-    print('mail send to ', to)
+    # to = gpm.getGPMEmail(gpm_name)
+    # print('mail send to ', to)
 
     # if (to == ['tafsir.bashar@skf.transcombd.com', '']):
     #     to = ['rejaul.islam@transcombd.com', '']
@@ -107,17 +107,17 @@ def send_mail(gpm_name):
     msgRoot = MIMEMultipart('related')
 
     me = 'erp-bi.service@transcombd.com'
-    # to = ['fazle.rabby@transcombd.com','rejaul.islam@transcombd.com']
-    # cc = ['', '']
-    # bcc = ['', '']
+    to = ['','rejaul.islam@transcombd.com']
+    cc = ['', '']
+    bcc = ['', '']
 
     # to = 'biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com'
     # cc = ['biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com']
     # bcc = ['rejaul.islam@transcombd.com', 'aftab.uddin@transcombd.com', 'fazle.rabby@transcombd.com']
 
-    cc = ['', '']
-    bcc = ['mdshbiswas@gmail.com', 'biswas@transcombd.com', 'zubair@transcombd.com','yakub@transcombd.com', 'aftab.uddin@transcombd.com',
-           'fazle.rabby@transcombd.com', 'rejaul.islam@transcombd.com']
+    # cc = ['', '']
+    # bcc = ['mdshbiswas@gmail.com', 'biswas@transcombd.com', 'zubair@transcombd.com','yakub@transcombd.com', 'aftab.uddin@transcombd.com',
+    #        'fazle.rabby@transcombd.com', 'rejaul.islam@transcombd.com']
 
     recipient = to + cc + bcc
 

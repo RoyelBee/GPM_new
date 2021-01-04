@@ -1,9 +1,8 @@
-import Functions.dashboard as d
-d.dash_kpi_generator('Mr. A. K. M. Nawajesh Hossain')
+# import Functions.dashboard as d
+# d.dash_kpi_generator('Mr. A. K. M. Nawajesh Hossain')
 
-
-# import Functions.brand_wise_target_sales as bts
-# bts.brand_wise_target_sales()
+import Functions.brand_wise_target_sales as bts
+bts.brand_wise_target_sales()
 
 # import Functions.cumulative_target_sales as cs
 # cs.cumulative_target_sales('Mr. A. K. M. Nawajesh Hossain')

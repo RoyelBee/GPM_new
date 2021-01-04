@@ -19,57 +19,57 @@ def executives_brand_target_sales_chart(name):
                        FROM
                        (
                             select [executive shortname] from(
-SELECT distinct [executive shortname] as [executive shortname], ExecutiveName from [dbo].[GPMExecutive_ShortName] a left join PRINFOSKF b
-on a.ExecutiveName=b.CP01 
-where a.GPMNAME like ? and b.BRAND in (select distinct brand from GPMBRAND where Name like ?)) as ttt) PV
-                       ORDER BY [executive shortname]
-        DECLARE @query NVARCHAR(MAX)
-        SET @query ='Select * from
-                (select *
-                from
-                (
-        select b.[Executive ShortName] as exe,PRINFOSKF.brand as brand,sum(QTYSHIPPED) as sale from OESalesDetails
-left join PRINFOSKF
-on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-left join
-(select * from GPMExecutive_ShortName) as b
-on b.[ExecutiveName]=PRINFOSKF.cp01
-where transtype =1 and transdate between convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112) and 
-		 convert(varchar(8),getdate(), 112)
-and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
-group by b.[Executive ShortName],PRINFOSKF.brand
-                ) src
-                pivot
-                (Max(Sale)
-               for EXE in (' + @cols + ')) AS piv
-                ) as TblSale
-                      left join
+    SELECT distinct [executive shortname] as [executive shortname], ExecutiveName from [dbo].[GPMExecutive_ShortName] a left join PRINFOSKF b
+    on a.ExecutiveName=b.CP01 
+    where a.GPMNAME like ? and b.BRAND in (select distinct brand from GPMBRAND where Name like ?)) as ttt) PV
+                           ORDER BY [executive shortname]
+            DECLARE @query NVARCHAR(MAX)
+            SET @query ='Select * from
                     (select *
-                from
-        (
-select [Executive ShortName] as Exe,prinfoskf.brand as brand, sum(trgqty)/ DAY(EOMONTH(GETDATE()))*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target
-from PRINFOSKF 
-left join ARCSECONDARY.dbo.[PRODUCT_WISE_TRG]
-on [PRODUCT_WISE_TRG].ITEM = PRINFOSKF.ITEMNO
- left join
-        (select distinct [Executive ShortName],ExecutiveName from [GPMExecutive_ShortName]) as Exe on
-        exe.ExecutiveName=PRINFOSKF.cp01
-where yrm=CONVERT(varchar(6), dateAdd(month,0,getdate()), 
-112)
-and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
-group by [Executive ShortName],prinfoskf.brand
-
-                ) src
-                pivot
-                (
-                sum(Target)
-                for EXE in (' + @cols + '
-                 )
-                ) AS piv) as tblsTarget
-                on (tblsTarget.brand=TblSale.brand)'
-
-        EXEC SP_EXECUTESQL @query
-        """
+                    from
+                    (
+            select b.[Executive ShortName] as exe,PRINFOSKF.brand as brand,sum(QTYSHIPPED) as sale from OESalesDetails
+    left join PRINFOSKF
+    on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+    left join
+    (select * from GPMExecutive_ShortName) as b
+    on b.[ExecutiveName]=PRINFOSKF.cp01
+    where transtype =1 and transdate between convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112) and 
+             convert(varchar(8),getdate(), 112)
+    and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
+    group by b.[Executive ShortName],PRINFOSKF.brand
+                    ) src
+                    pivot
+                    (Max(Sale)
+                   for EXE in (' + @cols + ')) AS piv
+                    ) as TblSale
+                          left join
+                        (select *
+                    from
+            (
+    select [Executive ShortName] as Exe,prinfoskf.brand as brand, sum(trgqty)/ DAY(EOMONTH(GETDATE()))*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target
+    from PRINFOSKF 
+    left join ARCSECONDARY.dbo.[PRODUCT_WISE_TRG]
+    on [PRODUCT_WISE_TRG].ITEM = PRINFOSKF.ITEMNO
+     left join
+            (select distinct [Executive ShortName],ExecutiveName from [GPMExecutive_ShortName]) as Exe on
+            exe.ExecutiveName=PRINFOSKF.cp01
+    where yrm=CONVERT(varchar(6), dateAdd(month,0,getdate()), 
+    112)
+    and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
+    group by [Executive ShortName],prinfoskf.brand
+    
+                    ) src
+                    pivot
+                    (
+                    sum(Target)
+                    for EXE in (' + @cols + '
+                     )
+                    ) AS piv) as tblsTarget
+                    on (tblsTarget.brand=TblSale.brand)'
+    
+            EXEC SP_EXECUTESQL @query
+            """
 
     df = pd.read_sql(sql, dbc.connection, params=(name, name))
 
@@ -110,15 +110,15 @@ group by [Executive ShortName],prinfoskf.brand
         all_data.append((data.loc[i].tolist())[1:])
 
     row, col = data.shape
-    print(col)
+    # print(col)
 
     col_alll = range(1, col)
-    print(col_alll)
+    # print(col_alll)
 
     df_main_per = pd.read_csv('./Data/master_executive_target_sales_data.csv', usecols=col_alll)
     df_test = df_main_per.sum(axis=0)
     list_of_sum_value = df_test.tolist()
-    print(list_of_sum_value)
+    # print(list_of_sum_value)
 
     list_of_target = []
     list_of_sales = []
@@ -128,11 +128,11 @@ group by [Executive ShortName],prinfoskf.brand
         else:
             list_of_target.append(list_of_sum_value[i])
 
-    print(list_of_target)
-    print(list_of_sales)
+    # print(list_of_target)
+    # print(list_of_sales)
 
     list_of_achv = np.divide(list_of_sales, list_of_target) * 100
-    print(list_of_achv)
+    # print(list_of_achv)
 
     # # Arrange columns name with .S for sales and .T for Target
     t = len(list_of_achv)

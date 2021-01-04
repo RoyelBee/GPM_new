@@ -11,10 +11,10 @@ def GenerateReport(gpm_name):
                 declare @firstday varchar(8)
                 declare @pdatefrom varchar(8)
                 declare @pdateTo varchar(8)
-                
+                                
                 declare @TotalDays int
                 declare @MTDdays int=(SELECT DAY(getdate()-1) )
-                                        
+                                                        
                 if(@MTDdays=1)
                 begin
                 set @thismonth=convert(varchar(6),getdate()-1,112)
@@ -28,20 +28,20 @@ def GenerateReport(gpm_name):
                 set @TotalDays=(Select day(dateadd(mm,DateDiff(mm, -1, getdate()),0) -1))
                 set @firstday=convert(varchar(6),getdate(),112)+'01'
                 end
-                                        
+                                                        
                 set @pdateTo= convert(varchar(8),dateadd(Day,-1,getdate()),112)
                 --select @pdateTo
                 set @pdatefrom= convert(varchar(8),dateadd(Day,-91,getdate()),112)
                 --select @mtddays
-                                        
+                                                        
                 select
                 dense_rank() OVER (ORDER BY BRAND  ) [BSL NO]
                 ,ISNULL(BRAND, 0) BRAND
-                                        
+                                                        
                 ,ROW_NUMBER() OVER (ORDER BY ProductBrand.Brand)   [ISL NO]
                 , ISNULL(ProductBrand.Itemname, 'Not Found') [Item Name]
                 ,PACKSIZE as UOM
-                                     
+                                                     
                 ,ISNULL(CAST(Sales.YesterdaySales AS INT), 0) YesterdaySalesQty
                 ,ISNULL(CAST(Sales.AvgSalesDay AS INT), 0) [Avg Sales/Day]
                 ,ISNULL(CAST(ItemTarget.ST AS INT), 0) [Monthly Sales Target]
@@ -51,16 +51,16 @@ def GenerateReport(gpm_name):
                 ,ISNULL(CAST(case when ItemTarget.ST>0 then (Sales.ActualSalesMTD/ItemTarget.ST) * 100 else 0 end AS INT), 0) as [Monthly Sales Acv]
                 ,ISNULL(cast(Sales.AvgSalesDay*@TotalDays AS INT), 0) as [Monthly Sales Trend]
                 ,ISNULL(cast(case when ItemTarget.ST>0 then (Sales.AvgSalesDay*@TotalDays /ItemTarget.ST)*100 else 0 end as int), 0) as [Monthly Sales Trend Achiv]
-                
+                                
                 ,case when isnull(cast(ItemTarget.ST - Sales.ActualSalesMTD as int), 0)<0 then 0 else isnull(cast(ItemTarget.ST - Sales.ActualSalesMTD as int), 0) end as [Remaining TM Sales Qty]
-                
+                                
                 ,isnull(cast([SKF Mirpur Plant] + [SKF Tongi Plant] + [SKF Rupganj Plant] + TDCLCentralWH + BOG+ BSL+ COM+ COX+ CTG+ CTN+ DNJ+ FEN+ FRD+ GZP+ HZJ+JES+KHL+KRN+KSG + KUS + MHK+ MIR+ MLV+ MOT+ MYM + NAJ+ PAT + PBN+ RAJ
                 + RNG + SAV + SYL + TGL+ VRB as int ), 0) as  [Nationwide Stock]
                 ,isnull(cast([SKF Mirpur Plant] + [SKF Tongi Plant] + [SKF Rupganj Plant] as int), 0) as [Total SKF Qty]
                 ,isnull(cast([SKF Mirpur Plant] as int), 0) as 'SKF Mirpur Plant'
                 ,isnull(cast([SKF Tongi Plant] as int), 0) as 'SKF Tongi Plant'
                 ,isnull(cast([SKF Rupganj Plant] as int), 0) as 'SKF Rupganj Plant',
-                                        
+                                                        
                 isnull(AvgSaleBOG, 0) AvgSaleBOG,
                 isnull(AvgSaleBSL, 0) AvgSaleBSL,
                 isnull(AvgSaleCOM, 0) AvgSaleCOM,
@@ -132,23 +132,26 @@ def GenerateReport(gpm_name):
                 ,isnull(TRADEPRICE, 0) as TP, 
                 isnull(Sales.YesterdaySales * TRADEPRICE, 0) as [TP Sales Value], 
                 isnull(SalesVal, 0) as [Net Sales Value], 
-                isnull((Sales.YesterdaySales * TRADEPRICE) - SalesVal, 0) as [Discount]
-                        
+                isnull((Sales.YesterdaySales * TRADEPRICE) - SalesVal, 0) as [Discount], 
+                ISNULL(CAST(ItemTarget.MTDTargetVal AS INT), 0) [MTD Sales Target Value]
+                ,ISNULL(CAST(Sales.ActualSalesMTDVal AS INT), 0) [Actual Sales MTD Value]
+                             
                 from
                 (select distinct ITEMNO,  TRADEPRICE ,[ITEMNAME] as Itemname, BRAND,PACKSIZE from PRINFOSKF where ITEMNO not like '9%'
-                and BRAND IN (SELECT BRAND FROM GPMBRAND WHERE Name like ?) and GPMNAME like ?
+                and BRAND IN (SELECT BRAND FROM GPMBRAND WHERE Name like ?) and GPMNAME  like ?
                 ) as ProductBrand
                 Left join
                 (
-                SELECT ITEMNO,sum(QTY) as ST,sum(qty)/@TotalDays as STDay ,(sum(qty)/@TotalDays)*@MTDdays as MTDTarget 
+                SELECT ITEMNO,sum(QTY) as ST,sum(qty)/@TotalDays as STDay ,(sum(qty)/@TotalDays)*@MTDdays as MTDTarget, (sum(VALUE)/@TotalDays)*@MTDdays as MTDTargetVal 
                 FROM ARCSECONDARY.dbo.RfieldForceProductTRG where YEARMONTH=@thismonth
                 group by ITEMNO) as ItemTarget
                 ON ProductBrand.ITEMNO=ItemTarget.ITEMNO
-                                        
+                                                        
                 left join
                 (select ITEM
                 ,sum(case when transdate between @pdateTo and @pdateTo then QTYSHIPPED else 0 end ) as YesterdaySales
                 ,sum(case when transdate between @firstday and @pdateTo then QTYSHIPPED else 0 end ) as ActualSalesMTD
+                ,sum(case when transdate between @firstday and @pdateTo then EXTINVMISC else 0 end ) as ActualSalesMTDVal
                 ,sum(case when transdate between @pdatefrom and @pdateTo then QTYSHIPPED else 0 end)/91  as AvgSalesDay
                 ,sum(case when transdate between @pdatefrom and @pdateTo and  audtorg='BOGSKF'then QTYSHIPPED else 0 end)/91  as AvgSaleBOG
                 ,sum(case when transdate between @pdatefrom and @pdateTo and  audtorg='BSLSKF'then QTYSHIPPED else 0 end)/91  as AvgSaleBSL
@@ -182,8 +185,8 @@ def GenerateReport(gpm_name):
                 ,sum(case when transdate between @pdatefrom and @pdateTo and  audtorg='TGLSKF'then QTYSHIPPED else 0 end)/91  as AvgSaleTGL
                 ,sum(case when transdate between @pdatefrom and @pdateTo and  audtorg='VRBSKF'then QTYSHIPPED else 0 end)/91  as AvgSaleVRB
                 ,sum(case when transdate = @pdateTo then EXTINVMISC else 0 end)  as SalesVal
-                        
                                         
+                                                        
                 from OESalesDetails where TRANSDATE between @pdatefrom and @pdateTo group by ITEM) as Sales
                 on ProductBrand.ITEMNO=sales.ITEM
                 left join (
@@ -220,7 +223,7 @@ def GenerateReport(gpm_name):
                 ,SUM(case when AUDTORG='SYLSKF' then QTYONHAND else 0 end) as SYL
                 ,SUM(case when AUDTORG='TGLSKF' then QTYONHAND else 0 end) as TGL
                 ,SUM(case when AUDTORG='VRBSKF' then QTYONHAND else 0 end) as VRB
-                                        
+                                                        
                 from ICHistoricalStock where AUDTDATE= convert(varchar(8),getdate()-1,112) AND RIGHT(LOCATION,3) IN ('140','141')
                 group by ITEMNO
                 ) as Stock
@@ -231,13 +234,13 @@ def GenerateReport(gpm_name):
                 ,sum(case when [location] = ('4016') then QTYAVAIL else 0 end) as 'SKF Rupganj Plant'
                 from ICStockStatusCurrentLOT where [location] in ('4001','4005','4016') group by ITEMNO) as currentstock
                 on ProductBrand.ITEMNO = currentstock.ITEMNO
-                                        
+                                                        
                 left join
                 (select item, SUM(QTYordered) as QTYordered, cast(SUM(QTYordered)*UNITPRICE as int) as EstimateSales from OEOrderDetails
                 where ORDERDATE between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()), 0),112) 
                 and convert(varchar(8),getdate(), 112) 
                 group by item, UNITPRICE
-                                        
+                                                        
                 ) as OEOrder
                 on Stock.itemno=oeorder.item
                 

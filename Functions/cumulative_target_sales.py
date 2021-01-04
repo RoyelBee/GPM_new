@@ -17,15 +17,17 @@ def convert(number):
 
 def cumulative_target_sales(name):
     try:
-        everday_sale_df = pd.read_sql_query("""select  right(TRANSDATE, 2) as Date, isnull(sum(QTYSHIPPED),
-0) as ItemSales from OESalesDetails
-left join PRINFOSKF
-on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-where left(TRANSDATE,6) = convert(varchar(6),getdate(), 112)
-and PRINFOSKF.GPMNAME like ?
-and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
-group by right(TRANSDATE, 2)
-order by right(TRANSDATE, 2)""", dbc.connection, params=(name,name))
+        everday_sale_df = pd.read_sql_query(""" 
+        select  right(TRANSDATE, 2) as Date, isnull(sum(EXTINVMISC),0) as ItemSales from OESalesDetails
+        left join PRINFOSKF
+        on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+        where left(TRANSDATE,6) = convert(varchar(6),getdate(), 112)
+        and PRINFOSKF.GPMNAME like ?
+        and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+        group by right(TRANSDATE, 2)
+        order by right(TRANSDATE, 2)
+            
+            """, dbc.connection, params=(name,name))
 
         day_wise_date = everday_sale_df['Date'].tolist()
         day_to_day_sale = everday_sale_df['ItemSales'].tolist()
@@ -47,17 +49,19 @@ order by right(TRANSDATE, 2)""", dbc.connection, params=(name,name))
         # print('Reduced 0 value days from the list : ', final_days_array)
         # print('Sales Taken According to the value of days : ', final_sales_array)
 
-        EveryDay_target_df = pd.read_sql_query(""" Declare @CurrentMonth NVARCHAR(MAX);
-Declare @DaysInMonth NVARCHAR(MAX);
-SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
-SET @DaysInMonth = DAY(EOMONTH(GETDATE())) 
-select  isnull(sum(QTY),0)/@DaysInMonth as MonthsTargetQty 
-from ARCSECONDARY.dbo.RfieldForceProductTRG
-left join PRINFOSKF
-on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
-where YEARMONTH=CONVERT(varchar(6), dateAdd(month,0,getdate()), 112) and GPMNAME like ?
-and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
-                                """, dbc.connection, params=(name,name))
+        EveryDay_target_df = pd.read_sql_query(""" 
+            Declare @CurrentMonth NVARCHAR(MAX);
+            Declare @DaysInMonth NVARCHAR(MAX);
+            SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
+            SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
+            select  isnull(sum(VALUE),0)/@DaysInMonth as MonthsTargetQty
+            from ARCSECONDARY.dbo.RfieldForceProductTRG
+            left join PRINFOSKF
+            on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
+            where YEARMONTH=CONVERT(varchar(6), dateAdd(month,0,getdate()), 112) and GPMNAME like ?
+            and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+                                
+            """, dbc.connection, params=(name,name))
 
         single_day_target = EveryDay_target_df['MonthsTargetQty'][0]
         # print('Single Day Target : ', single_day_target)
@@ -78,16 +82,16 @@ and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
         total_days = calendar.monthrange(now.year, now.month)[1]
         # print('Total number of days in this month : ', total_days)
 
-        monthly_trend = (sum(final_sales_array) / (current_day_in_int-1))*total_days
+        # monthly_trend = (sum(final_sales_array) / (current_day_in_int-1))*total_days
         # print('Monthly Trend: ',monthly_trend)
 
         monthly_trend_per_day = (sum(final_sales_array) / (current_day_in_int-1))
         # print('Monthly Trend Per Day: ', monthly_trend_per_day)
 
-        trend_achievement = str(round((sum(final_sales_array)/monthly_trend)*100,1))
+        # trend_achievement = str(round((sum(final_sales_array)/monthly_trend)*100,1))
         # print('Trend Achievement: ',trend_achievement)
 
-        final_target_day_wise = 0
+        # final_target_day_wise = 0
         cumulative_target_that_needs_to_plot = []
         cumulative_trend_that_needs_to_plot = []
         for t_value in range(0, total_days + 1):
@@ -196,7 +200,7 @@ and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
 
         plt.xticks(np.arange(1, total_days + 1, 1), new_generated_label_list, fontsize=12,rotation=90)
         plt.xlabel('Days', color='black', fontsize=12, fontweight='bold')
-        plt.ylabel('Quantity(K)', color='black', fontsize=12, fontweight='bold')
+        plt.ylabel('Amount(K)', color='black', fontsize=12, fontweight='bold')
 
         date = datetime.datetime.now()
         month = date.strftime("%b")

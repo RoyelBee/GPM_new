@@ -6,7 +6,7 @@ import numpy as np
 def brand_wise_target_sales():
     try:
         # # Prepare dataset ---------------------------------------
-        cols = ['BRAND', 'MTD Sales Target', 'Actual Sales MTD']
+        cols = ['BRAND', 'MTD Sales Target Value', 'Actual Sales MTD Value']
         df = pd.read_excel('./Data/gpm_data.xlsx', usecols=cols)
         df = df[df['MTD Sales Target'] != 0]
         df.sort_values(by='Actual Sales MTD', ascending=False)
@@ -75,11 +75,11 @@ def brand_wise_target_sales():
 
     except:
 
-        fig, ax = plt.subplots(figsize=(9.6, 4.8))
+        plt.subplots(figsize=(18, 6))
         plt.title("Brand wise MTD Target VS Sold Quantity", fontsize=16, color='black', fontweight='bold')
-        plt.text(0.2, 0.5, 'Due to target unavailability the chart could not get generated.', color='red', fontsize=14)
+        plt.text(0.2, 0.5, 'Due to target unavailability the chart could not generated.', color='red', fontsize=14)
         plt.xlabel('Brand', fontsize=14, color='black', fontweight='bold')
-        plt.ylabel('Sales', fontsize=14, color='black', fontweight='bold')
+        plt.ylabel('Amount (K)', fontsize=14, color='black', fontweight='bold')
         # plt.legend(['Target', 'Sales with Ach%'], loc='best', fontsize='14')
 
         plt.tight_layout()

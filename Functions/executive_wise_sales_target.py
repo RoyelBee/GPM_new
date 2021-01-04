@@ -8,36 +8,37 @@ import Functions.db_connection as dbc
 def executive_sales_target(name):
     try:
         executive_target_sales_df = pd.read_sql_query("""
-                                Declare @CurrentMonth NVARCHAR(MAX);
-Declare @DaysInMonth NVARCHAR(MAX);
-Declare @DaysInMonthtilltoday NVARCHAR(MAX);
-SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
-SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
-SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
-select exe_sales.ExecutiveName as ExecutiveName,exe_sales.shortname as shortname,exe_sales.ItemSales as ItemSales,exe_target.MTDTargetQty as MTDTargetQty from
-(select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,cast(isnull(sum(QTYSHIPPED),
-0)/1000 as int) as ItemSales from OESalesDetails
-left join PRINFOSKF
-on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-left join
-(select * from GPMExecutive_ShortName) as b
-on b.[ExecutiveName]=PRINFOSKF.cp01
-where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
-                and convert(varchar(10),getdate(), 112)
-and PRINFOSKF.GPMNAME like ?
-and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
-group by CP01,b.[Executive ShortName]) as exe_sales
-left join
-(select CP01 as ExecutiveName, cast(isnull((sum(QTY)/@DaysInMonth)*@DaysInMonthtilltoday,0)/1000 as int) as MTDTargetQty
-from PRINFOSKF 
-left join ARCSECONDARY.dbo.RfieldForceProductTRG
-on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
-where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
-112) and GPMNAME like ?
-and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
-group by CP01) as exe_target
-on exe_sales.ExecutiveName = exe_target.ExecutiveName
-order by exe_sales.ItemSales desc""", dbc.connection, params=(name,name,name,name))
+        Declare @CurrentMonth NVARCHAR(MAX);
+        Declare @DaysInMonth NVARCHAR(MAX);
+        Declare @DaysInMonthtilltoday NVARCHAR(MAX);
+        SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
+        SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
+        SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
+        select exe_sales.ExecutiveName as ExecutiveName,exe_sales.shortname as shortname,exe_sales.ItemSales as ItemSales,exe_target.MTDTargetQty as MTDTargetQty from
+        (select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,cast(isnull(sum(QTYSHIPPED),
+        0)/1000 as int) as ItemSales from OESalesDetails
+        left join PRINFOSKF
+        on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+        left join
+        (select * from GPMExecutive_ShortName) as b
+        on b.[ExecutiveName]=PRINFOSKF.cp01
+        where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
+                        and convert(varchar(10),getdate(), 112)
+        and PRINFOSKF.GPMNAME like ?
+        and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+        group by CP01,b.[Executive ShortName]) as exe_sales
+        left join
+        (select CP01 as ExecutiveName, cast(isnull((sum(QTY)/@DaysInMonth)*@DaysInMonthtilltoday,0)/1000 as int) as MTDTargetQty
+        from PRINFOSKF 
+        left join ARCSECONDARY.dbo.RfieldForceProductTRG
+        on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
+        where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
+        112) and GPMNAME like ?
+        and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+        group by CP01) as exe_target
+        on exe_sales.ExecutiveName = exe_target.ExecutiveName
+        order by exe_sales.ItemSales desc """,
+        dbc.connection, params=(name,name,name,name))
 
         Executive_name = executive_target_sales_df['ExecutiveName'].tolist()
         Executive_target = executive_target_sales_df['MTDTargetQty'].tolist()
@@ -114,7 +115,7 @@ order by exe_sales.ItemSales desc""", dbc.connection, params=(name,name,name,nam
         fig, ax = plt.subplots(figsize=(9.6, 4.8))
         plt.title("Executive Wise MTD Target & Sales", fontsize=12, color='black', fontweight='bold')
         plt.xlabel('Executive', fontsize=10, color='black', fontweight='bold')
-        plt.ylabel('Sales', fontsize=10, color='black', fontweight='bold')
+        plt.ylabel('Sales Quantity', fontsize=10, color='black', fontweight='bold')
 
         plt.text(0.2, 0.5, 'Due to target unavailability the chart could not get generated.', color='red', fontsize=14)
         plt.legend(['Target', 'Sales'])
