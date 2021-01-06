@@ -626,12 +626,13 @@ def generate_layout(gpm_name):
                 <table border="1px solid black" style="width: 300%;">
 
     <tr>
-        <th colspan='53' style="background-color: #f5f681;text-align: center; font-size:20px;"> Branch - Brand - SKU
+        <th colspan='57' style="background-color: #f5f681;text-align: center; font-size:20px;"> Branch - Brand - SKU
             wise Stock Information: Detailed
         </th>
     </tr>
+    
     <tr>
-        <th colspan="20" class="info" style="text-align: left"> """ + gpm.getGPMNFullInfo(gpm_name) + """
+        <th colspan="23" class="info" style="text-align: left"> """ + gpm.getGPMNFullInfo(gpm_name) + """
         </th>
         <th rowspan="3" style="background-color: #fed8b1;font-size: 12px;text-align:center">
             <div>TDCL <br> Central <br> WH
@@ -646,16 +647,16 @@ def generate_layout(gpm_name):
         <th colspan="6" style="background-color: #fff900; color: black" class="color_style">Super Over Stock</th>
     </tr>
 
-    <tr>
+     <tr>
         <th rowspan="2" class="style1" style="font-size: 12px;background-color: #d7fed7;">SL &nbsp&nbsp</th>
-        <th rowspan="2" class="brand" style="font-size: 12px;font-weight: bolder; background-color: #d7fed7;"> 
-        Product Brand
+        <th rowspan="2" class="brand" style="font-size: 12px;font-weight: bolder; background-color: #d7fed7;">
+            Product Brand
 
         </th>
         <th rowspan="2" class="item_sl" style="font-size: 12px;background-color: #d7fed7;"> SL
 
         </th>
-        <th rowspan="2" class="description" style="width:14%;font-weight: bolder; font-size: 12px;background-color: #d7fed7;text-align: 
+        <th rowspan="2" class="description" style="width:14%;font-weight: bolder; font-size: 12px;background-color: #d7fed7;text-align:
         left;">Item
             <br> Description
         </th>
@@ -675,10 +676,21 @@ def generate_layout(gpm_name):
         <th rowspan="2" class="colors" style="font-size: 12px;">
             <div>MTD <br> Sales <br> Achv%</div>
         </th>
+
         <th rowspan="2" class="colors" style="font-size: 12px;">
-            <div>TM <br>Sales <br> Achv%
-            </div>
+            <div>Monthly <br> Sales <br> Achv%</div>
         </th>
+
+        <th rowspan="2" class="colors" style="font-size: 12px;">
+            <div> LM MTD <br> Sales <br> Target</div>
+        </th>
+        <th rowspan="2" class="colors" style="font-size: 12px;">
+            <div> LM MTD <br> Sales <br> Actual</div>
+        </th>
+        <th rowspan="2" class="colors" style="font-size: 12px;">
+            <div>LM MTD <br> Sales <br> Achv%</div>
+        </th>
+
         <th rowspan="2" class="colors" style="font-size: 12px;">
             <div>TM <br> Sales <br> Trend
             </div>
@@ -698,8 +710,6 @@ def generate_layout(gpm_name):
             <div>Total <br> SK+F <br> Qty</div>
         </th>
         <th colspan="3" style="font-weight: bolder; font-size: 12px;">SKF Plant</th>
-
-
         <th colspan="31" style="font-weight: bolder; font-size: 14px;"> TDCL Branches</th>
     </tr>
     <tr>
@@ -708,15 +718,15 @@ def generate_layout(gpm_name):
         <th class="branch_plant_color" rowspan="" style="font-size: 12px;padding: 0; text-align: center; ">Rupganj</th>
 
 
-        <th class="branch_plant_color" style="font-size:9px; ">BOG</th>
-        <th class="branch_plant_color" style="font-size:9px; ">BSL</th>
-        <th class="branch_plant_color" style="font-size:9px; ">COM</th>
-        <th class="branch_plant_color" style="font-size:9px; ">COX</th>
-        <th class="branch_plant_color" style="font-size:9px; ">CTG</th>
-        <th class="branch_plant_color" style="font-size:9px; ">CTN</th>
-        <th class="branch_plant_color" style="font-size:9px; "> DNJ</th>
-        <th class="branch_plant_color" style="font-size:9px; ">FEN</th>
-        <th class="branch_plant_color" style="font-size:9px; ">FRD</th>
+        <th class="branch_plant_color" style="font-size:9px;">BOG</th>
+        <th class="branch_plant_color" style="font-size:9px;">BSL</th>
+        <th class="branch_plant_color" style="font-size:9px;">COM</th>
+        <th class="branch_plant_color" style="font-size:9px;">COX</th>
+        <th class="branch_plant_color" style="font-size:9px;">CTG</th>
+        <th class="branch_plant_color" style="font-size:9px;">CTN</th>
+        <th class="branch_plant_color" style="font-size:9px;">DNJ</th>
+        <th class="branch_plant_color" style="font-size:9px;">FEN</th>
+        <th class="branch_plant_color" style="font-size:9px;">FRD</th>
         <th class="branch_plant_color" style="font-size:9px;">GZP</th>
         <th class="branch_plant_color" style="font-size:9px;">HZJ</th>
         <th class="branch_plant_color" style="font-size:9px;">JES</th>

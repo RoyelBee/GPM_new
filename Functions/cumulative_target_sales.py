@@ -7,6 +7,7 @@ import calendar
 import datetime
 import Functions.db_connection as dbc
 
+
 def convert(number):
     number = number / 1000
     number = int(number)
@@ -21,13 +22,13 @@ def cumulative_target_sales(name):
         select  right(TRANSDATE, 2) as Date, isnull(sum(EXTINVMISC),0) as ItemSales from OESalesDetails
         left join PRINFOSKF
         on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-        where left(TRANSDATE,6) = convert(varchar(6),getdate(), 112)
+        where left(TRANSDATE, 8) between convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112) and convert(varchar(8),DATEADD(D,0,GETDATE()-1),112)
         and PRINFOSKF.GPMNAME like ?
         and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
         group by right(TRANSDATE, 2)
         order by right(TRANSDATE, 2)
             
-            """, dbc.connection, params=(name,name))
+            """, dbc.connection, params=(name, name))
 
         day_wise_date = everday_sale_df['Date'].tolist()
         day_to_day_sale = everday_sale_df['ItemSales'].tolist()
@@ -43,25 +44,27 @@ def cumulative_target_sales(name):
 
         final_days_array = []
         final_sales_array = []
-        for t_va in range(0, current_day_in_int-1):
+        for t_va in range(0, current_day_in_int - 1):
             final_days_array.append(day_wise_date[t_va])
             final_sales_array.append(day_to_day_sale[t_va])
         # print('Reduced 0 value days from the list : ', final_days_array)
         # print('Sales Taken According to the value of days : ', final_sales_array)
 
         EveryDay_target_df = pd.read_sql_query(""" 
+           
             Declare @CurrentMonth NVARCHAR(MAX);
             Declare @DaysInMonth NVARCHAR(MAX);
             SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
             SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
-            select  isnull(sum(VALUE),0)/@DaysInMonth as MonthsTargetQty
-            from ARCSECONDARY.dbo.RfieldForceProductTRG
+            select  isnull(sum(TRGVAL),0)/@DaysInMonth as MonthsTargetQty
+            from ARCSECONDARY.dbo.PRODUCT_WISE_TRG
             left join PRINFOSKF
-            on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
-            where YEARMONTH=CONVERT(varchar(6), dateAdd(month,0,getdate()), 112) and GPMNAME like ?
-            and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+            on PRODUCT_WISE_TRG.ITEM = PRINFOSKF.ITEMNO
+            where YRM = CONVERT(varchar(6), dateAdd(month,0,getdate()), 112) and GPMNAME LIKE ?
+            and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name LIKE ?)
+
                                 
-            """, dbc.connection, params=(name,name))
+            """, dbc.connection, params=(name, name))
 
         single_day_target = EveryDay_target_df['MonthsTargetQty'][0]
         # print('Single Day Target : ', single_day_target)
@@ -77,7 +80,6 @@ def cumulative_target_sales(name):
 
         # ----------------code for cumulitive sales------------
 
-
         now = datetime.datetime.now()
         total_days = calendar.monthrange(now.year, now.month)[1]
         # print('Total number of days in this month : ', total_days)
@@ -85,7 +87,7 @@ def cumulative_target_sales(name):
         # monthly_trend = (sum(final_sales_array) / (current_day_in_int-1))*total_days
         # print('Monthly Trend: ',monthly_trend)
 
-        monthly_trend_per_day = (sum(final_sales_array) / (current_day_in_int-1))
+        monthly_trend_per_day = (sum(final_sales_array) / (current_day_in_int - 1))
         # print('Monthly Trend Per Day: ', monthly_trend_per_day)
 
         # trend_achievement = str(round((sum(final_sales_array)/monthly_trend)*100,1))
@@ -98,8 +100,8 @@ def cumulative_target_sales(name):
             final_target_day_wise = single_day_target * t_value
             final_trend_day_wise = monthly_trend_per_day * t_value
             cumulative_target_that_needs_to_plot.append(final_target_day_wise / 1000)
-            cumulative_trend_that_needs_to_plot.append(final_trend_day_wise/1000)
-            final_target_day_wise = 0
+            cumulative_trend_that_needs_to_plot.append(final_trend_day_wise / 1000)
+            # final_target_day_wise = 0
         # print('cumulative target from 0 to final day of the month : ', cumulative_target_that_needs_to_plot)
         # print('cumulative trend from 0 to final day of the month : ', cumulative_trend_that_needs_to_plot)
 
@@ -141,24 +143,27 @@ def cumulative_target_sales(name):
         # print('index size for sale : ', list_index_for_sale)
         # sys.exit()
 
-        cumulative_achv_label=[]
-        for loop_value in range(1,list_index_for_sale+1):
-            cumulative_achv=str(round((new_array_of_cumulative_sales[loop_value]/cumulative_target_that_needs_to_plot[loop_value])*100,1))+'%'
+        cumulative_achv_label = []
+        for loop_value in range(1, list_index_for_sale + 1):
+            cumulative_achv = str(round(
+                (new_array_of_cumulative_sales[loop_value] / cumulative_target_that_needs_to_plot[loop_value]) * 100,
+                1)) + '%'
             cumulative_achv_label.append(cumulative_achv)
 
         # print('cumulative achievement list: ',cumulative_achv_label)
 
-        for z in range(0,(total_days-list_index_for_sale)):
+        for z in range(0, (total_days - list_index_for_sale)):
             cumulative_achv_label.append('')
         # print('cumulative achv with Faka values: ',cumulative_achv_label)
 
-        days_list=np.arange(1, total_days + 1, 1)
+        days_list = np.arange(1, total_days + 1, 1)
         # print('days list: ',days_list)
 
-        new_generated_label_list=[]
-        for new_generated_label_value in range(0,total_days):
-            new_generated_label_list.append(str(days_list[new_generated_label_value])+' ('+str(cumulative_achv_label[
-                                                                                                   new_generated_label_value])+')')
+        new_generated_label_list = []
+        for new_generated_label_value in range(0, total_days):
+            new_generated_label_list.append(
+                str(days_list[new_generated_label_value]) + ' (' + str(cumulative_achv_label[
+                                                                           new_generated_label_value]) + ')')
 
         fig, ax = plt.subplots(figsize=(9.6, 4.8))
 
@@ -167,38 +172,48 @@ def cumulative_target_sales(name):
         plt.plot(length_of_cumulative_target, cumulative_target_that_needs_to_plot, color="red", linewidth=3,
                  linestyle="-")
 
-        plt.text(list_index_for_target - 1, cumulative_trend_that_needs_to_plot[list_index_for_target] +2 ,
-                 format(round(cumulative_trend_that_needs_to_plot[list_index_for_target]), ',') + 'K\n('
-                 +str(round((cumulative_trend_that_needs_to_plot[list_index_for_target]/cumulative_target_that_needs_to_plot[list_index_for_target])*100,1))+'%)' ,
+        # # Trend val with percent
+        plt.text(list_index_for_target, cumulative_trend_that_needs_to_plot[list_index_for_target],
+                 format(int(cumulative_trend_that_needs_to_plot[list_index_for_target]), ',') + 'K\n('
+                 + str(round((cumulative_trend_that_needs_to_plot[list_index_for_target] /
+                              cumulative_target_that_needs_to_plot[list_index_for_target]) * 100, 1)) + '%)',
                  color='black', fontsize=10, fontweight='bold')
 
+        # # Trend scatter point
         plt.scatter(list_index_for_target, cumulative_trend_that_needs_to_plot[list_index_for_target], s=60,
                     facecolors='green', edgecolors='white')
 
+        # # Target value
+        plt.text(list_index_for_sale - 1, cumulative_target_that_needs_to_plot[list_index_for_sale] * 1.2,
+                 format(int(cumulative_target_that_needs_to_plot[list_index_for_sale]), ',') + 'K',
+                 color='red', fontsize=10, fontweight='bold', rotation=20)
 
-        plt.text(list_index_for_sale - 1, cumulative_target_that_needs_to_plot[list_index_for_sale],
-                 format(round(cumulative_target_that_needs_to_plot[list_index_for_sale], 1), ',') + 'K',
-                 color='black', fontsize=10, fontweight='bold')
-        plt.scatter(list_index_for_sale, cumulative_target_that_needs_to_plot[list_index_for_sale], s=60, facecolors='red',
+        # # MTD Target point
+        plt.scatter(list_index_for_sale, cumulative_target_that_needs_to_plot[list_index_for_sale], s=60,
+                    facecolors='red',
                     edgecolors='white')
 
+        # # Sales value 
+        plt.text(list_index_for_sale + .2, new_array_of_cumulative_sales[list_index_for_sale] * .3,
+                 format(int(new_array_of_cumulative_sales[list_index_for_sale]), ',') + 'K',
+                 color='green', fontsize=10, fontweight='bold')
 
-        plt.text(list_index_for_sale + .2, new_array_of_cumulative_sales[list_index_for_sale],
-                 format(round(new_array_of_cumulative_sales[list_index_for_sale], 1), ',') + 'K',
-                 color='black', fontsize=10, fontweight='bold')
-        plt.scatter(list_index_for_sale, new_array_of_cumulative_sales[list_index_for_sale], s=60, facecolors='#113d3c',
-                    edgecolors='white')
+        # plt.scatter(list_index_for_sale, new_array_of_cumulative_sales[list_index_for_sale], s=60, facecolors='#113d3c',
+        #             edgecolors='white')
 
-        plt.text(list_index_for_target - 1, cumulative_target_that_needs_to_plot[list_index_for_target] +2,
+        # # Final Months Target
+        plt.text(list_index_for_target - 1, cumulative_target_that_needs_to_plot[list_index_for_target] + 2,
                  format(round(cumulative_target_that_needs_to_plot[list_index_for_target]), ',') + 'K',
-                 color='black', fontsize=10, fontweight='bold')
+                 color='red', fontsize=10, fontweight='bold')
+
+        # # Months Target Point
         plt.scatter(list_index_for_target, cumulative_target_that_needs_to_plot[list_index_for_target], s=60,
                     facecolors='red', edgecolors='white')
 
         ax.set_ylim(ymin=0)
         ax.set_xlim(xmin=0)
 
-        plt.xticks(np.arange(1, total_days + 1, 1), new_generated_label_list, fontsize=12,rotation=90)
+        plt.xticks(np.arange(1, total_days + 1, 1), new_generated_label_list, fontsize=12, rotation=90)
         plt.xlabel('Days', color='black', fontsize=12, fontweight='bold')
         plt.ylabel('Amount(K)', color='black', fontsize=12, fontweight='bold')
 
@@ -206,12 +221,10 @@ def cumulative_target_sales(name):
         month = date.strftime("%b")
         year = date.strftime("%y")
 
+        plt.title('Day wise Cumulative MTD Target VS Sales (' + str(month) + "' " + str(year) + ')', color='black', \
+                  fontweight='bold', fontsize=16)
 
-        plt.title('Day wise Cumulative MTD Target VS Sales (' +str(month)+"' "+ str(year)+ ')', color='black', \
-                                                                                              fontweight='bold',
-                  fontsize=16)
-
-        plt.legend(['Target', 'Trend with Achiv%' ,'Sales'], loc= 'upper left')
+        plt.legend(['Target', 'Trend with Achiv%', 'Sales'], loc='upper left')
         # print(max(cumulative_target_that_needs_to_plot))
         plt.yticks(
             np.arange(0, max(cumulative_target_that_needs_to_plot) + 0.4 * max(cumulative_target_that_needs_to_plot),
@@ -225,11 +238,10 @@ def cumulative_target_sales(name):
     except:
         plt.subplots(figsize=(9.6, 4.8))
         plt.text(0.2, 0.5, 'Due to target unavailability the chart could not get generated.', color='red', \
-                                                                                                      fontsize=14)
+                 fontsize=14)
         plt.xlabel('Days', color='black', fontsize=14, fontweight='bold')
         plt.ylabel('Amount(K)', color='black', fontsize=10, fontweight='bold')
         plt.title('Cumulative Day Wise Stock & Sales', color='black', fontweight='bold', fontsize=12)
-
 
         plt.tight_layout()
 

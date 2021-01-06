@@ -98,20 +98,21 @@ def dash_kpi_generator(name):
     # ---------------------------------kpi 6-10 ------------------------------------------
 
     gpm_target = pd.read_sql_query(""" Declare @CurrentMonth NVARCHAR(MAX);
-                    Declare @DaysInMonth NVARCHAR(MAX);
-                    Declare @DaysInMonthtilltoday NVARCHAR(MAX);
-                    SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
-                    SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
-                    SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
-                    select CP01 as ExecutiveName, isnull(sum(QTY),0) as TargetQty,isnull(sum(VALUE)/@DaysInMonth,0) as Targetvalue
-                    from PRINFOSKF 
-                    left join ARCSECONDARY.dbo.RfieldForceProductTRG
-                    on RfieldForceProductTRG.ITEMNO = PRINFOSKF.ITEMNO
-                    where YEARMONTH = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
-                    112) and GPMNAME like ?
-                    and brand in (select distinct brand from GPMBRAND where Name like ?)
-                    group by CP01
-                    order by CP01 asc """, conn, params=(name, name))
+                Declare @DaysInMonth NVARCHAR(MAX);
+                Declare @DaysInMonthtilltoday NVARCHAR(MAX);
+                SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
+                SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
+                SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
+                select CP01 as ExecutiveName, isnull(sum(TRGQTY),0) as TargetQty,isnull(sum(TRGVAL)/@DaysInMonth,0) as Targetvalue
+                from PRINFOSKF 
+                left join ARCSECONDARY.dbo.PRODUCT_WISE_TRG
+                on PRODUCT_WISE_TRG.ITEM = PRINFOSKF.ITEMNO
+                where YRM = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
+                112) and GPMNAME like ?
+                and PRINFOSKF.brand in (select distinct brand from GPMBRAND where Name like ?)
+                group by CP01
+                order by CP01 asc 
+                """, conn, params=(name, name))
 
     GPM_target_list = gpm_target['Targetvalue'].to_list()
     # print(GPM_target_list)
@@ -200,13 +201,13 @@ def dash_kpi_generator(name):
 
     mtd_target = GPM_TARGET_SUM * (current_date - 1)
     if len(str(int(mtd_target))) >= 8:
-        mtd_target = str("{:.2f}".format((mtd_target / 10000000), 2)) + ' Cr'
+        mtd_targets = str("{:.2f}".format((mtd_target / 10000000), 2)) + ' Cr'
     else:
-        mtd_target = str("{:.2f}".format((mtd_target / 1000000), 2)) + ' M'
+        mtd_targets = str("{:.2f}".format((mtd_target / 1000000), 2)) + ' M'
 
     # # ----------------- mtd_achivement ---------------------------------------------------------
     try:
-        mtd_achiv = str("{:.2f}".format((mtd_sale / mtd_target) * 100))
+        mtd_achiv = str("{:.2f}".format((mtd_sale / mtd_target) * 100)) + ' %'
     except:
         mtd_achiv = '0 %'
 
@@ -252,6 +253,7 @@ def dash_kpi_generator(name):
         mtd_trend = '0'
 
 
+
     # # -------------------------------------------------------------------------------------------
     image = Image.open(dir.get_directory() + "/Images/dash_kpi.png")
     draw = ImageDraw.Draw(image)
@@ -266,13 +268,13 @@ def dash_kpi_generator(name):
 
     draw.text((60, 177), Target_value_in_crore, font=font, fill=(39, 98, 236))
     draw.text((250, 177), Sales_value_in_crore, font=font, fill=(39, 98, 236))
-    draw.text((435, 177), achievement_target_sales, font=font, fill=(39, 98, 236))
-    draw.text((640, 177), brand_no_of_invoice, font=font, fill=(39, 98, 236))
+    draw.text((425, 177), achievement_target_sales, font=font, fill=(39, 98, 236))
+    draw.text((635, 177), brand_no_of_invoice, font=font, fill=(39, 98, 236))
     draw.text((835, 177), str(average_no_of_invoice_line), font=font, fill=(39, 98, 236))
 
-    draw.text((60, 315), mtd_target, font=font, fill=(0, 0, 0))
+    draw.text((60, 315), mtd_targets, font=font, fill=(0, 0, 0))
     draw.text((250, 315), mtd_sales, font=font, fill=(0, 0, 0))
-    draw.text((435, 315), mtd_achiv, font=font, fill=(0, 0, 0))
+    draw.text((425, 315), mtd_achiv, font=font, fill=(0, 0, 0))
     draw.text((610, 315), mtd_growth, font=font, fill=(0, 0, 0))
     draw.text((820, 315), mtd_trend, font=font, fill=(0, 0, 0))
 

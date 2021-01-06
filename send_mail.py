@@ -38,54 +38,54 @@ def send_mail(gpm_name):
     # cm.cumulative_target_sales(gpm_name)  # 4
     # ex.executive_sales_target(gpm_name)  # 5
     # stacked.executives_brand_target_sales_chart(gpm_name)  # 6
-    b.brand_wise_target_sales()  # 7
-    brand_bar.stock_aging_chart(gpm_name)  # 8.1
-    SKU_bar.stock_aging_chart(gpm_name)  # 8.2
-    quantity_bar.stock_aging_chart(gpm_name)  # 8.3
-    item_stock_days_data.create_item_wise_stock_days_data()  # 9 This data used in branch_stock_summery.py file
-    bsdata.branch_stock_summery_data()  # 10
+    # b.brand_wise_target_sales()  # 7
+    # brand_bar.stock_aging_chart(gpm_name)  # 8.1
+    # SKU_bar.stock_aging_chart(gpm_name)  # 8.2
+    # quantity_bar.stock_aging_chart(gpm_name)  # 8.3
+    # item_stock_days_data.create_item_wise_stock_days_data()  # 9 This data used in branch_stock_summery.py file
+    # bsdata.branch_stock_summery_data()  # 10
 
     # # branch_stock_aging.get_branch_aging_stock_status(gpm_name) # 17
 
     # 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
 
     # --------- Add Image Border ---------------------------------------
-    from PIL import Image
-
-    da = Image.open("./Images/dashboard.png")
-    imageSize = Image.new('RGB', (962, 375))
-    imageSize.paste(da, (1, 0))
-    imageSize.save("./Images/dashboard.png")
-
-    kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    imageSize = Image.new('RGB', (962, 481))
-    imageSize.paste(kpi1, (1, 0))
-    imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-
-    kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
-    imageSize = Image.new('RGB', (962, 481))
-    imageSize.paste(kpi2, (1, 0))
-    imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
-
-    kpistock = Image.open("./Images/mainexecutive.png")
-    imageSize = Image.new('RGB', (1802, 901))
-    imageSize.paste(kpistock, (1, 0))
-    imageSize.save("./Images/main_executive_with_margin.png")
-
-    kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
-    imageSize = Image.new('RGB', (1802, 601))
-    imageSize.paste(kpi3, (1, 0))
-    imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
-
-    kpi7_1 = Image.open("./Images/brand_wise_aging_stock_information.png")
-    kpi7_2 = Image.open("./Images/SKU_wise_aging_stock_information.png")
-    kpi7_3 = Image.open("./Images/Quantity_wise_aging_stock_information.png")
-
-    img = Image.new('RGB', (1804, 481))
-    img.paste(kpi7_1, (1, 0))
-    img.paste(kpi7_2, (602, 0))
-    img.paste(kpi7_3, (1203, 0))
-    img.save("./Images/aging_stock_information.png")
+    # from PIL import Image
+    #
+    # da = Image.open("./Images/dashboard.png")
+    # imageSize = Image.new('RGB', (962, 375))
+    # imageSize.paste(da, (1, 0))
+    # imageSize.save("./Images/dashboard.png")
+    #
+    # kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+    # imageSize = Image.new('RGB', (962, 481))
+    # imageSize.paste(kpi1, (1, 0))
+    # imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+    #
+    # kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
+    # imageSize = Image.new('RGB', (962, 481))
+    # imageSize.paste(kpi2, (1, 0))
+    # imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
+    #
+    # kpistock = Image.open("./Images/mainexecutive.png")
+    # imageSize = Image.new('RGB', (1802, 901))
+    # imageSize.paste(kpistock, (1, 0))
+    # imageSize.save("./Images/main_executive_with_margin.png")
+    #
+    # kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
+    # imageSize = Image.new('RGB', (1802, 601))
+    # imageSize.paste(kpi3, (1, 0))
+    # imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
+    #
+    # kpi7_1 = Image.open("./Images/brand_wise_aging_stock_information.png")
+    # kpi7_2 = Image.open("./Images/SKU_wise_aging_stock_information.png")
+    # kpi7_3 = Image.open("./Images/Quantity_wise_aging_stock_information.png")
+    #
+    # img = Image.new('RGB', (1804, 481))
+    # img.paste(kpi7_1, (1, 0))
+    # img.paste(kpi7_2, (602, 0))
+    # img.paste(kpi7_3, (1203, 0))
+    # img.save("./Images/aging_stock_information.png")
 
     # to = gpm.getGPMEmail(gpm_name)
     # print('mail send to ', to)
@@ -107,8 +107,8 @@ def send_mail(gpm_name):
     msgRoot = MIMEMultipart('related')
 
     me = 'erp-bi.service@transcombd.com'
-    to = ['','rejaul.islam@transcombd.com']
-    cc = ['', '']
+    to = ['rejaul.islam@transcombd.com', '']
+    cc = ['rafiul.ramjan@transcombd.com', '' ]
     bcc = ['', '']
 
     # to = 'biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com'
@@ -209,9 +209,9 @@ def send_mail(gpm_name):
     # # # -----------------------------------------------------
     # # # --------- 19 Process all attached data --------------
     # attachdata.dataFormating()
-    # # # -----------------------------------------------------
-    #
-    # # 1. Add GPM branch wise aging Stock dataset
+    # # -----------------------------------------------------
+
+    # 1. Add GPM branch wise aging Stock dataset
     # part = MIMEBase('application', "octet-stream")
     # file_location = d.get_directory() + '/Data/branch_wise_aging_stock_copy.xlsx'
     # filename = os.path.basename(file_location)

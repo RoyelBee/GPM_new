@@ -28,7 +28,7 @@ def executives_brand_target_sales_chart(name):
                     (select *
                     from
                     (
-            select b.[Executive ShortName] as exe,PRINFOSKF.brand as brand,sum(QTYSHIPPED) as sale from OESalesDetails
+            select b.[Executive ShortName] as exe,PRINFOSKF.brand as brand,sum(EXTINVMISC) as sale from OESalesDetails
     left join PRINFOSKF
     on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
     left join
@@ -47,7 +47,7 @@ def executives_brand_target_sales_chart(name):
                         (select *
                     from
             (
-    select [Executive ShortName] as Exe,prinfoskf.brand as brand, sum(trgqty)/ DAY(EOMONTH(GETDATE()))*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target
+    select [Executive ShortName] as Exe,prinfoskf.brand as brand, sum(trgval)/ DAY(EOMONTH(GETDATE()))*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target
     from PRINFOSKF 
     left join ARCSECONDARY.dbo.[PRODUCT_WISE_TRG]
     on [PRODUCT_WISE_TRG].ITEM = PRINFOSKF.ITEMNO
@@ -239,8 +239,8 @@ def executives_brand_target_sales_chart(name):
     )
 
     plt.xlabel("Executive Name", fontweight='bold', fontsize=14)
-    plt.ylabel("Quantity (K)", fontweight='bold', fontsize=14)
-    plt.title('Executive Brands Quantity wise MTD Target and Sales', fontsize=16, fontweight='bold', color='black')
+    plt.ylabel("Amount (K)", fontweight='bold', fontsize=14)
+    plt.title('Executive Brands wise MTD Target and Sales', fontsize=16, fontweight='bold', color='black')
     # plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
     #                fancybox=True, shadow=True, ncol=7)
 

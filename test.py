@@ -1,11 +1,11 @@
 # import Functions.dashboard as d
-# d.dash_kpi_generator('Mr. A. K. M. Nawajesh Hossain')
+# d.dash_kpi_generator('Mr. Mohammad Akhter Alam Khan')
 
-import Functions.brand_wise_target_sales as bts
-bts.brand_wise_target_sales()
+# import Functions.brand_wise_target_sales as bts
+# bts.brand_wise_target_sales()
 
-# import Functions.cumulative_target_sales as cs
-# cs.cumulative_target_sales('Mr. A. K. M. Nawajesh Hossain')
+import Functions.cumulative_target_sales as cs
+cs.cumulative_target_sales('Mr. Mohammad Akhter Alam Khan')
 
 # # ------ 1 -----------------------------------------
 # import Functions.banner_code as b
@@ -25,7 +25,7 @@ bts.brand_wise_target_sales()
 
 # # --------------- 5 --------------------------------
 # import Functions.executive_wise_sales_target as ex
-# ex.executive_sales_target('Mr. A. K. M. Nawajesh Hossain')
+# ex.executive_sales_target('Mr. Mohammad Akhter Alam Khan')
 
 # # --------------- 7 --------------------------------
 # import Functions.stock_aging_days as ss
@@ -63,8 +63,8 @@ bts.brand_wise_target_sales()
 # import Functions.sales_and_stock_record as sl
 # sl.get_Sales_and_Stock_Records()
 
-# import Functions.design_report_layout as de
-# de.generate_layout('Mr. A. K. M. Nawajesh Hossain')
+import Functions.design_report_layout as de
+de.generate_layout('Mr. A. K. M. Nawajesh Hossain')
 
 # import send_mail as s
 # s.send_mail('Mr. A. K. M. Nawajesh Hossain')

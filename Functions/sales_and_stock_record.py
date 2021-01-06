@@ -55,332 +55,374 @@ def get_Sales_and_Stock_Records():
             tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(msalestar))) + "</td>\n"
 
         for j in range(7, 8):
-            # MTD sales Target
-            mtdsalestar = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(mtdsalestar))) + "</td>\n"
+            # Months Target
+            months_target = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(months_target))) + "</td>\n"
 
         for j in range(8, 9):
-            # actual sales mtd
-            mtdsales = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(mtdsales))) + "</td>\n"
+            # MTD Target
+            mtdtarget = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(mtdtarget))) + "</td>\n"
 
         for j in range(9, 10):
-            # actual sales mtd
-            mtdsales = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(mtdsales))) + "</td>\n"
+            # MTD  Sales Actual
+            mtd_sales = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(mtd_sales)) + "</td>\n"
+
 
         for j in range(10, 11):
             # MTD Sales Achv %
-            mtd_salesacv = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(mtd_salesacv)) + '%' + "</td>\n"
+            try:
+                mtd_achiv = "{:.2f}".format((mtd_sales / mtdtarget) * 100)
+            except:
+                mtd_achiv = 0
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(mtd_achiv)) + '%' + "</td>\n"
 
         for j in range(11, 12):
             # Monthly Sales Achv %
-            m_salesacv = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(m_salesacv)) + '%' + "</td>\n"
+            lmtarget = "{:.2f}".format(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(lmtarget)) + '%' + "</td>\n"
 
         for j in range(12, 13):
-            # Monthly Sales Trend
-            monthlytrend = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(monthlytrend))) + "</td>\n"
+            # lm mtd sALES TARGET
+            lmtargeta = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(lmtargeta)) + "</td>\n"
 
         for j in range(13, 14):
-            # monthly sales trend acv
-            monthlyachiv = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(monthlyachiv))) + "</td>\n"
+            # LM actual sales
+            lmactual_sales = int(sh.cell_value(i, j))
+
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(lmactual_sales))  + "</td>\n"
 
         for j in range(14, 15):
-            # RemaingStock
-            RemaingStock = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(RemaingStock))) + "</td>\n"
+            # LM MTD Sales Achv %
+            try:
+                lmmtd_achiv = "{:.2f}".format( (lmactual_sales/lmtargeta) * 100)
+            except:
+                lmmtd_achiv = 0
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(lmmtd_achiv)) + '%' + "</td>\n"
+
+
+        for j in range(14, 15):
+            tmtrend = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"ssstd\">" + str(ofn.number_style(str(tmtrend))) + "</td>\n"
 
         for j in range(15, 16):
-            NationwideStock = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"ssstd\">" + str(ofn.number_style(str(NationwideStock))) + "</td>\n"
+            s_trendacv = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"ssstd\">" + str(ofn.number_style(str(s_trendacv))) + '%' + "</td>\n"
+
 
         for j in range(16, 17):
-            totalskfqty = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"ssstd\">" + str(ofn.number_style(str(totalskfqty))) + "</td>\n"
-
+            # remaining qty
+            remailing  = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(remailing)) + "</td>\n"
 
         for j in range(17, 18):
-            # SKF Mirpur Plant
-            mirpur = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(mirpur))) + "</td>\n"
+            # SKF Rupganje
+            nationwide = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(str(nationwide))  + "</td>\n"
 
         for j in range(18, 19):
-            # SKF Rupganje
-            Rupganje = int(sh.cell_value(i, j))
-            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(Rupganje))) + "</td>\n"
+            # SKF Tongi Plant
+            SKF = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(SKF))) + "</td>\n"
 
         for j in range(19, 20):
             # SKF Tongi Plant
+            mirpur = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(mirpur))) + "</td>\n"
+
+        for j in range(20, 21):
+            # SKF tongi Plant
             tongi = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(tongi))) + "</td>\n"
 
-        for j in range(20, 21):
-            bog = sh.cell_value(i, j)
-
         for j in range(21, 22):
-            bsl = sh.cell_value(i, j)
+            # SKF rup Plant
+            rup = int(sh.cell_value(i, j))
+            tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(rup))) + "</td>\n"
+
 
         for j in range(22, 23):
-            com = sh.cell_value(i, j)
+            bog = sh.cell_value(i, j)
 
         for j in range(23, 24):
-            cox = sh.cell_value(i, j)
+            bsl = sh.cell_value(i, j)
 
         for j in range(24, 25):
-            ctg = sh.cell_value(i, j)
+            com = sh.cell_value(i, j)
 
         for j in range(25, 26):
-            ctn = sh.cell_value(i, j)
+            cox = sh.cell_value(i, j)
 
         for j in range(26, 27):
-            dnj = sh.cell_value(i, j)
+            ctg = sh.cell_value(i, j)
 
         for j in range(27, 28):
-            fen = sh.cell_value(i, j)
+            cetn = sh.cell_value(i, j)
 
         for j in range(28, 29):
-            frd = sh.cell_value(i, j)
+            dnj = sh.cell_value(i, j)
 
         for j in range(29, 30):
-            gzp = sh.cell_value(i, j)
+            fen = sh.cell_value(i, j)
 
         for j in range(30, 31):
-            hzj = sh.cell_value(i, j)
+            frd = sh.cell_value(i, j)
 
         for j in range(31, 32):
-            jes = sh.cell_value(i, j)
+            gzp = sh.cell_value(i, j)
 
         for j in range(32, 33):
-            khl = sh.cell_value(i, j)
+            cnd = sh.cell_value(i, j)
 
         for j in range(33, 34):
-            krn = sh.cell_value(i, j)
+            jes = sh.cell_value(i, j)
 
         for j in range(34, 35):
-            ksg = sh.cell_value(i, j)
+            khl = sh.cell_value(i, j)
 
         for j in range(35, 36):
-            kus = sh.cell_value(i, j)
+            krn = sh.cell_value(i, j)
 
         for j in range(36, 37):
-            mhk = sh.cell_value(i, j)
+            ksg = sh.cell_value(i, j)
 
         for j in range(37, 38):
-            mir = sh.cell_value(i, j)
+            kus = sh.cell_value(i, j)
 
         for j in range(38, 39):
-            mlv = sh.cell_value(i, j)
+            tej = sh.cell_value(i, j)
 
         for j in range(39, 40):
-            mot = sh.cell_value(i, j)
+            mir = sh.cell_value(i, j)
 
         for j in range(40, 41):
-            mym = sh.cell_value(i, j)
+            mlv = sh.cell_value(i, j)
 
         for j in range(41, 42):
-            naj = sh.cell_value(i, j)
+            mot = sh.cell_value(i, j)
 
         for j in range(42, 43):
-            nok = sh.cell_value(i, j)
+            mym = sh.cell_value(i, j)
 
         for j in range(43, 44):
-            pat = sh.cell_value(i, j)
+            naj = sh.cell_value(i, j)
 
         for j in range(44, 45):
-            pbn = sh.cell_value(i, j)
+            nok = sh.cell_value(i, j)
 
         for j in range(45, 46):
-            raj = sh.cell_value(i, j)
+            pat = sh.cell_value(i, j)
 
         for j in range(46, 47):
-            rng = sh.cell_value(i, j)
+            pbn = sh.cell_value(i, j)
 
         for j in range(47, 48):
-            sav = sh.cell_value(i, j)
+            raj = sh.cell_value(i, j)
 
         for j in range(48, 49):
-            syl = sh.cell_value(i, j)
+            rng = sh.cell_value(i, j)
 
         for j in range(49, 50):
-            tgl = sh.cell_value(i, j)
+            sav = sh.cell_value(i, j)
 
         for j in range(50, 51):
-            vrb = sh.cell_value(i, j)
+            syl = sh.cell_value(i, j)
 
         for j in range(51, 52):
+            tgl = sh.cell_value(i, j)
+
+        for j in range(52, 53):
+            bbr = sh.cell_value(i, j)
+
+        for j in range(53, 54):
             # TDCL Central
             tdcl_val = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(tdcl_val))) + "</td>\n"
 
-        for j in range(52, 53):
+        for j in range(54, 55):
             # Branch Total
             tdcl_val = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\">" + str(ofn.number_style(str(tdcl_val))) + "</td>\n"
 
+        # # need to correct order
 
-        for j in range(53, 54):
+        for j in range(55, 56):
             BOG = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(bog, BOG)) + "\">" + ofn.day_calculator(bog, BOG) + "</td>\n"
 
-        for j in range(54, 55):
+        for j in range(56, 57):
             BSL = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\" style=\"background-color:" + \
                       str(ofn.warning(bsl, BSL)) + "\">" + ofn.day_calculator(bsl, BSL) + "</td>\n"
 
-        for j in range(55, 56):
+        for j in range(57, 58):
             COM = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(com, COM)) + "\">" + ofn.day_calculator(com, COM)  + "</td>\n"
 
-        for j in range(56, 57):
+        for j in range(58, 59):
             COX = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(cox, COX)) + "\">" + ofn.day_calculator(cox, COX) + "</td>\n"
 
-        for j in range(57, 58):
+        for j in range(59, 60):
             CTG = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(ctg, CTG)) + "\">" + ofn.day_calculator(ctg, CTG) + "</td>\n"
 
-        for j in range(58, 59):
+        for j in range(60, 61):
             CTN = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
-                      str(ofn.warning(ctn, CTN)) + "\">" + ofn.day_calculator(ctn, CTN) + "</td>\n"
+                      str(ofn.warning(cetn, CTN)) + "\">" + ofn.day_calculator(cetn, CTN) + "</td>\n"
 
-        for j in range(59, 60):
+        for j in range(61, 62):
             DNJ = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(dnj, DNJ)) + "\">" + ofn.day_calculator(dnj, DNJ) + "</td>\n"
 
-        for j in range(60, 61):
+        for j in range(62, 63):
             FEN = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(fen, FEN)) + "\">" + ofn.day_calculator(fen, FEN) + "</td>\n"
 
-        for j in range(61, 62):
+        for j in range(63, 64):
             FRD = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(frd, FRD)) + "\">" + ofn.day_calculator(frd, FRD) + "</td>\n"
 
-        for j in range(62, 63):
+        for j in range(64, 65):
             GZP = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(gzp, GZP)) + "\">" + ofn.day_calculator(gzp, GZP) + "</td>\n"
 
-        for j in range(63, 64):
+        for j in range(65, 66):
             HZJ = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
-                      str(ofn.warning(hzj, HZJ)) + "\">" + ofn.day_calculator(hzj, HZJ) + "</td>\n"
+                      str(ofn.warning(cnd, HZJ)) + "\">" + ofn.day_calculator(cnd, HZJ) + "</td>\n"
 
-        for j in range(64, 65):
+        for j in range(66, 67):
             JES = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(jes, JES)) + "\">" + ofn.day_calculator(jes, JES) + "</td>\n"
 
-        for j in range(65, 66):
+        for j in range(67, 68):
             KHL = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(khl, KHL)) + "\">" + ofn.day_calculator(khl, KHL) + "</td>\n"
 
-        for j in range(66, 67):
+        for j in range(68, 69):
             KRN = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(krn, KRN)) + "\">" + ofn.day_calculator(krn, KRN) + "</td>\n"
 
-        for j in range(67, 68):
+        for j in range(69, 70):
             KSG = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(ksg, KSG)) + "\">" + ofn.day_calculator(ksg, KSG) + "</td>\n"
 
-        for j in range(68, 69):
+        for j in range(70, 71):
             KUS = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(kus, KUS)) + "\">" + ofn.day_calculator(kus, KUS) + "</td>\n"
 
-        for j in range(69, 70):
+        for j in range(71, 72):
             MHK = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
-                      str(ofn.warning(mhk, MHK)) + "\">" + ofn.day_calculator(mhk, MHK) + "</td>\n"
+                      str(ofn.warning(tej, MHK)) + "\">" + ofn.day_calculator(tej, MHK) + "</td>\n"
 
-        for j in range(70, 71):
+        for j in range(72, 73):
             MIR = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(mir, MIR)) + "\">" + ofn.day_calculator(mir, MIR) + "</td>\n"
 
-        for j in range(71, 72):
+        for j in range(73, 74):
             MLV = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(mlv, MLV)) + "\">" + ofn.day_calculator(mlv, MLV) + "</td>\n"
 
-        for j in range(72, 73):
+        for j in range(74, 75):
             MOT = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(mot, MOT)) + "\">" + ofn.day_calculator(mot, MOT) + "</td>\n"
 
-        for j in range(73, 74):
+        for j in range(75, 76):
             MYM = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(mym, MYM)) + "\">" + ofn.day_calculator(mym, MYM) + "</td>\n"
 
-        for j in range(74, 75):
+        for j in range(76, 77):
             NAJ = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(naj, NAJ)) + "\">" + ofn.day_calculator(naj, NAJ) + "</td>\n"
 
-        for j in range(75, 76):
+        for j in range(77, 78):
             NOK = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(nok, NOK)) + "\">" + ofn.day_calculator(nok, NOK) + "</td>\n"
 
-        for j in range(76, 77):
+        for j in range(78, 79):
             PAT = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(pat, PAT)) + "\">" + ofn.day_calculator(pat, PAT) + "</td>\n"
 
-        for j in range(77, 78):
+        for j in range(79, 80):
             PBN = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(pbn, PBN)) + "\">" + ofn.day_calculator(pbn, PBN) + "</td>\n"
 
-        for j in range(78, 79):
+        for j in range(80, 81):
             RAJ = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(raj, RAJ)) + "\">" + ofn.day_calculator(raj, RAJ) + "</td>\n"
 
-        for j in range(79, 80):
+        for j in range(81, 82):
             RNG = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(rng, RNG)) + "\">" + ofn.day_calculator(rng, RNG) + "</td>\n"
 
-        for j in range(80, 81):
+        for j in range(82, 83):
             SAV = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(sav, SAV)) + "\">" + ofn.day_calculator(sav, SAV) + "</td>\n"
 
-        for j in range(81, 82):
+        for j in range(83, 84):
             SYL = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(syl, SYL)) + "\">" + ofn.day_calculator(syl, SYL) + "</td>\n"
 
-        for j in range(82, 83):
+        for j in range(84, 85):
             TGL = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
                       str(ofn.warning(tgl, TGL)) + "\">" + ofn.day_calculator(tgl, TGL) + "</td>\n"
 
-        for j in range(83, 84):
+        for j in range(85, 86):
             VRB = int(sh.cell_value(i, j))
             tabletd = tabletd + "<td id=\"number_style2\"style=\"background-color:" + \
-                      str(ofn.warning(vrb, VRB)) + "\">" + ofn.day_calculator(vrb, VRB) + "</td>\n"
+                      str(ofn.warning(bbr, VRB)) + "\">" + ofn.day_calculator(bbr, VRB) + "</td>\n"
 
-        # for j in range(83, 84):
+        # for j in range(86, 87):
         #     VRB = int(sh.cell_value(i, j))
         #     tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
-        #               str(ofn.warning(vrb, VRB)) + "\">" + str(ofn.number_style(str(VRB))) + "</td>\n"
+        #               str(ofn.warning(bbr, VRB)) + "\">" + str(ofn.number_style(str(VRB))) + "</td>\n"
+        #
+        # for j in range(87, 88):
+        #     VRB = int(sh.cell_value(i, j))
+        #     tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+        #               str(ofn.warning(bbr, VRB)) + "\">" + str(ofn.number_style(str(VRB))) + "</td>\n"
+        #
+        # for j in range(88, 89):
+        #     VRB = int(sh.cell_value(i, j))
+        #     tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+        #               str(ofn.warning(bbr, VRB)) + "\">" + str(ofn.number_style(str(VRB))) + "</td>\n"
+        #
+        # for j in range(89, 90):
+        #     VRB = int(sh.cell_value(i, j))
+        #     tabletd = tabletd + "<td class=\"remarks\"style=\"background-color:" + \
+        #               str(ofn.warning(bbr, VRB)) + "\">" + str(ofn.number_style(str(VRB))) + "</td>\n"
+
 
         table = tabletd + "</tr>\n"
     print("18. Master Details Table Created")
