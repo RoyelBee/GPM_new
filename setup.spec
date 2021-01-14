@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['setup.py'],
-             pathex=['D:\\Python Code\\GPM_new_v18'],
+             pathex=['D:\\Python Code\\GPM_new_v19_Value'],
              binaries=[],
              datas=[],
              hiddenimports=[],

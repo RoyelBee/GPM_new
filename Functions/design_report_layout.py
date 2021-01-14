@@ -402,13 +402,13 @@ def generate_layout(gpm_name):
                         <th rowspan="2"class="style1">FEN</th>
                         <th rowspan="2"class="style1">FRD</th>
                         <th rowspan="2"class="style1">GZP</th>
-                        <th rowspan="2"class="style1">HZJ</th>
+                        <th rowspan="2"class="style1">CND</th>
                         <th rowspan="2"class="style1">JES</th>
                         <th rowspan="2"class="style1">KHL</th>
                         <th rowspan="2"class="style1">KRN</th>
                         <th rowspan="2"class="style1">KSG</th>
                         <th rowspan="2"class="style1">KUS</th>
-                        <th rowspan="2"class="style1">MHK</th>
+                        <th rowspan="2"class="style1">TEJ</th>
                         <th rowspan="2"class="style1">MIR</th>
                         <th rowspan="2"class="style1">MLV</th>
                         <th rowspan="2"class="style1">MOT</th>
@@ -422,7 +422,7 @@ def generate_layout(gpm_name):
                         <th rowspan="2"class="style1">SAV</th>
                         <th rowspan="2"class="style1">SYL</th>
                         <th rowspan="2"class="style1">TGL</th>
-                        <th rowspan="2"class="style1">VRB</th>
+                        <th rowspan="2"class="style1">BBR</th>
                         <th colspan="3" >SK+F Plant</th>
      
                         
@@ -440,7 +440,6 @@ def generate_layout(gpm_name):
                  
 
             </table>  <br><br>
-            
             
             <table border="1px solid gray" width='300%'> 
                    <tr> 
@@ -470,7 +469,62 @@ def generate_layout(gpm_name):
 
                    """ + yesterday.item_wise_yesterday_sales_Records()  +  yesterday.grandtotal() + """
                 </table>  <br> 
+            
+                
+            <table border="1px solid gray" width='300%'> 
+            <tr> 
+                <th colspan='43' style=" background-color: #00ffbb; font-size: 20px; "> Region wise Item Sales : Yesterday</th> 
+            </tr>
+															
+                    <tr>
+                        <th class="brand" style="font-size: 14px;">  Brand</th>
+                        <th  class="brandsl" style="font-size: 14px; text-align: center">SL</th>
+                        <th  class="description" style="width:14%;font-weight: bolder;  left; font-size: 14px;">Item Description</th
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> BB</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> BJ</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> BN</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> CD</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> CG</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> CH</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> CL</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> CR</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> CS</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> CT</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> DB</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> DD</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> DK</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> DM</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> DS</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> DT</th> 
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> FK</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> FR</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> GK</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> JS</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> KB</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> KC</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> KN</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> MG</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> MH</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> ML</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> MS</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> ND</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> NM</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> PB</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> PS</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> RK</th>										
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> RN</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> SB</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> SM</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> SS</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> TJ</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> UM</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> WS</th>
+                        <th class="uom" style="text-align: right;  font-size: 14px;"> ZREGION</th>
 
+                    </tr>
+                  """ + yesterday.region_wise_yesterday_item_sales(gpm_name) + """
+                </table>  <br> <br>
+                
             <table border="1px solid gray" width='300%'> 
                    <tr> 
                         <th colspan='5' style=" background-color: #ffc994; font-size: 20px; "> No Sales Item: Yesterday </th> 
@@ -586,13 +640,13 @@ def generate_layout(gpm_name):
                         <th rowspan="2"class="style1">FEN</th>
                         <th rowspan="2"class="style1">FRD</th>
                         <th rowspan="2"class="style1">GZP</th>
-                        <th rowspan="2"class="style1">HZJ</th>
+                        <th rowspan="2"class="style1">CND</th>
                         <th rowspan="2"class="style1">JES</th>
                         <th rowspan="2"class="style1">KHL</th>
                         <th rowspan="2"class="style1">KRN</th>
                         <th rowspan="2"class="style1">KSG</th>
                         <th rowspan="2"class="style1">KUS</th>
-                        <th rowspan="2"class="style1">MHK</th>
+                        <th rowspan="2"class="style1">TEJ</th>
                         <th rowspan="2"class="style1">MIR</th>
                         <th rowspan="2"class="style1">MLV</th>
                         <th rowspan="2"class="style1">MOT</th>
@@ -606,7 +660,7 @@ def generate_layout(gpm_name):
                         <th rowspan="2"class="style1">SAV</th>
                         <th rowspan="2"class="style1">SYL</th>
                         <th rowspan="2"class="style1">TGL</th>
-                        <th rowspan="2"class="style1">VRB</th>
+                        <th rowspan="2"class="style1">BBR</th>
                         <th colspan="3" >SK+F Plant</th>
 
                    </tr>  
@@ -728,13 +782,13 @@ def generate_layout(gpm_name):
         <th class="branch_plant_color" style="font-size:9px;">FEN</th>
         <th class="branch_plant_color" style="font-size:9px;">FRD</th>
         <th class="branch_plant_color" style="font-size:9px;">GZP</th>
-        <th class="branch_plant_color" style="font-size:9px;">HZJ</th>
+        <th class="branch_plant_color" style="font-size:9px;">CND</th>
         <th class="branch_plant_color" style="font-size:9px;">JES</th>
         <th class="branch_plant_color" style="font-size:9px;">KHL</th>
         <th class="branch_plant_color" style="font-size:9px;">KRN</th>
         <th class="branch_plant_color" style="font-size:9px;">KSG</th>
         <th class="branch_plant_color" style="font-size:9px;">KUS</th>
-        <th class="branch_plant_color" style="font-size:9px;">MHK</th>
+        <th class="branch_plant_color" style="font-size:9px;">TEJ</th>
         <th class="branch_plant_color" style="font-size:9px;">MIR</th>
         <th class="branch_plant_color" style="font-size:9px;">MLV</th>
         <th class="branch_plant_color" style="font-size:9px;">MOT</th>
@@ -748,7 +802,7 @@ def generate_layout(gpm_name):
         <th class="branch_plant_color" style="font-size:9px;">SAV</th>
         <th class="branch_plant_color" style="font-size:9px;">SYL</th>
         <th class="branch_plant_color" style="font-size:9px;">TGL</th>
-        <th class="branch_plant_color" style="font-size:9px;">VRB</th>
+        <th class="branch_plant_color" style="font-size:9px;">BBR</th>
 
     </tr>
     

@@ -77,8 +77,8 @@ def create_item_wise_stock_days_data():
     fifth_column = df['UOM'].tolist()
 
     label_list = ['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'BOG', 'BSL', 'COM', 'COX', 'CTG', 'CTN', 'DNJ', 'FEN',
-                  'FRD', 'GZP', 'HZJ', 'JES', 'KHL', 'KRN', 'KSG', 'KUS', 'MHK', 'MIR', 'MLV', 'MOT', 'MYM', 'NAJ', 'NOK',
-                  'PAT', 'PBN', 'RAJ', 'RNG', 'SAV', 'SYL', 'TGL', 'VRB']
+                  'FRD', 'GZP', 'CND', 'JES', 'KHL', 'KRN', 'KSG', 'KUS', 'TEJ', 'MIR', 'MLV', 'MOT', 'MYM', 'NAJ', 'NOK',
+                  'PAT', 'PBN', 'RAJ', 'RNG', 'SAV', 'SYL', 'TGL', 'BBR']
     third_column_serial_change = range(1, len(first_column) + 1)
 
     workbook = xlsxwriter.Workbook('Data/item_wise_stock_days.xlsx')

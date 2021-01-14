@@ -15,6 +15,22 @@ def number_style(value):
     else:
         return value
 
+def number_style1(value):
+    value = str(int(value))
+
+    if (len(value) > 6):
+        return str(value[0:len(value) - 6] + "," + value[len(value) - 6:len(value) - 3] + ","
+                   + value[len(value) - 3:len(value)])
+    elif (len(value) > 3):
+        return str(value[0:len(value) - 3] + "," + value[len(value) - 3:len(value)])
+    elif (len(value) > 1):
+        return value
+
+    elif (len(value) == 1 and str(value) == '0'):
+        return '-'
+    else:
+        return value
+
 def day_calculator(value1, value2):
     value1 = value1
     value2 = int(value2)

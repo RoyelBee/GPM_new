@@ -4,8 +4,8 @@
 # import Functions.brand_wise_target_sales as bts
 # bts.brand_wise_target_sales()
 
-import Functions.cumulative_target_sales as cs
-cs.cumulative_target_sales('Mr. Mohammad Akhter Alam Khan')
+# import Functions.cumulative_target_sales as cs
+# cs.cumulative_target_sales('Mr. Mohammad Akhter Alam Khan')
 
 # # ------ 1 -----------------------------------------
 # import Functions.banner_code as b
@@ -24,8 +24,8 @@ cs.cumulative_target_sales('Mr. Mohammad Akhter Alam Khan')
 # cu.cumulative_target_sales('Mr. A. K. M. Nawajesh Hossain')
 
 # # --------------- 5 --------------------------------
-# import Functions.executive_wise_sales_target as ex
-# ex.executive_sales_target('Mr. Mohammad Akhter Alam Khan')
+import Functions.executive_wise_sales_target as ex
+ex.executive_sales_target('Mr. Md. Tafsir Bashar')
 
 # # --------------- 7 --------------------------------
 # import Functions.stock_aging_days as ss
@@ -63,8 +63,8 @@ cs.cumulative_target_sales('Mr. Mohammad Akhter Alam Khan')
 # import Functions.sales_and_stock_record as sl
 # sl.get_Sales_and_Stock_Records()
 
-import Functions.design_report_layout as de
-de.generate_layout('Mr. A. K. M. Nawajesh Hossain')
+# import Functions.design_report_layout as de
+# de.generate_layout('Mr. A. K. M. Nawajesh Hossain')
 
 # import send_mail as s
 # s.send_mail('Mr. A. K. M. Nawajesh Hossain')
@@ -77,3 +77,7 @@ de.generate_layout('Mr. A. K. M. Nawajesh Hossain')
 
 # import Functions.executive_stackedbarchart1 as exts
 # exts.executives_brand_target_sales_chart('Mr. Md. Tafsir Bashar')
+
+
+# import Functions.item_wise_yesterday_sales as y
+# y.region_wise_yesterday_item_sales('Mr. Mohammad Akhter Alam Khan')

@@ -47,11 +47,11 @@ def cumulative_target_sales(name):
         for t_va in range(0, current_day_in_int - 1):
             final_days_array.append(day_wise_date[t_va])
             final_sales_array.append(day_to_day_sale[t_va])
+
         # print('Reduced 0 value days from the list : ', final_days_array)
         # print('Sales Taken According to the value of days : ', final_sales_array)
 
-        EveryDay_target_df = pd.read_sql_query(""" 
-           
+        EveryDay_target_df = pd.read_sql_query("""   
             Declare @CurrentMonth NVARCHAR(MAX);
             Declare @DaysInMonth NVARCHAR(MAX);
             SET @CurrentMonth = convert(varchar(6), GETDATE(),112)

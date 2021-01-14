@@ -4,7 +4,7 @@ import xlrd
 import numpy as np
 from calendar import monthrange
 from datetime import date, datetime
-
+import Functions.db_connection as dbc
 
 def formater(val):
     val = str(val)
@@ -43,7 +43,6 @@ def item_wise_yesterday_sales_Records():
     yesterday_sales = yesterday_sales.drop(yesterday_sales.columns[[2]], axis=1)
     yesterday_sales.insert(loc=2, column='ISL NO', value=np.arange(len(yesterday_sales)) + 1)
 
-
     # -----------------change excel percentage---------------------
 
     yesterday_sales_quantity = yesterday_sales['YesterdaySalesQty'].to_list()
@@ -81,7 +80,6 @@ def item_wise_yesterday_sales_Records():
     dayTarget = []
     for a in dayWiseTarget3:
         dayTarget.append(int(a))
-
 
     df = pd.DataFrame()  # 'BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM', 'YesterdaySalesQty',
     # 'TP', 'TP Sales Value', 'Net Sales Value', 'Discount'
@@ -255,7 +253,6 @@ def grandtotal():
 
 
 def item_wise_yesterday_no_sales_Records():
-
     excel_data_df = pd.read_excel('Data/yesterday_no_sales.xlsx', sheet_name='Sheet1',
                                   usecols=['BSL NO', 'BRAND', 'ISL NO', 'Item Name', 'UOM'])
     bslno = ofn.create_dup_count_list(excel_data_df, 'BSL NO')
@@ -294,4 +291,90 @@ def item_wise_yesterday_no_sales_Records():
         table1 = tabletd + "</tr>\n"
 
     print("13. Yesterday No sale table Created\n")
+    return table1
+
+
+def region_wise_yesterday_item_sales(name):
+    df = pd.read_sql_query("""
+            select BrandName as BRAND, ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS number, * from(select * from (select PRINFOSKF.BRAND as BrandName, OESalesDetails.[DESC] as [Item Description], rsmtr,isnull(sum(extinvmisc),0) as sales from OESalesDetails
+            left join prinfoskf
+            on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+            
+            left join GPMBRAND
+            on PRINFOSKF.BRAND = GPMBRAND.Brand
+            where GPMBRAND.Name like ? and  transdate=  convert(varchar(8),getdate()-1, 112) and TRANSTYPE = 1
+            group by PRINFOSKF.brand,rsmtr, OESalesDetails.item, OESalesDetails.[DESC]) as t1
+            pivot
+            (
+            SUM(sales)
+            --for EXE in (' + @cols + ')
+            for rsmtr in ([BB],[BJ],[BN],[CD],[CG],[CH],[CL],[CR],[CS],[CT],[DB],[DD],[DK],[DM],[DS],[DT],[FK],[FR],[GK],[JS],[KB],[KC],[KN],[MG],[MH],
+            [ML],[MS],[ND],[NM],[PB],[PS],[RK],[RN],[SB],[SM],[SS],[TJ],[UM],[WS],[ZREGION]) 
+            ) piv
+            ) main
+            ORDER BY BRAND
+            """, dbc.connection, params={name})
+
+    df = df.drop(['BrandName'], axis=1)
+    df = df.fillna(0)
+
+    df.to_excel('Data/items_region_wise_yesterday_sales.xlsx', index=False)
+    import time
+    time.sleep(5)
+
+
+    excel_data_df = pd.read_excel('Data/items_region_wise_yesterday_sales.xlsx', sheet_name='Sheet1')
+
+
+    brand = ofn.create_dup_count_list(excel_data_df, 'BRAND')
+
+    wb = xlrd.open_workbook('Data/items_region_wise_yesterday_sales.xlsx')
+    sh = wb.sheet_by_name('Sheet1')
+
+    tabletd = ""
+    th = ""
+    # for i in range(0, 1):
+    #     th = th + "<tr>\n"
+    #     # th = th + "<th class=\"unit\">ID</th>"
+    #     for j in range(0, 1):
+    #         # Brand
+    #         th = th + "<th class=\"brandtd\" >" + str(sh.cell_value(i, j)) + "</th>\n"
+    #     for j in range(1, 2):
+    #         # SL
+    #         th = th + "<th class=\"serialno\" >" + str(sh.cell_value(i, j)) + "</th>\n"
+    #
+    #     for j in range(2, 3):
+    #         # Desc
+    #         th = th + "<th class=\"y_desc_sales\" >" + str(sh.cell_value(i, j)) + "</th>\n"
+    #
+    #     for j in range(3, sh.ncols):
+    #         # All
+    #         th = th + "<th class=\"unit\" >" + str(sh.cell_value(i, j)) + "</th>\n"
+    #     th = th + "</tr>\n"
+
+    for i in range(1, sh.nrows):
+        tabletd = tabletd + "<tr>\n"
+
+        for j in range(0, 1):
+            # Brand
+            if (brand[i - 1] != 0):
+                tabletd = tabletd + "<td class=\"brandtd\" rowspan=\"" + str(brand[i - 1]) + "\">" + str(
+                    sh.cell_value(i, j)) + "</td>\n"
+
+
+
+        for j in range(1, 2):
+            # SL
+            tabletd = tabletd + "<td class=\"serialno\">" + str(int(sh.cell_value(i, j))) + "</td>\n"
+
+        for j in range(2, 3):
+            # item Desc
+            tabletd = tabletd + "<td class=\"y_desc_sales\">" + str((sh.cell_value(i, j))) + "</td>\n"
+
+        for j in range(3, 43):
+            tabletd = tabletd + "<td class=\"number_style\">" + str(ofn.number_style1((sh.cell_value(i, j)))) + "</td>\n"
+
+        table1 = th + tabletd + "</tr>\n"
+
+    print("13#. Region wise Items yesterday sales \n")
     return table1

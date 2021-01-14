@@ -275,8 +275,8 @@ def dash_kpi_generator(name):
     draw.text((60, 315), mtd_targets, font=font, fill=(0, 0, 0))
     draw.text((250, 315), mtd_sales, font=font, fill=(0, 0, 0))
     draw.text((425, 315), mtd_achiv, font=font, fill=(0, 0, 0))
-    draw.text((610, 315), mtd_growth, font=font, fill=(0, 0, 0))
-    draw.text((820, 315), mtd_trend, font=font, fill=(0, 0, 0))
+    draw.text((610, 315), mtd_trend, font=font, fill=(0, 0, 0))
+    draw.text((820, 315), mtd_growth, font=font, fill=(0, 0, 0))
 
     # image.show()
     image.save('./Images/dashboard.png')

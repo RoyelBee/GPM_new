@@ -20,7 +20,7 @@ def executive_sales_target(name):
             0)/1000 as int) as ItemSales from OESalesDetails
             left join PRINFOSKF
             on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-            left join
+            right join
             (select * from GPMExecutive_ShortName) as b
             on b.[ExecutiveName]=PRINFOSKF.cp01
             where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
@@ -40,10 +40,12 @@ def executive_sales_target(name):
             on exe_sales.ExecutiveName = exe_target.ExecutiveName
             order by exe_sales.ItemSales desc
              """,
-        dbc.connection, params=(name,name,name,name))
+                  dbc.connection, params=(name, name, name, name))
 
         Executive_name = executive_target_sales_df['ExecutiveName'].tolist()
         Executive_target = executive_target_sales_df['MTDTargetValue'].tolist()
+
+        # print('Executive target list = ', Executive_target)
 
         def Dr_Replace(customer_name):
             md_replaced_result = [sub.replace('Dr. ', '') for sub in customer_name]
@@ -61,7 +63,6 @@ def executive_sales_target(name):
         new_name2 = Mr_Replace(new_name)
         MS_Replace(new_name2)
 
-
         # print(executive_target_df)
         Executive_sale = executive_target_sales_df['ItemSales'].tolist()
         short_name = executive_target_sales_df['shortname'].tolist()
@@ -78,7 +79,8 @@ def executive_sales_target(name):
         for x, y in zip(short_name, achievement_list):
             new_label = str(x) + ' (' + str(round(y)) + '%)'
             new_label_list.append(new_label)
-        # print("new label list", new_label_list)
+        # print("new label list= ", new_label_list)
+        # print("Executive sales = ", Executive_sale)
 
         # z = range(0, len(new_label_list))
         # print(range(0, len(new_label_list)))
@@ -120,7 +122,7 @@ def executive_sales_target(name):
         plt.xlabel('Executive', fontsize=10, color='black', fontweight='bold')
         plt.ylabel('Sales Value', fontsize=10, color='black', fontweight='bold')
 
-        plt.text(0.2, 0.5, 'Due to target unavailability the chart could not get generated.', color='red', fontsize=16)
+        plt.text(0.2, 0.4, 'Sorry, this chart could not get generated.', color='red', fontsize=16)
         # plt.legend(['Target', 'Sales'])
         plt.tight_layout()
         # plt.show()
