@@ -11,7 +11,6 @@ connection = db.connect('DRIVER={SQL Server};'
                         'UID=sa;PWD=erp@123')
 
 def aging_stock_summary_status(name):
-    print('gpm name from first table', name)
     df = pd.read_sql_query("""select * 
     from 
     

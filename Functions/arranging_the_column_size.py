@@ -1,15 +1,16 @@
 import pandas as pd
+import os
 def dataFormating():
     # 1st excel file
-    cols_1 = 0, 1, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67
+    cols_1 = 2, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76
     df_1 = pd.read_excel('./Data/branch_wise_aging_stock.xlsx', usecols=cols_1)
 
     writer = pd.ExcelWriter('./Data/branch_wise_aging_stock_copy.xlsx', engine='xlsxwriter')
     df_1.to_excel(writer, sheet_name='Sheet1', index=False)
     worksheet = writer.sheets['Sheet1']
-    worksheet.set_column('A:A', 20)
-    worksheet.set_column('B:B', 50)
-    worksheet.set_column('C:AH', 16)
+    worksheet.set_column('B:B', 20)
+    worksheet.set_column('C:C', 50)
+    worksheet.set_column('D:AL', 18)
     writer.save()
 
     # 2nd excel file
@@ -22,7 +23,7 @@ def dataFormating():
     writer2.save()
 
     # 3rd excel file
-    cols_7 = range(0, 10)
+    cols_7 = range(0, 15)
     df_7 = pd.read_excel('./Data/item_wise_yesterday_sales.xlsx', usecols=cols_7)
 
     writer7 = pd.ExcelWriter('./Data/item_wise_yesterday_sales_copy.xlsx', engine='xlsxwriter')
@@ -76,15 +77,15 @@ def dataFormating():
 
 
     # 7th excel file
-    cols_main = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 50, 51
+    cols_main = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,81, 82, 83
     df_main = pd.read_excel('./Data/html_data_Sales_and_Stock.xlsx', usecols=cols_main)
 
-    cols_main_2 = 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
-    df_main_2 = pd.read_excel('./Data/item_wise_stock_days.xlsx', usecols=cols_main_2)
+    # cols_main_2 = 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
+    # df_main_2 = pd.read_excel('./Data/item_wise_stock_days.xlsx', usecols=cols_main_2)
 
     writer = pd.ExcelWriter('./Data/branch_wise_detailed_data_Sales_and_Stock-Copy.xlsx', engine='xlsxwriter')
     df_main.to_excel(writer, sheet_name='Sheet1', index=False, startcol=0, startrow=0)
-    df_main_2.to_excel(writer, sheet_name='Sheet1', index=False, startcol=21, startrow=0)
+    # df_main_2.to_excel(writer, sheet_name='Sheet1', index=False, startcol=21, startrow=0)
 
     worksheet = writer.sheets['Sheet1']
     worksheet.set_column('D:D', 40)
@@ -95,3 +96,5 @@ def dataFormating():
     writer.save()
 
     print("19. All attached excels files are processed.")
+
+

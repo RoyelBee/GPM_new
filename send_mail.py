@@ -8,6 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
 import Functions.design_report_layout as layout
+import Functions.test_design as test
 import path as d
 import time
 import Functions.read_gpm_info as gpm
@@ -27,68 +28,65 @@ def send_mail(gpm_name):
     import Functions.brand_wise_aging_information_bar as brand_bar
     import Functions.SKU_wise_aging_information_bar as SKU_bar
     import Functions.quantity_wise_aging_information_bar as quantity_bar
-    import Functions.branch_wise_stock_aging as branch_stock_aging
     import Functions.item_wise_stock_days_data as item_stock_days_data
     import Functions.branch_stock_summery_data as bsdata
     import Functions.arranging_the_column_size as attachdata
 
-    # ban.banner(gpm_name)  # 01
-    # gdata.GenerateReport(gpm_name)  # 02
-    # dash.dash_kpi_generator(gpm_name)  # 03
-    # cm.cumulative_target_sales(gpm_name)  # 4
-    # ex.executive_sales_target(gpm_name)  # 5
-    # stacked.executives_brand_target_sales_chart(gpm_name)  # 6
-    # b.brand_wise_target_sales()  # 7
-    # brand_bar.stock_aging_chart(gpm_name)  # 8.1
-    # SKU_bar.stock_aging_chart(gpm_name)  # 8.2
-    # quantity_bar.stock_aging_chart(gpm_name)  # 8.3
-    # item_stock_days_data.create_item_wise_stock_days_data()  # 9 This data used in branch_stock_summery.py file
-    # bsdata.branch_stock_summery_data()  # 10
+    ban.banner(gpm_name)  # 01
+    gdata.GenerateReport(gpm_name)  # 02
+    dash.dash_kpi_generator(gpm_name)  # 03
+    cm.cumulative_target_sales(gpm_name)  # 4
+    ex.executive_sales_target(gpm_name)  # 5
+    stacked.executives_brand_target_sales_chart(gpm_name)  # 6
+    b.brand_wise_target_sales()  # 7
+    brand_bar.stock_aging_chart(gpm_name)  # 8.1
+    SKU_bar.stock_aging_chart(gpm_name)  # 8.2
+    quantity_bar.stock_aging_chart(gpm_name)  # 8.3
+    item_stock_days_data.create_item_wise_stock_days_data()  # 9 This data used in branch_stock_summery.py file
+    bsdata.branch_stock_summery_data()  # 10
 
-    # # branch_stock_aging.get_branch_aging_stock_status(gpm_name) # 17
-
-    # 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
+    ## 11 to 17 KPI are comes from "design_report_layout.py" file in ascending order.
 
     # --------- Add Image Border ---------------------------------------
-    # from PIL import Image
-    #
-    # da = Image.open("./Images/dashboard.png")
-    # imageSize = Image.new('RGB', (962, 375))
-    # imageSize.paste(da, (1, 0))
-    # imageSize.save("./Images/dashboard.png")
-    #
-    # kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi1, (1, 0))
-    # imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
-    #
-    # kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
-    # imageSize = Image.new('RGB', (962, 481))
-    # imageSize.paste(kpi2, (1, 0))
-    # imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
-    #
-    # kpistock = Image.open("./Images/mainexecutive.png")
-    # imageSize = Image.new('RGB', (1802, 901))
-    # imageSize.paste(kpistock, (1, 0))
-    # imageSize.save("./Images/main_executive_with_margin.png")
-    #
-    # kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
-    # imageSize = Image.new('RGB', (1802, 601))
-    # imageSize.paste(kpi3, (1, 0))
-    # imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
-    #
-    # kpi7_1 = Image.open("./Images/brand_wise_aging_stock_information.png")
-    # kpi7_2 = Image.open("./Images/SKU_wise_aging_stock_information.png")
-    # kpi7_3 = Image.open("./Images/Quantity_wise_aging_stock_information.png")
-    #
-    # img = Image.new('RGB', (1804, 481))
-    # img.paste(kpi7_1, (1, 0))
-    # img.paste(kpi7_2, (602, 0))
-    # img.paste(kpi7_3, (1203, 0))
-    # img.save("./Images/aging_stock_information.png")
+    from PIL import Image
 
-    # to = gpm.getGPMEmail(gpm_name)
-    # print('mail send to ', to)
+    da = Image.open("./Images/dashboard.png")
+    imageSize = Image.new('RGB', (962, 375))
+    imageSize.paste(da, (1, 0))
+    imageSize.save("./Images/dashboard.png")
+
+    kpi1 = Image.open("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi1, (1, 0))
+    imageSize.save("./Images/Cumulative_Day_Wise_Target_vs_Sales.png")
+
+    kpi2 = Image.open("./Images/executive_wise_target_vs_sold_quantity.png")
+    imageSize = Image.new('RGB', (962, 481))
+    imageSize.paste(kpi2, (1, 0))
+    imageSize.save("./Images/executive_wise_target_vs_sold_quantity.png")
+
+    kpistock = Image.open("./Images/mainexecutive.png")
+    imageSize = Image.new('RGB', (1802, 901))
+    imageSize.paste(kpistock, (1, 0))
+    imageSize.save("./Images/main_executive_with_margin.png")
+
+    kpi3 = Image.open("./Images/brand_wise_target_vs_sold_quantity.png")
+    imageSize = Image.new('RGB', (1802, 601))
+    imageSize.paste(kpi3, (1, 0))
+    imageSize.save("./Images/brand_wise_target_vs_sold_quantity.png")
+
+    kpi7_1 = Image.open("./Images/brand_wise_aging_stock_information.png")
+    kpi7_2 = Image.open("./Images/SKU_wise_aging_stock_information.png")
+    kpi7_3 = Image.open("./Images/Quantity_wise_aging_stock_information.png")
+
+    img = Image.new('RGB', (1804, 481))
+    img.paste(kpi7_1, (1, 0))
+    img.paste(kpi7_2, (602, 0))
+    img.paste(kpi7_3, (1203, 0))
+    img.save("./Images/aging_stock_information.png")
+
+    to = gpm.getGPMEmail(gpm_name)
+    print('mail send to ', to)
 
     # if (to == ['tafsir.bashar@skf.transcombd.com', '']):
     #     to = ['rejaul.islam@transcombd.com', '']
@@ -107,17 +105,17 @@ def send_mail(gpm_name):
     msgRoot = MIMEMultipart('related')
 
     me = 'erp-bi.service@transcombd.com'
-    to = ['rejaul.islam@transcombd.com', '']
-    cc = ['rafiul.ramjan@transcombd.com', '' ]
-    bcc = ['', '']
-
-    # to = 'biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com'
-    # cc = ['biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com']
-    # bcc = ['rejaul.islam@transcombd.com', 'aftab.uddin@transcombd.com', 'fazle.rabby@transcombd.com']
-
+    # to = ['rejaul.islam@transcombd.com', '']
     # cc = ['', '']
-    # bcc = ['mdshbiswas@gmail.com', 'biswas@transcombd.com', 'zubair@transcombd.com','yakub@transcombd.com', 'aftab.uddin@transcombd.com',
-    #        'fazle.rabby@transcombd.com', 'rejaul.islam@transcombd.com']
+    # bcc = ['', '']
+
+    # cc = ['biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com']
+    # bcc = ['rejaul.islam@transcombd.com', '']
+
+    cc = ['', '']
+    bcc = ['mdshbiswas@gmail.com', 'biswas@transcombd.com', 'zubair@transcombd.com', 'yakub@transcombd.com',
+           'aftab.uddin@transcombd.com',
+           'rejaul.islam@transcombd.com']
 
     recipient = to + cc + bcc
 
@@ -146,8 +144,8 @@ def send_mail(gpm_name):
 
     # # We reference the image in the IMG SRC attribute by the ID we give it below
     msgText = MIMEText("""
-                            """ + layout.generate_layout(gpm_name) + """
-                        """, 'html')
+                           """ + layout.generate_layout(gpm_name) + """
+                       """, 'html')
 
     msgAlternative.attach(msgText)
 
@@ -208,85 +206,95 @@ def send_mail(gpm_name):
 
     # # # -----------------------------------------------------
     # # # --------- 19 Process all attached data --------------
-    # attachdata.dataFormating()
-    # # -----------------------------------------------------
+    attachdata.dataFormating()
 
-    # 1. Add GPM branch wise aging Stock dataset
-    # part = MIMEBase('application', "octet-stream")
-    # file_location = d.get_directory() + '/Data/branch_wise_aging_stock_copy.xlsx'
-    # filename = os.path.basename(file_location)
-    # attachment = open(file_location, "rb")
-    # part = MIMEBase('application', 'octet-stream')
-    # part.set_payload(attachment.read())
-    # encoders.encode_base64(part)
-    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    # msgRoot.attach(part)
-    #
-    # # 2. Add GPM branch wise stock status dataset
-    # part = MIMEBase('application', "octet-stream")
-    # file_location = d.get_directory() + '/Data/branch_wise_stock_status_copy.xlsx'
-    # filename = os.path.basename(file_location)
-    # attachment = open(file_location, "rb")
-    # part = MIMEBase('application', 'octet-stream')
-    # part.set_payload(attachment.read())
-    # encoders.encode_base64(part)
-    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    # msgRoot.attach(part)
-    #
-    # # 3. Add GPM item wise yesterday sales dataset
-    # part = MIMEBase('application', "octet-stream")
-    # file_location = d.get_directory() + '/Data/item_wise_yesterday_sales_copy.xlsx'
-    # filename = os.path.basename(file_location)
-    # attachment = open(file_location, "rb")
-    # part = MIMEBase('application', 'octet-stream')
-    # part.set_payload(attachment.read())
-    # encoders.encode_base64(part)
-    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    # msgRoot.attach(part)
-    #
-    # # 4. Add GPM last three month no sales dataset
-    # part = MIMEBase('application', "octet-stream")
-    # file_location = d.get_directory() + '/Data/NoSales_last_three_month_copy.xlsx'
-    # filename = os.path.basename(file_location)
-    # attachment = open(file_location, "rb")
-    # part = MIMEBase('application', 'octet-stream')
-    # part.set_payload(attachment.read())
-    # encoders.encode_base64(part)
-    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    # msgRoot.attach(part)
-    #
-    # # 5. Add GPM No Stock last three month dataset
-    # part = MIMEBase('application', "octet-stream")
-    # file_location = d.get_directory() + '/Data/NoStock_last_three_month_copy.xlsx'
-    # filename = os.path.basename(file_location)
-    # attachment = open(file_location, "rb")
-    # part = MIMEBase('application', 'octet-stream')
-    # part.set_payload(attachment.read())
-    # encoders.encode_base64(part)
-    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    # msgRoot.attach(part)
-    #
-    # # 6. Add GPM yesterday no sales dataset
-    # part = MIMEBase('application', "octet-stream")
-    # file_location = d.get_directory() + '/Data/yesterday_no_sales_copy.xlsx'
-    # filename = os.path.basename(file_location)
-    # attachment = open(file_location, "rb")
-    # part = MIMEBase('application', 'octet-stream')
-    # part.set_payload(attachment.read())
-    # encoders.encode_base64(part)
-    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    # msgRoot.attach(part)
-    #
-    # # 7. Add GPM yesterday no sales dataset
-    # part = MIMEBase('application', "octet-stream")
-    # file_location = d.get_directory() + '/Data/branch_wise_detailed_data_Sales_and_Stock-Copy.xlsx'
-    # filename = os.path.basename(file_location)
-    # attachment = open(file_location, "rb")
-    # part = MIMEBase('application', 'octet-stream')
-    # part.set_payload(attachment.read())
-    # encoders.encode_base64(part)
-    # part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    # msgRoot.attach(part)
+    # # 1. Add GPM branch wise aging Stock dataset
+    part = MIMEBase('application', "octet-stream")
+    file_location = d.get_directory() + '/Data/branch_wise_aging_stock_copy.xlsx'
+    filename = os.path.basename(file_location)
+    attachment = open(file_location, "rb")
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(attachment.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    msgRoot.attach(part)
+
+    # 2. Add GPM branch wise stock status dataset
+    part = MIMEBase('application', "octet-stream")
+    file_location = d.get_directory() + '/Data/branch_wise_stock_status_copy.xlsx'
+    filename = os.path.basename(file_location)
+    attachment = open(file_location, "rb")
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(attachment.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    msgRoot.attach(part)
+
+    # 3. Add GPM item wise yesterday sales dataset
+    part = MIMEBase('application', "octet-stream")
+    file_location = d.get_directory() + '/Data/item_wise_yesterday_sales_copy.xlsx'
+    filename = os.path.basename(file_location)
+    attachment = open(file_location, "rb")
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(attachment.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    msgRoot.attach(part)
+
+    # 4. Add GPM last three month no sales dataset
+    part = MIMEBase('application', "octet-stream")
+    file_location = d.get_directory() + '/Data/NoSales_last_three_month_copy.xlsx'
+    filename = os.path.basename(file_location)
+    attachment = open(file_location, "rb")
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(attachment.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    msgRoot.attach(part)
+
+    # 5. Add GPM No Stock last three month dataset
+    part = MIMEBase('application', "octet-stream")
+    file_location = d.get_directory() + '/Data/NoStock_last_three_month_copy.xlsx'
+    filename = os.path.basename(file_location)
+    attachment = open(file_location, "rb")
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(attachment.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    msgRoot.attach(part)
+
+    # 6. Add GPM yesterday no sales dataset
+    part = MIMEBase('application', "octet-stream")
+    file_location = d.get_directory() + '/Data/yesterday_no_sales_copy.xlsx'
+    filename = os.path.basename(file_location)
+    attachment = open(file_location, "rb")
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(attachment.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    msgRoot.attach(part)
+
+    # 7. Add GPM yesterday no sales dataset
+    part = MIMEBase('application', "octet-stream")
+    file_location = d.get_directory() + '/Data/branch_wise_detailed_data_Sales_and_Stock-Copy.xlsx'
+    filename = os.path.basename(file_location)
+    attachment = open(file_location, "rb")
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(attachment.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    msgRoot.attach(part)
+
+    # 7. Region wise items yesterday sales
+    part = MIMEBase('application', "octet-stream")
+    file_location = d.get_directory() + '/Data/items_region_wise_yesterday_sales.xlsx'
+    filename = os.path.basename(file_location)
+    attachment = open(file_location, "rb")
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(attachment.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    msgRoot.attach(part)
 
     # #----------- Finally send mail and close server connection -----
     server = smtplib.SMTP(email_server_host, port)
@@ -299,6 +307,6 @@ def send_mail(gpm_name):
     server.close()
     print('Time takes = ', round((time.time() - start_time) / 60, 2), 'Min')
 
-    # # Html_file = open("testinghtml.html", "w")
-    # # Html_file.write(layout.generate_layout(gpm_name))
-    # # Html_file.close()
+    # Html_file = open("testinghtml.html", "w")
+    # Html_file.write(layout.generate_layout(gpm_name))
+    # Html_file.close()

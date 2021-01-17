@@ -37,11 +37,11 @@ import error_alert as error
 #     error.send_error_msg('Mr. Fazal Mohammad Tanim')
 #
 # # # --------- GPM Mr. Mohammad Akhter Alam Khan ------------------------- akhter@skf.transcombd.com
-try:
-    action.send_mail('Mr. Mohammad Akhter Alam Khan')
-except:
-    error.send_error_msg('Mr. Mohammad Akhter Alam Khan')
-
+# try:
+#     action.send_mail('Mr. Mohammad Akhter Alam Khan')
+# except:
+#     error.send_error_msg('Mr. Mohammad Akhter Alam Khan')
+#
 # # # # --------- GPM Mr. Rubaeadul Hasan Lashkar -------------------------
 # try:
 #     action.send_mail('Mr. Rubaeadul Hasan Lashkar')
@@ -49,14 +49,13 @@ except:
 #     action.send_mail('Mr. Rubaeadul Hasan Lashkar')
 
 # # # --------- GPM Mr. Tafsir Bashar -------------------------------------
-
-# try:
-#     action.send_mail('Mr. Md. Tafsir Bashar') # tafsir.bashar@skf.transcombd.com
-# except:
-#     action.send_mail('Mr. Md. Tafsir Bashar')
+try:
+    action.send_mail('Mr. Md. Tafsir Bashar')  # tafsir.bashar@skf.transcombd.com
+except:
+    action.send_mail('Mr. Md. Tafsir Bashar')
 
 # # # --------- GPM Mr. Zahid Hossain Faisal ------------------------------
-#
+
 # try:
 #     action.send_mail('Mr. Zahid Hossain Faisal')
 # except:

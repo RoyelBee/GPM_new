@@ -358,5 +358,5 @@ def get_branch_aging_stock_status(name):
 
 
         table = tabletd + "</tr>\n"
-    print("17.1. Branch - Brand - SKU wise Stock Aging Status: Detailed table Created\n")
+    print("17.1. Branch - Brand - SKU wise Stock Aging Status: Detailed table Created \n")
     return table

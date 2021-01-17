@@ -26,26 +26,17 @@ def banner(name):
                     group by Name,Designation """, dbc.connection, params={name})
 
     date_time = pd.read_sql_query(
-        """select max(datetime) as uptime from OESalesDetails
-        where LEFT(TRANSDATE, 8) = convert(varchar(8), getdate(), 112)""", dbc.connection)
+            """ select convert(varchar, max(datetime),6) as [date],
+            FORMAT(CAST(max(datetime) AS datetime), 'hh:mm tt') as [time]
+            
+            from OESalesDetails
+            where LEFT(TRANSDATE, 8) = convert(varchar(8), getdate(), 112) """, dbc.connection)
 
-    designation = df_designation["Designation"].tolist()
+    up_date = str(date_time["date"][0])
 
-    datetime_list = date_time['uptime'].to_list()
-    temp_var = datetime_list[0]
-    con_to_str = str(temp_var)
-    hour = str(con_to_str[11:13])
-    min = str(con_to_str[14:16])
+    up_time = date_time['time'][0]
+    # print(type(up_date), type(up_time))
 
-    def convertTime(hour, min):
-        h, m = (int(hour), int(min))
-
-        postfix = ' AM'
-
-        if h >= 12:
-            postfix = ' PM'
-            h -= 12
-        return '{}:{:02d}{}'.format(h or 12, m, postfix)
     #
     # im = Image.open(dir.get_directory() + '/Images/Person.png')
     # im = im.resize((120, 120));
@@ -80,7 +71,7 @@ def banner(name):
     timestore.text((25, 200), name, (244, 118,1), font=font2)
     timestore.text((25, 220), "Group Product Manager", (255,255,255), font=font2)
 
-    timestore.text((815, 10), "Last Data Update Time\n" + str(convertTime(hour, min)) + ', ' + day, (255, 255, 255),  font=font3)
+    timestore.text((815, 10), "Last Data Update Time\n" + str(up_date) + ' , ' + up_time,  (255, 255, 255),  font=font3)
     # timestore.text((705, 180), "Name", (255, 255, 255), font=font2)
     # timestore.text((705, 180), "Designation", (255, 255, 255), font=font2)
 
