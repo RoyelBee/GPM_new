@@ -1,7 +1,7 @@
 import pandas as pd
 
-def number_style(value):
 
+def number_style(value):
     if (len(value) > 6):
         return str(value[0:len(value) - 6] + "," + value[len(value) - 6:len(value) - 3] + ","
                    + value[len(value) - 3:len(value)])
@@ -14,6 +14,7 @@ def number_style(value):
         return '-'
     else:
         return value
+
 
 def number_style1(value):
     value = str(int(value))
@@ -31,25 +32,22 @@ def number_style1(value):
     else:
         return value
 
+
 def day_calculator(value1, value2):
     value1 = value1
     value2 = int(value2)
-    if value2 >= 0  and  value1 > .001:
+    if value2 >= 0 and value1 > .001:
         day = value2 / value1
         if day > 35:
-            result = str(int(value2))  + '<br>'+ str(int(day)) + 'D'
+            result = str(int(value2)) + '<br>' + str(int(day)) + 'D'
         else:
             day = day - 35
             result = str(int(value2)) + '<br>' + str(int(day)) + 'D'
-
-
     else:
-        result= str(value2)
-    return  result
+        result = str(value2)
+    return result
 
-# print(day_calculator(.461, 162))
 def warning(daily_sales, total_stock):
-
     if daily_sales <= 0:
         return False
     else:
@@ -83,10 +81,8 @@ def warning(daily_sales, total_stock):
 def branch_warning(total_stock):
     s = str(total_stock)
 
-    if s== '-' or total_stock <= 0:
+    if s == '-' or total_stock <= 0:
         set_color = 'red'
-    # if total_stock <= 0:
-    #     set_color = '#ff2300'
 
     # Super Under Stock
     elif total_stock >= 1 and total_stock <= 15:
@@ -109,31 +105,29 @@ def branch_warning(total_stock):
     else:
         # Super over stock
         set_color = 'red'
-
     return set_color
 
 
-def create_dup_count_list(excel, colName):
+def create_dup_count_list(excel, colname):
     df = pd.DataFrame(excel)
-    colRaw = df[colName].tolist()
+    colrow = df[colname].tolist()
     df1 = df
-    df1.loc[df1.duplicated(subset=[colName]), colName] = ''
-    colDup = df1[colName].tolist()
+    df1.loc[df1.duplicated(subset=[colname]), colname] = ''
+    coldup = df1[colname].tolist()
     k = 0
-    colList = []
-    for j in colDup:
+    collist = []
+    for j in coldup:
         item1 = j
         i = 0
-        for item in colRaw:
+        for item in colrow:
             if (item == item1):
                 i = i + 1
-        colList.insert(k, i)
+        collist.insert(k, i)
         k = k + 1
-    return colList
+    return collist
 
 
 def status_color(status):
-
     if status == 'Within 15 Days':
         color = '#fd8947'
 
@@ -157,15 +151,16 @@ def status_color(status):
 
     elif status == 'More Than 1 Year':
         color = '#ffffff'
-    elif status == '' or len(status) <1:
+    elif status == '' or len(status) < 1:
         color = '#ffffff'
     else:
         color = '#f40d0d'
     return color
 
+
 def integer_converter(num):
     if num == '':
         num = num
     else:
-        num  = int(num)
+        num = int(num)
     return num

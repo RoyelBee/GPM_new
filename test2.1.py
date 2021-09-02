@@ -5,6 +5,7 @@ import Functions.db_connection as dbc
 import warnings
 warnings.filterwarnings("ignore")
 
+
 def thousand_converter(number):
     number = int(number / 1000)
     number = format(number, ',')
@@ -14,63 +15,63 @@ def thousand_converter(number):
 
 def executives_brand_target_sales_chart(name):
     sql = """
-            DECLARE @cols NVARCHAR (MAX)
+        DECLARE @cols NVARCHAR (MAX)
 
-            SELECT @cols = COALESCE (@cols + ',[' + [executive shortname] + ']', '[' + [executive shortname] + ']')
-                           FROM
-                           (
-                                select [executive shortname] from(
-        SELECT distinct [executive shortname] as [executive shortname], ExecutiveName from [dbo].[GPMExecutive_ShortName] a left join PRINFOSKF b
-        on a.ExecutiveName=b.CP01 
-        where a.GPMNAME like ? and b.BRAND in (select distinct brand from GPMBRAND where Name like ?)) as ttt) PV
-                               ORDER BY [executive shortname]
-                DECLARE @query NVARCHAR(MAX)
-                SET @query ='Select * from
+        SELECT @cols = COALESCE (@cols + ',[' + [executive shortname] + ']', '[' + [executive shortname] + ']')
+                       FROM
+                       (
+                            select [executive shortname] from(
+    SELECT distinct [executive shortname] as [executive shortname], ExecutiveName from [dbo].[GPMExecutive_ShortName] a left join PRINFOSKF b
+    on a.ExecutiveName=b.CP01 
+    where a.GPMNAME like ? and b.BRAND in (select distinct brand from GPMBRAND where Name like ?)) as ttt) PV
+                           ORDER BY [executive shortname]
+            DECLARE @query NVARCHAR(MAX)
+            SET @query ='Select * from
+                    (select *
+                    from
+                    (
+            select b.[Executive ShortName] as exe,PRINFOSKF.brand as brand,sum(EXTINVMISC) as sale from OESalesDetails
+    left join PRINFOSKF
+    on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+    left join
+    (select * from GPMExecutive_ShortName) as b
+    on b.[ExecutiveName]=PRINFOSKF.cp01
+    where transtype =1 and transdate between convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112) and 
+             convert(varchar(8),getdate(), 112)
+    and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
+    group by b.[Executive ShortName],PRINFOSKF.brand
+                    ) src
+                    pivot
+                    (Max(Sale)
+                   for EXE in (' + @cols + ')) AS piv
+                    ) as TblSale
+                          left join
                         (select *
-                        from
-                        (
-                select b.[Executive ShortName] as exe,PRINFOSKF.brand as brand,sum(EXTINVMISC) as sale from OESalesDetails
-        left join PRINFOSKF
-        on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-        left join
-        (select * from GPMExecutive_ShortName) as b
-        on b.[ExecutiveName]=PRINFOSKF.cp01
-        where transtype =1 and transdate between convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112) and 
-                 convert(varchar(8),getdate(), 112)
-        and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
-        group by b.[Executive ShortName],PRINFOSKF.brand
-                        ) src
-                        pivot
-                        (Max(Sale)
-                       for EXE in (' + @cols + ')) AS piv
-                        ) as TblSale
-                              left join
-                            (select *
-                        from
-                (
-        select [Executive ShortName] as Exe,prinfoskf.brand as brand, sum(trgval)/ DAY(EOMONTH(GETDATE()))*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target
-        from PRINFOSKF 
-        left join ARCSECONDARY.dbo.[PRODUCT_WISE_TRG]
-        on [PRODUCT_WISE_TRG].ITEM = PRINFOSKF.ITEMNO
-         left join
-                (select distinct [Executive ShortName],ExecutiveName from [GPMExecutive_ShortName]) as Exe on
-                exe.ExecutiveName=PRINFOSKF.cp01
-        where yrm=CONVERT(varchar(6), dateAdd(month,0,getdate()), 
-        112)
-        and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
-        group by [Executive ShortName],prinfoskf.brand
+                    from
+            (
+    select [Executive ShortName] as Exe,prinfoskf.brand as brand, sum(trgval)/ DAY(EOMONTH(GETDATE()))*RIGHT(convert(varchar(8),getdate()-1, 112),2) as Target
+    from PRINFOSKF 
+    left join ARCSECONDARY.dbo.[PRODUCT_WISE_TRG]
+    on [PRODUCT_WISE_TRG].ITEM = PRINFOSKF.ITEMNO
+     left join
+            (select distinct [Executive ShortName],ExecutiveName from [GPMExecutive_ShortName]) as Exe on
+            exe.ExecutiveName=PRINFOSKF.cp01
+    where yrm=CONVERT(varchar(6), dateAdd(month,0,getdate()), 
+    112)
+    and prinfoskf.BRAND in (select distinct brand from GPMBRAND )
+    group by [Executive ShortName],prinfoskf.brand
 
-                        ) src
-                        pivot
-                        (
-                        sum(Target)
-                        for EXE in (' + @cols + '
-                         )
-                        ) AS piv) as tblsTarget
-                        on (tblsTarget.brand=TblSale.brand)'
+                    ) src
+                    pivot
+                    (
+                    sum(Target)
+                    for EXE in (' + @cols + '
+                     )
+                    ) AS piv) as tblsTarget
+                    on (tblsTarget.brand=TblSale.brand)'
 
-                EXEC SP_EXECUTESQL @query
-                """
+            EXEC SP_EXECUTESQL @query
+            """
 
     df = pd.read_sql(sql, dbc.connection, params=(name, name))
 
@@ -145,6 +146,7 @@ def executives_brand_target_sales_chart(name):
             col = coluns[i].replace(".1", "") + ' .S (' + str("{:.1f}".format(list_of_achv[t - 1])) + '%)'
             master_col.append(col)
             t = t - 1
+
 
     writer = pd.ExcelWriter('./Data/new_testdata2.xlsx', engine='xlsxwriter')
     for j in range(0, np.shape(all_data)[1]):
@@ -247,3 +249,6 @@ def executives_brand_target_sales_chart(name):
     # plt.show()
     plt.savefig('./Images/mainexecutive.png')
     print('6. Brand wise Executives Target & Sales Figure Generated')
+#
+#
+executives_brand_target_sales_chart('Mr. Mohammad Akhter Alam Khan')

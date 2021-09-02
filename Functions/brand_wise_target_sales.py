@@ -1,16 +1,17 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-
+import warnings
+warnings.filterwarnings("ignore")
 
 def brand_wise_target_sales():
     try:
-        # # Prepare dataset ---------------------------------------
         cols = ['BRAND', 'MTD Sales Target Value', 'Actual Sales MTD Value']
         df = pd.read_excel('./Data/gpm_data.xlsx', usecols=cols)
-        df = df[df['MTD Sales Target Value'] != 0]
+        # df = df[df['MTD Sales Target Value'] != 0]
 
         data = df.groupby('BRAND')['MTD Sales Target Value', 'Actual Sales MTD Value'].sum()
+        # print(data)
 
         # data['Brand'] = data['BRAND']
         MTD_Achivment = (data['Actual Sales MTD Value'] / data['MTD Sales Target Value']) * 100
@@ -33,8 +34,12 @@ def brand_wise_target_sales():
 
         new_label_list = []
         for x, y in zip(brand, mtd_achivemet):
-            new_label = str(x) + ' (' + str(round(y)) + '%)'
-            new_label_list.append(new_label)
+            try:
+                new_label = str(x) + ' (' + str(round(y)) + '%)'
+                new_label_list.append(new_label)
+            except:
+                new_label = str(x) + '(0 %)'
+                new_label_list.append(new_label)
 
         # print(new_list)
         # print(new_label_list)
@@ -45,8 +50,6 @@ def brand_wise_target_sales():
         plt.xlabel('Brands', fontsize=12, color='black', fontweight='bold')
         plt.xticks(new_list, new_label_list, rotation=90, fontsize=9)
         plt.ylabel('Amount (K)', fontsize=12, color='black', fontweight='bold')
-
-        # plt.rcParams['text.color'] = 'black'
 
         for bar, achv in zip(bars, mtd_achivemet):
             yval = bar.get_height()

@@ -5,7 +5,6 @@
     <mapping directory="$PROJECT_DIR$/../31BranchOutstanding" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../AHD_GPM" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../BasicWebScrapeing" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../NDM_wise_Outstanding" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../Scrapy" vcs="Git" />
   </component>
 </project>

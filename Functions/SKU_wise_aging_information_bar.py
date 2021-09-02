@@ -3,7 +3,6 @@ import pandas as pd
 import Functions.db_connection as dbc
 
 
-
 def stock_aging_chart(name):
     try:
         executive_target_df = pd.read_sql_query("""
@@ -54,8 +53,7 @@ ON (T1.ITEMNO=T2.ITEMNO)
 WHERE T2.GPMNAME like ?
 AND T2.BRAND in (select distinct brand from GPMBRAND where Name like ?)
 Group by  AGEING)as T3
-                 """, dbc.connection, params=(name,name))
-
+                 """, dbc.connection, params=(name, name))
 
         fifteen_days_sku = executive_target_df['15 Days SKU'].tolist()
         thirty_days_sku = executive_target_df['30 Days SKU'].tolist()
@@ -81,7 +79,7 @@ Group by  AGEING)as T3
         colors = ['#933636', '#f40d0d', '#ff8600', '#e1e300', '#b2eb05', '#629B00', '#124B00']
         bars = plt.bar(list_of_label, height=list_to_sku, color=colors, width=.6)
 
-        plt.title("SKU wise Stock Aging ("+str(total)+")", fontsize=16, color='black', fontweight='bold')
+        plt.title("SKU wise Stock Aging (" + str(total) + ")", fontsize=16, color='black', fontweight='bold')
         plt.xlabel('Aging Days', fontsize=12, color='black', fontweight='bold')
         plt.xticks(list_of_label, rotation=90)
         plt.ylabel('SKU', fontsize=12, color='black', fontweight='bold')

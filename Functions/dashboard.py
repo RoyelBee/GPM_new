@@ -217,8 +217,7 @@ def dash_kpi_generator(name):
                 select ITEM, 
                     sum(case when TRANSDATE between  convert(varchar(8), DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE())-1, 0), 112)
                     and   left(convert(varchar(8), DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE())-1,0), 112), 6) + right(convert(varchar(8), GETDATE()-1, 112), 2)
-                  and TRANSTYPE=1 then EXTINVMISC else 0 end) as LastMonthMTDSales, 
-                
+                  and TRANSTYPE=1 then EXTINVMISC else 0 end) as LastMonthMTDSales,
                     isnull(sum(case when TRANSDATE between  convert(varchar(8),DATEADD(month, DATEDIFF(month, 0,  GETDATE()), 0),112)
                     and  convert(varchar(10),getdate()-1, 112)  and TRANSTYPE=1 then EXTINVMISC else 0 end), 0) as ThisMonthMTDSales
                 from OESalesDetails
@@ -235,8 +234,7 @@ def dash_kpi_generator(name):
     last_month_mtd_sales = int(growth_df.LastMonthMTDSales)
     thismonth_mtd_sales = int(growth_df.ThisMonthMTDSales)
 
-    mtd_growth = str(
-        "{:.2f}".format(((thismonth_mtd_sales - last_month_mtd_sales) / last_month_mtd_sales) * 100)) + ' %'
+    mtd_growth = str("{:.2f}".format(((thismonth_mtd_sales - last_month_mtd_sales) / last_month_mtd_sales) * 100)) + ' %'
 
     # # ------------- MTD Trend --------------------------------------------------------------------
     days_in_month = calendar.monthrange(now.year, now.month)[1]

@@ -2,12 +2,13 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.8 (Env)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.8 (env_3.8)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="NDM_wise_Outstanding" />
+    <orderEntry type="module" module-name="SKF_Turkish_C" />
+    <orderEntry type="module" module-name="SKF_Turkish" />
+    <orderEntry type="module" module-name="31BranchOutstanding" />
   </component>
   <component name="TestRunnerService">
-    <option name="projectConfiguration" value="pytest" />
     <option name="PROJECT_TEST_RUNNER" value="pytest" />
   </component>
 </module>

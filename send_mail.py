@@ -8,7 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
 import Functions.design_report_layout as layout
-import Functions.test_design as test
+# import Functions.test_design as test
 import path as d
 import time
 import Functions.read_gpm_info as gpm
@@ -85,8 +85,8 @@ def send_mail(gpm_name):
     img.paste(kpi7_3, (1203, 0))
     img.save("./Images/aging_stock_information.png")
 
-    to = gpm.getGPMEmail(gpm_name)
-    print('mail send to ', to)
+    # to = gpm.getGPMEmail(gpm_name)
+    # print('mail send to ', to)
 
     # if (to == ['tafsir.bashar@skf.transcombd.com', '']):
     #     to = ['rejaul.islam@transcombd.com', '']
@@ -105,18 +105,17 @@ def send_mail(gpm_name):
     msgRoot = MIMEMultipart('related')
 
     me = 'erp-bi.service@transcombd.com'
-    # to = ['rejaul.islam@transcombd.com', '']
-    # cc = ['', '']
-    # bcc = ['', '']
+    to = ['rejaul.islam@transcombd.com', '']
+    cc = ['', '']
+    bcc = ['', '']
 
     # cc = ['biswascma@yahoo.com', 'yakub@transcombd.com', 'zubair.transcom@gmail.com']
     # bcc = ['rejaul.islam@transcombd.com', '']
 
-    cc = ['', '']
-    bcc = ['mdshbiswas@gmail.com', 'biswas@transcombd.com', 'zubair@transcombd.com', 'yakub@transcombd.com',
-           'aftab.uddin@transcombd.com',
-           'rejaul.islam@transcombd.com']
+    # cc = ['', '']
+    # bcc = ['zubair@transcombd.com', 'yakub@transcombd.com', 'rejaul.islam@transcombd.com']
 
+    print('mail send to ', to)
     recipient = to + cc + bcc
 
     date = datetime.today()
@@ -306,7 +305,8 @@ def send_mail(gpm_name):
     print('-------------------')
     server.close()
     print('Time takes = ', round((time.time() - start_time) / 60, 2), 'Min')
-
+    #
     # Html_file = open("testinghtml.html", "w")
     # Html_file.write(layout.generate_layout(gpm_name))
     # Html_file.close()
+#

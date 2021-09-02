@@ -8,39 +8,38 @@ import Functions.db_connection as dbc
 def executive_sales_target(name):
     try:
         executive_target_sales_df = pd.read_sql_query("""
-            Declare @CurrentMonth NVARCHAR(MAX);
-            Declare @DaysInMonth NVARCHAR(MAX);
-            Declare @DaysInMonthtilltoday NVARCHAR(MAX);
-            SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
-            SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
-            SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
-            
-            select exe_sales.ExecutiveName as ExecutiveName,exe_sales.shortname as shortname,exe_sales.ItemSales as ItemSales,isnull(exe_target.MTDTargetValue, 0) as MTDTargetValue from
-            (select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,cast(isnull(sum(EXTINVMISC),
-            0)/1000 as int) as ItemSales from OESalesDetails
-            left join PRINFOSKF
-            on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
-            right join
-            (select * from GPMExecutive_ShortName) as b
-            on b.[ExecutiveName]=PRINFOSKF.cp01
-            where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
-                            and convert(varchar(10),getdate(), 112)
-            and PRINFOSKF.GPMNAME like ?
-            and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
-            group by CP01,b.[Executive ShortName]) as exe_sales
-            left join
-            (select CP01 as ExecutiveName, cast(isnull((sum(TRGVAL)/@DaysInMonth)*@DaysInMonthtilltoday,0)/1000 as int) as MTDTargetValue
-            from PRINFOSKF 
-            left join ARCSECONDARY.dbo.PRODUCT_WISE_TRG
-            on PRODUCT_WISE_TRG.ITEM = PRINFOSKF.ITEMNO
-            where YRM = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
-            112) and GPMNAME like ?
-            and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
-            group by CP01) as exe_target
-            on exe_sales.ExecutiveName = exe_target.ExecutiveName
-            order by exe_sales.ItemSales desc
-             """,
-                  dbc.connection, params=(name, name, name, name))
+                    Declare @CurrentMonth NVARCHAR(MAX);
+                    Declare @DaysInMonth NVARCHAR(MAX);
+                    Declare @DaysInMonthtilltoday NVARCHAR(MAX);
+                    SET @CurrentMonth = convert(varchar(6), GETDATE(),112)
+                    SET @DaysInMonth = DAY(EOMONTH(GETDATE()))
+                    SET @DaysInMonthtilltoday = right(convert(varchar(8), GETDATE(),112),2)
+
+                    select exe_sales.ExecutiveName as ExecutiveName,exe_sales.shortname as shortname,exe_sales.ItemSales as ItemSales,isnull(exe_target.MTDTargetValue, 0) as MTDTargetValue from
+                    (select CP01 as ExecutiveName,b.[Executive ShortName] as shortname,cast(isnull(sum(EXTINVMISC),
+                    0)/1000 as int) as ItemSales from OESalesDetails
+                    left join PRINFOSKF
+                    on OESalesDetails.ITEM = PRINFOSKF.ITEMNO
+                    right join
+                    (select * from GPMExecutive_ShortName) as b
+                    on b.[ExecutiveName]=PRINFOSKF.cp01
+                    where left(TRANSDATE,10) between convert(varchar(10),DATEADD(mm, DATEDIFF(mm, 0, GETDATE()-1), 0),112)
+                                    and convert(varchar(10),getdate(), 112)
+                    and PRINFOSKF.GPMNAME like ?
+                    and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+                    group by CP01,b.[Executive ShortName]) as exe_sales
+                    left join
+                    (select CP01 as ExecutiveName, cast(isnull((sum(TRGVAL)/@DaysInMonth)*@DaysInMonthtilltoday,0)/1000 as int) as MTDTargetValue
+                    from PRINFOSKF 
+                    left join ARCSECONDARY.dbo.PRODUCT_WISE_TRG
+                    on PRODUCT_WISE_TRG.ITEM = PRINFOSKF.ITEMNO
+                    where YRM = CONVERT(varchar(6), dateAdd(month,0,getdate()), 
+                    112) and GPMNAME like ?
+                    and prinfoskf.BRAND in (select distinct brand from GPMBRAND where Name like ?)
+                    group by CP01) as exe_target
+                    on exe_sales.ExecutiveName = exe_target.ExecutiveName
+                    order by exe_sales.ItemSales desc
+                     """, dbc.connection, params=(name, name, name, name))
 
         Executive_name = executive_target_sales_df['ExecutiveName'].tolist()
         Executive_target = executive_target_sales_df['MTDTargetValue'].tolist()
@@ -71,8 +70,12 @@ def executive_sales_target(name):
 
         achievement_list = []
         for x, y in zip(Executive_sale, Executive_target):
-            achv = (x / y) * 100
-            achievement_list.append(achv)
+            try:
+                achv = (x / y) * 100
+                achievement_list.append(achv)
+            except:
+                achv = 0
+                achievement_list.append(achv)
         # print("Achv list", achievement_list)
 
         new_label_list = []
@@ -103,16 +106,19 @@ def executive_sales_target(name):
             plt.text(bar.get_x() + .45 - wval / 2, yval / 2, data)
 
         plt.plot(new_label_list, Executive_target, 'o-', color='Red')
-        plt.yticks(
-            np.arange(0, int(max(Executive_target) + 0.9 * max(Executive_target)), int(max(Executive_target) / 5)))
+
+        if max(Executive_target) > 1:
+            plt.yticks(
+                np.arange(0, int(max(Executive_target) + 0.9 * max(Executive_target)), int(max(Executive_target) / 5)))
+
         for i, j in zip(new_label_list, Executive_target):
             label = format(int(j), ',') + 'K'
             plt.annotate(label, (i, j), textcoords="offset points", xytext=(0, 4), ha='center')
-        #
-        # # print(mtd_achivemet)
+
         plt.legend(['Target', 'Sales'])
         plt.tight_layout()
         # plt.show()
+
         plt.savefig('./Images/executive_wise_target_vs_sold_quantity.png')
         print('5. Executive figure generated \n')
 

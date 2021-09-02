@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../31BranchOutstanding/.idea/31BranchOutstanding.iml" filepath="$PROJECT_DIR$/../31BranchOutstanding/.idea/31BranchOutstanding.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/GPM_new_v15.iml" filepath="$PROJECT_DIR$/.idea/GPM_new_v15.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../NDM_wise_Outstanding/.idea/NDM_wise_Outstanding.iml" filepath="$PROJECT_DIR$/../NDM_wise_Outstanding/.idea/NDM_wise_Outstanding.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../SKF_Turkish/.idea/SKF_Turkish.iml" filepath="$PROJECT_DIR$/../SKF_Turkish/.idea/SKF_Turkish.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../From Rini Apu/SKF_Turkish_C/.idea/SKF_Turkish_C.iml" filepath="$PROJECT_DIR$/../From Rini Apu/SKF_Turkish_C/.idea/SKF_Turkish_C.iml" />
     </modules>
   </component>
 </project>
